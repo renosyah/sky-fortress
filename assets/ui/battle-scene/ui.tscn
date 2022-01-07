@@ -52,21 +52,23 @@ mouse_filter = 2
 size_flags_horizontal = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control2/Control/mid"]
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -1.0
-margin_top = -142.0
-margin_right = -1.0
-margin_bottom = -26.0
+margin_left = -198.5
+margin_top = -135.0
+margin_right = 201.5
+margin_bottom = -20.0
+rect_min_size = Vector2( 400, 115 )
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="cannon" type="Button" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
-margin_right = 101.0
-margin_bottom = 116.0
+margin_right = 86.0
+margin_bottom = 115.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Cannon"
@@ -75,15 +77,15 @@ __meta__ = {
 }
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
-margin_left = 105.0
-margin_right = 115.0
-margin_bottom = 116.0
+margin_left = 90.0
+margin_right = 100.0
+margin_bottom = 115.0
 rect_min_size = Vector2( 10, 0 )
 
 [node name="guided" type="Button" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
-margin_left = 119.0
-margin_right = 220.0
-margin_bottom = 116.0
+margin_left = 104.0
+margin_right = 191.0
+margin_bottom = 115.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Guided"
@@ -92,18 +94,35 @@ __meta__ = {
 }
 
 [node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
-margin_left = 224.0
-margin_right = 234.0
-margin_bottom = 116.0
+margin_left = 195.0
+margin_right = 205.0
+margin_bottom = 115.0
 rect_min_size = Vector2( 10, 0 )
 
 [node name="lock_on" type="Button" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
-margin_left = 238.0
-margin_right = 339.0
-margin_bottom = 116.0
+margin_left = 209.0
+margin_right = 295.0
+margin_bottom = 115.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Lock on"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
+margin_left = 299.0
+margin_right = 309.0
+margin_bottom = 115.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="plane" type="Button" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
+margin_left = 313.0
+margin_right = 400.0
+margin_bottom = 115.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Plane"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -152,4 +171,5 @@ __meta__ = {
 [connection signal="pressed" from="CanvasLayer/Control2/Control/mid/HBoxContainer/cannon" to="." method="_on_cannon_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control2/Control/mid/HBoxContainer/guided" to="." method="_on_guided_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control2/Control/mid/HBoxContainer/lock_on" to="." method="_on_lock_on_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control2/Control/mid/HBoxContainer/plane" to="." method="_on_plane_pressed"]
 [connection signal="toggled" from="CanvasLayer/Control2/Control/right/aim" to="." method="_on_aim_toggled"]

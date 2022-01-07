@@ -1,5 +1,8 @@
 extends Node
 
+const HOSTILE_SHIP = preload("res://scene/ships/carrier/carrier.tscn")
+const MAX_HOSTILE = 5
+
 onready var _terrain = $terrain
 onready var _camera = $cameraPivot
 onready var _cursor = $cursor
@@ -63,13 +66,13 @@ func _on_enemy_decision_timer_timeout():
 		bot.aim_point = target.translation
 		bot.guided_point = target
 		bot.lock_on_point = target
-		bot.shot(rand_range(0,2))
+		bot.shot(rand_range(0,3))
 		
 	
 	
 func _on_enemy_spawning_timer_timeout():
 	var bots_count = $bot_holder.get_child_count()
-	if bots_count >= 10:
+	if bots_count >= MAX_HOSTILE:
 		return
 		
 	if _terrain.cloud_spawn_points.empty():
@@ -77,7 +80,7 @@ func _on_enemy_spawning_timer_timeout():
 		
 	var spawn_pos = _terrain.cloud_spawn_points[randi() % _terrain.cloud_spawn_points.size()]
 
-	var ship = preload("res://scene/ships/cruiser/cruiser.tscn").instance()
+	var ship = HOSTILE_SHIP.instance()
 	$bot_holder.add_child(ship)
 	ship.translation = spawn_pos
 	ship.translation.y = Ship.DEFAULT_ALTITUDE

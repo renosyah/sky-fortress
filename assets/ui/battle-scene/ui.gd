@@ -21,6 +21,9 @@ func _on_aim_toggled(button_pressed):
 	emit_signal("on_aim_press", button_pressed)
 	$CanvasLayer/Control2/Control/mid/HBoxContainer.visible = button_pressed
 	
+func _on_plane_pressed():
+	emit_signal("on_shot_press" , 3)
+	
 	
 func _on_lock_on_pressed():
 		emit_signal("on_shot_press" , 2)
@@ -32,6 +35,7 @@ func _on_guided_pressed():
 	
 func _on_cannon_pressed():
 		emit_signal("on_shot_press" , 0)
+	
 	
 	
 func _on_player_on_take_damage(_node, damage, hp):
@@ -59,5 +63,8 @@ func _on_player_on_falling(_node):
 	_on_aim_toggled(false)
 	$CanvasLayer/Control2/Control.visible = false
 	
+
+
+
 
 

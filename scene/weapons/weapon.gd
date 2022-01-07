@@ -30,5 +30,13 @@ const TEMPLATES = [
 		ammo_scene = "res://scene/weapons/lock-on/lock-on-missile/lock_on_missile.tscn",
 		min_range = 10.0,
 		max_range = 80.0
+	},
+	{
+		damage = 1.0,
+		speed = 5.0,
+		type = TYPE_CONTROLLED,
+		ammo_scene = "res://scene/weapons/controlled/biplane/biplane.tscn",
+		min_range = 15.0,
+		max_range = 150.0
 	}
 ]

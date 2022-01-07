@@ -1,0 +1,103 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://scene/ships/carrier/prop.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scene/ships/carrier/carrier.gd" type="Script" id=2]
+[ext_resource path="res://scene/ships/carrier/bridge.png" type="Texture" id=3]
+[ext_resource path="res://scene/ships/carrier/flying_deck.png" type="Texture" id=4]
+[ext_resource path="res://scene/ships/carrier/engine.png" type="Texture" id=5]
+[ext_resource path="res://scene/ships/carrier/baloon.png" type="Texture" id=6]
+[ext_resource path="res://assets/ui/bar/bar_empty.png" type="Texture" id=7]
+[ext_resource path="res://assets/ui/bar/bar.png" type="Texture" id=8]
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 0.392489, 0.614795, 1.91847 )
+
+[node name="carrier" type="KinematicBody"]
+script = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00332022, 0 )
+shape = SubResource( 3 )
+
+[node name="pivot" type="Spatial" parent="."]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
+
+[node name="body_1" type="Sprite3D" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.16286e-09, 0, 0.486744 )
+alpha_cut = 2
+texture = ExtResource( 6 )
+
+[node name="body_2" type="Sprite3D" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.19589e-09, 0, -0.4875 )
+alpha_cut = 2
+texture = ExtResource( 6 )
+
+[node name="bridge_5" type="Sprite3D" parent="pivot"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.735409, 0, 0.502232 )
+alpha_cut = 2
+texture = ExtResource( 3 )
+
+[node name="bridge_6" type="Sprite3D" parent="pivot"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.735409, 0, -0.499493 )
+alpha_cut = 2
+texture = ExtResource( 3 )
+
+[node name="bridge_7" type="Sprite3D" parent="pivot"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.828994, 0, 0.502232 )
+alpha_cut = 2
+texture = ExtResource( 3 )
+
+[node name="bridge_8" type="Sprite3D" parent="pivot"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.828994, 0, -0.499493 )
+alpha_cut = 2
+texture = ExtResource( 3 )
+
+[node name="engine" type="Sprite3D" parent="pivot"]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 1, 0.176553, 0.47317, -0.478166 )
+flip_h = true
+alpha_cut = 2
+texture = ExtResource( 5 )
+
+[node name="flying_deck" type="Sprite3D" parent="pivot"]
+transform = Transform( 1, 4.37028e-08, 4.28582e-08, -4.3702e-08, 0.0194936, 0.99981, 4.2859e-08, -0.99981, 0.0194936, -0.132568, 0.257197, -0.00203074 )
+flip_h = true
+alpha_cut = 2
+texture = ExtResource( 4 )
+
+[node name="prop_1" parent="pivot" instance=ExtResource( 1 )]
+transform = Transform( -4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, -0.747071, 0.12507, -1.01502 )
+
+[node name="prop_2" parent="pivot" instance=ExtResource( 1 )]
+transform = Transform( -4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, 0.838379, 0.12507, -1.01502 )
+
+[node name="prop_3" parent="pivot" instance=ExtResource( 1 )]
+transform = Transform( -4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, 0.838379, 0.12507, 1.04295 )
+
+[node name="prop_4" parent="pivot" instance=ExtResource( 1 )]
+transform = Transform( -4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, -0.705364, 0.12507, 1.04295 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="hpBar" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8626, 0 )
+billboard = 1
+
+[node name="Viewport" type="Viewport" parent="hpBar"]
+size = Vector2( 500, 50 )
+transparent_bg = true
+usage = 0
+render_target_v_flip = true
+render_target_update_mode = 3
+gui_disable_input = true
+
+[node name="TextureProgress" type="TextureProgress" parent="hpBar/Viewport"]
+margin_right = 500.0
+margin_bottom = 50.0
+max_value = 1000.0
+value = 1000.0
+texture_under = ExtResource( 7 )
+texture_progress = ExtResource( 8 )
+tint_progress = Color( 0.14902, 1, 0, 1 )
+nine_patch_stretch = true
+
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]

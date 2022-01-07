@@ -87,6 +87,16 @@ func shot(weapon_index : int):
 		add_child(projectile)
 		projectile.translation = translation
 		projectile.lauching_at(lock_on_point)
+		
+	if weapon.type == Weapon.TYPE_CONTROLLED and is_instance_valid(lock_on_point):
+		var distance_to_target = translation.distance_to(lock_on_point.translation)
+		if distance_to_target > weapon.max_range or distance_to_target < weapon.min_range:
+			return
+			
+		add_child(projectile)
+		projectile.translation = translation + Vector3.ONE * rand_range(-5.0, 5.0)
+		projectile.lauching_at(lock_on_point)
+	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
