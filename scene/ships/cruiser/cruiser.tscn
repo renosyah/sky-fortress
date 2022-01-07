@@ -1,0 +1,127 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://scene/ships/cruiser/prop.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scene/ships/cruiser/engine.png" type="Texture" id=2]
+[ext_resource path="res://scene/ships/cruiser/baloon.png" type="Texture" id=3]
+[ext_resource path="res://scene/ships/cruiser/bridge.png" type="Texture" id=4]
+[ext_resource path="res://scene/ships/cruiser/cruiser.gd" type="Script" id=5]
+[ext_resource path="res://scene/ships/cruiser/turret.png" type="Texture" id=6]
+[ext_resource path="res://assets/ui/bar/bar_empty.png" type="Texture" id=7]
+[ext_resource path="res://assets/ui/bar/bar.png" type="Texture" id=8]
+[ext_resource path="res://scene/ships/cruiser/sail.png" type="Texture" id=9]
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 0.392489, 0.614795, 1.91847 )
+
+[node name="cruiser" type="KinematicBody"]
+script = ExtResource( 5 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00332022, 0 )
+shape = SubResource( 3 )
+
+[node name="pivot" type="Spatial" parent="."]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
+
+[node name="body_1" type="Sprite3D" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3 )
+alpha_cut = 2
+texture = ExtResource( 3 )
+
+[node name="body_2" type="Sprite3D" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.3 )
+alpha_cut = 2
+texture = ExtResource( 3 )
+
+[node name="bridge_1" type="Sprite3D" parent="pivot"]
+transform = Transform( -6.15946e-08, -1, -7.81699e-16, -4.37114e-08, 1.91069e-15, 1, -0.590881, 7.94504e-09, -2.58282e-08, -1.75013, 0, -0.00315485 )
+alpha_cut = 2
+texture = ExtResource( 4 )
+
+[node name="bridge_2" type="Sprite3D" parent="pivot"]
+transform = Transform( -2.58282e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -0.590881, 4.37114e-08, 1.91069e-15, -0.00498377, 0.313324, -0.00203068 )
+alpha_cut = 2
+texture = ExtResource( 4 )
+
+[node name="bridge_8" type="Sprite3D" parent="pivot"]
+transform = Transform( -2.58282e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -0.590881, 4.37114e-08, 1.91069e-15, -0.631064, 0.316751, -0.00203071 )
+alpha_cut = 2
+texture = ExtResource( 4 )
+
+[node name="bridge_3" type="Sprite3D" parent="pivot"]
+transform = Transform( -2.58282e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -0.590881, 4.37114e-08, 1.91069e-15, 0.185773, -0.215742, -0.00203067 )
+alpha_cut = 2
+texture = ExtResource( 4 )
+
+[node name="bridge_7" type="Sprite3D" parent="pivot"]
+transform = Transform( -2.58282e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -0.590881, 4.37114e-08, 1.91069e-15, 0.670307, 0.303467, -0.00203066 )
+alpha_cut = 2
+texture = ExtResource( 4 )
+
+[node name="turret" type="Sprite3D" parent="pivot"]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 1, 0.35512, -0.460374, -0.00203072 )
+flip_v = true
+alpha_cut = 2
+texture = ExtResource( 6 )
+
+[node name="sail" type="Sprite3D" parent="pivot"]
+transform = Transform( -0.499861, 0, 0.0235423, 0, 0.5, 0, -0.0117711, 0, -0.999723, -0.447969, -1.03902, 0.0130167 )
+flip_h = true
+alpha_cut = 2
+texture = ExtResource( 9 )
+
+[node name="engine" type="Sprite3D" parent="pivot"]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 1, -1.42174, 0.184719, -0.00203079 )
+flip_h = true
+alpha_cut = 2
+texture = ExtResource( 2 )
+
+[node name="bridge_5" type="Sprite3D" parent="pivot"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.0302619, 0, 0.502232 )
+alpha_cut = 2
+texture = ExtResource( 4 )
+
+[node name="bridge_6" type="Sprite3D" parent="pivot"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -0.999999, 0, -4.37114e-08, 0.0302619, 0, -0.499493 )
+alpha_cut = 2
+texture = ExtResource( 4 )
+
+[node name="bridge_4" type="Sprite3D" parent="pivot"]
+transform = Transform( -6.15946e-08, -1, -7.81699e-16, -4.37114e-08, 1.91069e-15, 1, -0.590881, 7.94504e-09, -2.58282e-08, -1.74603, 0.334626, -0.00203073 )
+alpha_cut = 2
+texture = ExtResource( 4 )
+
+[node name="prop_1" parent="pivot" instance=ExtResource( 1 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.89788, 0.186553, -8.29589e-08 )
+
+[node name="prop_2" parent="pivot" instance=ExtResource( 1 )]
+transform = Transform( 1.31134e-07, 0.999999, 4.37114e-08, 3.82136e-15, 4.37113e-08, -0.999999, -0.999999, 1.31134e-07, 1.91068e-15, 0.0266067, 0.127484, -1.03795 )
+
+[node name="prop_3" parent="pivot" instance=ExtResource( 1 )]
+transform = Transform( 1.31134e-07, 0.999999, 4.37114e-08, 3.82136e-15, 4.37113e-08, -0.999999, -0.999998, 1.31134e-07, 1.91068e-15, 0.027, 0.127, 0.998 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="hpBar" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8626, 0 )
+billboard = 1
+
+[node name="Viewport" type="Viewport" parent="hpBar"]
+size = Vector2( 500, 50 )
+transparent_bg = true
+usage = 0
+render_target_v_flip = true
+render_target_update_mode = 3
+gui_disable_input = true
+
+[node name="TextureProgress" type="TextureProgress" parent="hpBar/Viewport"]
+margin_right = 500.0
+margin_bottom = 50.0
+max_value = 1000.0
+value = 1000.0
+texture_under = ExtResource( 7 )
+texture_progress = ExtResource( 8 )
+tint_progress = Color( 0.14902, 1, 0, 1 )
+nine_patch_stretch = true
+
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]

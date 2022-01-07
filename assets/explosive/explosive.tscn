@@ -1,0 +1,82 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://assets/explosive/2.png" type="Texture" id=1]
+[ext_resource path="res://assets/explosive/4.png" type="Texture" id=2]
+[ext_resource path="res://assets/explosive/6.png" type="Texture" id=3]
+[ext_resource path="res://assets/explosive/5.png" type="Texture" id=4]
+[ext_resource path="res://assets/explosive/3.png" type="Texture" id=5]
+[ext_resource path="res://assets/explosive/1.png" type="Texture" id=6]
+[ext_resource path="res://assets/explosive/explosive.gd" type="Script" id=7]
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite3D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ ExtResource( 6 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite3D2:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ ExtResource( 6 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "explosive_anim"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite3D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ null, ExtResource( 6 ), ExtResource( 1 ), ExtResource( 5 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 3 ), null ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite3D2:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ null, ExtResource( 6 ), ExtResource( 1 ), ExtResource( 5 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 3 ), null ]
+}
+
+[node name="explosive" type="Spatial"]
+script = ExtResource( 7 )
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+texture = ExtResource( 6 )
+
+[node name="Sprite3D2" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+texture = ExtResource( 6 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "explosive_anim"
+playback_speed = 2.0
+anims/RESET = SubResource( 1 )
+anims/explosive_anim = SubResource( 2 )
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

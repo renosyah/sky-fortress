@@ -1,0 +1,155 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/ui/battle-scene/ui.gd" type="Script" id=1]
+[ext_resource path="res://assets/ui/bar/bar_empty.png" type="Texture" id=2]
+[ext_resource path="res://assets/ui/bar/bar.png" type="Texture" id=3]
+[ext_resource path="res://assets/ui/deadscreen/deadscreen.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/ui/mini_map/MiniMap.tscn" type="PackedScene" id=5]
+
+[node name="ui" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control2" type="Control" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="deadscreen" parent="CanvasLayer/Control2" instance=ExtResource( 4 )]
+visible = false
+
+[node name="Control" type="HBoxContainer" parent="CanvasLayer/Control2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="left" type="Control" parent="CanvasLayer/Control2/Control"]
+margin_right = 338.0
+margin_bottom = 600.0
+mouse_filter = 2
+size_flags_horizontal = 3
+
+[node name="MiniMap" parent="CanvasLayer/Control2/Control/left" instance=ExtResource( 5 )]
+
+[node name="mid" type="Control" parent="CanvasLayer/Control2/Control"]
+margin_left = 342.0
+margin_right = 681.0
+margin_bottom = 600.0
+mouse_filter = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control2/Control/mid"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1.0
+margin_top = -142.0
+margin_right = -1.0
+margin_bottom = -26.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="cannon" type="Button" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
+margin_right = 101.0
+margin_bottom = 116.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Cannon"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
+margin_left = 105.0
+margin_right = 115.0
+margin_bottom = 116.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="guided" type="Button" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
+margin_left = 119.0
+margin_right = 220.0
+margin_bottom = 116.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Guided"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
+margin_left = 224.0
+margin_right = 234.0
+margin_bottom = 116.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="lock_on" type="Button" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
+margin_left = 238.0
+margin_right = 339.0
+margin_bottom = 116.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Lock on"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hp_bar" type="TextureProgress" parent="CanvasLayer/Control2/Control/mid"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -249.5
+margin_top = 10.0
+margin_right = 250.5
+margin_bottom = 34.0
+max_value = 1000.0
+value = 1000.0
+texture_under = ExtResource( 2 )
+texture_progress = ExtResource( 3 )
+tint_progress = Color( 0.14902, 1, 0, 1 )
+nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="right" type="Control" parent="CanvasLayer/Control2/Control"]
+margin_left = 685.0
+margin_right = 1024.0
+margin_bottom = 600.0
+mouse_filter = 2
+size_flags_horizontal = 3
+
+[node name="aim" type="Button" parent="CanvasLayer/Control2/Control/right"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -155.0
+margin_top = -85.0
+margin_right = -16.0
+margin_bottom = -27.0
+size_flags_vertical = 3
+toggle_mode = true
+text = "Aim"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="on_respawn_click" from="CanvasLayer/Control2/deadscreen" to="." method="_on_deadscreen_on_respawn_click"]
+[connection signal="pressed" from="CanvasLayer/Control2/Control/mid/HBoxContainer/cannon" to="." method="_on_cannon_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control2/Control/mid/HBoxContainer/guided" to="." method="_on_guided_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control2/Control/mid/HBoxContainer/lock_on" to="." method="_on_lock_on_pressed"]
+[connection signal="toggled" from="CanvasLayer/Control2/Control/right/aim" to="." method="_on_aim_toggled"]

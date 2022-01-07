@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/cloud/cloud_1.png" type="Texture" id=1]
+[ext_resource path="res://assets/cloud/cloud.gd" type="Script" id=2]
+
+[node name="cloud_1" type="Sprite3D"]
+transform = Transform( 1, 0, 0, 0, 0.422618, 0.906308, 0, -0.906308, 0.422618, -6.71464, 2.00694, 0 )
+opacity = 0.0
+alpha_cut = 2
+texture = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="VisibilityNotifier" type="VisibilityNotifier" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0 )
+aabb = AABB( -5.15336, -0.408731, -1, 10.3067, 0.817462, 2 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="screen_exited" from="VisibilityNotifier" to="." method="_on_VisibilityNotifier_screen_exited"]

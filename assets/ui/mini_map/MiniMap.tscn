@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/ui/mini_map/MiniMap.gd" type="Script" id=1]
+[ext_resource path="res://assets/ui/mini_map/border_no_transparent.png" type="Texture" id=2]
+[ext_resource path="res://assets/ui/mini_map/troop.png" type="Texture" id=3]
+[ext_resource path="res://assets/ui/mini_map/select_all.png" type="Texture" id=4]
+[ext_resource path="res://addons/Godot-Touch-Input-Manager/InputManager.gd" type="Script" id=7]
+
+[node name="MiniMap" type="MarginContainer"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_right = 200.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 200, 200 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Frame" type="NinePatchRect" parent="."]
+margin_right = 200.0
+margin_bottom = 200.0
+texture = ExtResource( 2 )
+region_rect = Rect2( -23, -28.0102, 529, 392.01 )
+patch_margin_left = 82
+patch_margin_top = 73
+patch_margin_right = 62
+patch_margin_bottom = 51
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_right = 200.0
+margin_bottom = 200.0
+mouse_filter = 2
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+
+[node name="Grid" type="ColorRect" parent="MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 190.0
+margin_bottom = 190.0
+mouse_filter = 2
+color = Color( 0.188235, 0.188235, 0.188235, 0.733333 )
+
+[node name="TroopMarker" type="Sprite" parent="MarginContainer/Grid"]
+visible = false
+texture = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="MarginContainer/Grid/TroopMarker"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+
+[node name="Camera" type="Sprite" parent="MarginContainer/Grid"]
+position = Vector2( 89.2929, 113.636 )
+texture = ExtResource( 4 )
+
+[node name="input_detection" type="Node" parent="."]
+script = ExtResource( 7 )
+
+[connection signal="gui_input" from="." to="." method="_on_MiniMap_gui_input"]
