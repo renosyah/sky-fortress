@@ -1,12 +1,13 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scene/weapons/controlled/biplane/biplane.gd" type="Script" id=1]
 [ext_resource path="res://scene/ships/carrier/bridge.png" type="Texture" id=2]
-[ext_resource path="res://assets/other/prop/prop.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scene/weapons/controlled/biplane/prop.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scene/weapons/controlled/biplane/bottom_wing.png" type="Texture" id=4]
 [ext_resource path="res://scene/weapons/controlled/biplane/top_wing.png" type="Texture" id=5]
 [ext_resource path="res://scene/weapons/controlled/biplane/fusselages.png" type="Texture" id=6]
 [ext_resource path="res://assets/mg-firing/mg_firing.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scene/weapons/controlled/biplane/tag.png" type="Texture" id=8]
 
 [sub_resource type="SphereShape" id=4]
 radius = 0.75931
@@ -17,45 +18,50 @@ radius = 1.35619
 [node name="biplane" type="KinematicBody"]
 script = ExtResource( 1 )
 
-[node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0185437 )
-shape = SubResource( 4 )
+[node name="Pivot" type="Spatial" parent="."]
 
-[node name="mg_firing" parent="." instance=ExtResource( 7 )]
-transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -0.021432, -0.112582, -1.17486 )
+[node name="mg_firing" parent="Pivot" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.021432, -0.112582, -1.00782 )
 
-[node name="prop" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.106425, -0.874288 )
+[node name="mg_firing2" parent="Pivot/mg_firing" instance=ExtResource( 7 )]
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 4.65661e-10, 0, -0.010596 )
 
-[node name="body" type="Sprite3D" parent="."]
+[node name="prop" parent="Pivot" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00060606, -0.135123, -0.834402 )
+
+[node name="body" type="Sprite3D" parent="Pivot"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
 alpha_cut = 2
 texture = ExtResource( 6 )
 
-[node name="body2" type="Sprite3D" parent="."]
+[node name="body2" type="Sprite3D" parent="Pivot"]
 transform = Transform( -4.37114e-08, 0, 1, -0.413889, 0.00210936, -1.80917e-08, -0.00144515, -0.283562, -6.31697e-11, 0.470206, -0.0503014, -0.468981 )
 alpha_cut = 2
 texture = ExtResource( 2 )
 
-[node name="body3" type="Sprite3D" parent="."]
+[node name="body3" type="Sprite3D" parent="Pivot"]
 transform = Transform( -4.37114e-08, 0, 1, -0.413889, 0.00210936, -1.80917e-08, -0.00144515, -0.283562, -6.31697e-11, -0.532496, -0.0503014, -0.468981 )
 alpha_cut = 2
 texture = ExtResource( 2 )
 
-[node name="bottom_wing" type="Sprite3D" parent="."]
+[node name="bottom_wing" type="Sprite3D" parent="Pivot"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.0124048, -0.255494, -0.366166 )
 alpha_cut = 2
 texture = ExtResource( 4 )
 
-[node name="tail" type="Sprite3D" parent="."]
+[node name="tail" type="Sprite3D" parent="Pivot"]
 transform = Transform( 0.644664, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.0124048, -0.0122173, 0.678103 )
 alpha_cut = 2
 texture = ExtResource( 2 )
 
-[node name="top_wing" type="Sprite3D" parent="."]
+[node name="top_wing" type="Sprite3D" parent="Pivot"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.0124048, 0.146199, -0.511959 )
 alpha_cut = 2
 texture = ExtResource( 5 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0185437 )
+shape = SubResource( 4 )
 
 [node name="UpdateCourse" type="Timer" parent="."]
 wait_time = 2.0
@@ -65,14 +71,22 @@ autostart = true
 wait_time = 0.8
 one_shot = true
 
-[node name="MissionTime" type="Timer" parent="."]
+[node name="Fuel" type="Timer" parent="."]
 one_shot = true
+
+[node name="tag" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.402617, 0, 0, 0, 0.860592, 0, 1.2, 0 )
+modulate = Color( 1, 0, 0, 1 )
+billboard = 1
+texture = ExtResource( 8 )
 
 [node name="Area" type="Area" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
 shape = SubResource( 3 )
 
+[node name="Tween" type="Tween" parent="."]
+
 [connection signal="timeout" from="UpdateCourse" to="." method="_on_UpdateCourse_timeout"]
-[connection signal="timeout" from="MissionTime" to="." method="_on_MissionTime_timeout"]
 [connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]

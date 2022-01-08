@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/ui/battle-scene/ui.gd" type="Script" id=1]
-[ext_resource path="res://assets/ui/bar/bar_empty.png" type="Texture" id=2]
-[ext_resource path="res://assets/ui/bar/bar.png" type="Texture" id=3]
+[ext_resource path="res://assets/ui/bar/hp_bar.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/ui/deadscreen/deadscreen.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/ui/mini_map/MiniMap.tscn" type="PackedScene" id=5]
 
@@ -56,9 +55,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -198.5
+margin_left = -269.5
 margin_top = -135.0
-margin_right = 201.5
+margin_right = 264.5
 margin_bottom = -20.0
 rect_min_size = Vector2( 400, 115 )
 alignment = 1
@@ -67,8 +66,9 @@ __meta__ = {
 }
 
 [node name="cannon" type="Button" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
-margin_right = 86.0
+margin_right = 120.0
 margin_bottom = 115.0
+rect_min_size = Vector2( 120, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Cannon"
@@ -77,15 +77,16 @@ __meta__ = {
 }
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
-margin_left = 90.0
-margin_right = 100.0
+margin_left = 124.0
+margin_right = 134.0
 margin_bottom = 115.0
 rect_min_size = Vector2( 10, 0 )
 
 [node name="guided" type="Button" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
-margin_left = 104.0
-margin_right = 191.0
+margin_left = 138.0
+margin_right = 258.0
 margin_bottom = 115.0
+rect_min_size = Vector2( 120, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Guided"
@@ -94,15 +95,16 @@ __meta__ = {
 }
 
 [node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
-margin_left = 195.0
-margin_right = 205.0
+margin_left = 262.0
+margin_right = 272.0
 margin_bottom = 115.0
 rect_min_size = Vector2( 10, 0 )
 
 [node name="lock_on" type="Button" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
-margin_left = 209.0
-margin_right = 295.0
+margin_left = 276.0
+margin_right = 396.0
 margin_bottom = 115.0
+rect_min_size = Vector2( 120, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Lock on"
@@ -111,15 +113,16 @@ __meta__ = {
 }
 
 [node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
-margin_left = 299.0
-margin_right = 309.0
+margin_left = 400.0
+margin_right = 410.0
 margin_bottom = 115.0
 rect_min_size = Vector2( 10, 0 )
 
 [node name="plane" type="Button" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
-margin_left = 313.0
-margin_right = 400.0
+margin_left = 414.0
+margin_right = 534.0
 margin_bottom = 115.0
+rect_min_size = Vector2( 120, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Plane"
@@ -127,22 +130,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="hp_bar" type="TextureProgress" parent="CanvasLayer/Control2/Control/mid"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -249.5
-margin_top = 10.0
-margin_right = 250.5
-margin_bottom = 34.0
-max_value = 1000.0
-value = 1000.0
-texture_under = ExtResource( 2 )
-texture_progress = ExtResource( 3 )
-tint_progress = Color( 0.14902, 1, 0, 1 )
-nine_patch_stretch = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="hp_bar" parent="CanvasLayer/Control2/Control/mid" instance=ExtResource( 2 )]
 
 [node name="right" type="Control" parent="CanvasLayer/Control2/Control"]
 margin_left = 685.0

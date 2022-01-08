@@ -1,5 +1,8 @@
 extends KinematicBody
 
+const MINIMAP_MARKER = "weapon"
+var MINIMAP_COLOR = Color.white
+
 var damage = 20.0
 var speed = 5.0
 

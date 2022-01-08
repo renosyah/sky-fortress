@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/cant_click.wav-2d290cd0c03cbf711fdd55e183819733.sample"
+
+[deps]
+
+source_file="res://assets/sounds/cant_click.wav"
+dest_files=[ "res://.import/cant_click.wav-2d290cd0c03cbf711fdd55e183819733.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

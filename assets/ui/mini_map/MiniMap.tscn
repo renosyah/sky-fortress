@@ -52,6 +52,15 @@ visible = false
 margin_right = 40.0
 margin_bottom = 14.0
 
+[node name="WeaponMarker" type="Sprite" parent="MarginContainer/Grid"]
+visible = false
+texture = ExtResource( 3 )
+
+[node name="Label2" type="Label" parent="MarginContainer/Grid/WeaponMarker"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+
 [node name="Camera" type="Sprite" parent="MarginContainer/Grid"]
 position = Vector2( 89.2929, 113.636 )
 texture = ExtResource( 4 )

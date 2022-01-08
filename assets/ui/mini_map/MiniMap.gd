@@ -6,6 +6,8 @@ signal on_minimap_click()
 const NORMAL = "NORMAL_MINIMAP"
 const EXPAND = "EXPAND_MINIMAP"
 
+const DIMESION_MULTIPLIER = 50.0
+
 var camera : Spatial  # If this is null, the map will not function.
 var zoom = 2.5 # Scale multiplier.
 
@@ -15,11 +17,13 @@ onready var frame = $Frame
 onready var camera_marker = $MarginContainer/Grid/Camera
 onready var troop_marker = $MarginContainer/Grid/TroopMarker
 onready var input_detection = $input_detection
+onready var weapon_marker = $MarginContainer/Grid/WeaponMarker
 
 # Link object icon setting to Sprite marker.
 onready var icons = {
 	"camera": camera_marker,
 	"troop": troop_marker,
+	"weapon" : weapon_marker
 }
 
 var mode = NORMAL
@@ -56,16 +60,23 @@ func _process(_delta):
 	
 	for item in markers.keys():
 		if is_instance_valid(item):
-			var obj_pos = (Vector2(item.translation.x,item.translation.z)*10 - Vector2(camera.translation.x,camera.translation.z)*10) * grid_scale + grid.rect_size / 2
+			var obj_pos = (Vector2(item.translation.x,item.translation.z) * DIMESION_MULTIPLIER   - Vector2(camera.translation.x,camera.translation.z) * DIMESION_MULTIPLIER) * grid_scale + grid.rect_size / 2
 			
 			# If marker is outside grid, hide or shrink it.
 			if grid.get_rect().has_point(obj_pos + grid.rect_position):
 				markers[item].get_child(0).visible = false
 				
-				markers[item].scale = Vector2(2, 2) / Vector2(zoom, zoom) 
-				if mode == EXPAND:
-					markers[item].scale = Vector2(1, 1)
-					markers[item].get_child(0).visible = true
+				if item.MINIMAP_MARKER == "troop":
+					markers[item].scale = Vector2(2, 2) / Vector2(zoom, zoom) 
+					if mode == EXPAND:
+						markers[item].scale = Vector2(2, 2)
+						markers[item].get_child(0).visible = true
+						
+				elif item.MINIMAP_MARKER == "weapon":
+					markers[item].scale = Vector2(1, 1) / Vector2(zoom, zoom) 
+					if mode == EXPAND:
+						markers[item].scale = Vector2(1, 1)
+						markers[item].get_child(0).visible = true
 						
 				markers[item].modulate.a = 1.0
 				markers[item].show()
@@ -87,6 +98,8 @@ func _process(_delta):
 			obj_pos.y = clamp(obj_pos.y, 0, grid.rect_size.y)
 			markers[item].position = obj_pos
 			markers[item].visible = item.visible
+		else:
+			remove_object(item)
 		
 func add_object(object):
 	var new_marker = icons[object.MINIMAP_MARKER].duplicate()

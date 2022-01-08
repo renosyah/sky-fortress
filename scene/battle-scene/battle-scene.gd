@@ -1,6 +1,9 @@
 extends Node
 
-const HOSTILE_SHIP = preload("res://scene/ships/carrier/carrier.tscn")
+const HOSTILE_SHIPS = [
+	preload("res://scene/ships/cruiser/cruiser.tscn"),
+	preload("res://scene/ships/carrier/carrier.tscn")
+]
 const MAX_HOSTILE = 5
 
 onready var _terrain = $terrain
@@ -12,7 +15,14 @@ var is_aiming = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$player.MINIMAP_COLOR = Color.green
 	$player.show_hp_bar(false)
+	$player.set_hp_bar_color(Color.green)
+	$player.weapons.clear()
+	for i in Weapon.TEMPLATES:
+		$player.weapons.append(i.duplicate())
+	$player.make_ready()
+	
 	_ui.add_minimap_object($player)
 	_ui.set_camera(_camera)
 	_terrain.generate()
@@ -62,13 +72,12 @@ func _on_enemy_decision_timer_timeout():
 	
 	var target = targets[randi() % targets.size()]
 	
-	if randf() < 0.8:
+	if randf() < 0.8 and targets.size() >= 5:
 		bot.aim_point = target.translation
 		bot.guided_point = target
 		bot.lock_on_point = target
-		bot.shot(rand_range(0,3))
+		bot.shot(rand_range(0,bot.weapons.size()))
 		
-	
 	
 func _on_enemy_spawning_timer_timeout():
 	var bots_count = $bot_holder.get_child_count()
@@ -79,22 +88,23 @@ func _on_enemy_spawning_timer_timeout():
 		return
 		
 	var spawn_pos = _terrain.cloud_spawn_points[randi() % _terrain.cloud_spawn_points.size()]
-
-	var ship = HOSTILE_SHIP.instance()
+	
+	var ship = HOSTILE_SHIPS[randi() % HOSTILE_SHIPS.size()].instance()
 	$bot_holder.add_child(ship)
 	ship.translation = spawn_pos
 	ship.translation.y = Ship.DEFAULT_ALTITUDE
+	ship.weapons.clear()
+	for i in Weapon.TEMPLATES:
+		ship.weapons.append(i.duplicate())
+	ship.MINIMAP_COLOR = Color.red
 	ship.show_hp_bar(true)
 	ship.set_hp_bar_color(Color.red)
 	ship.connect("on_destroyed", self, "_on_enemy_on_destroyed")
+	ship.connect("on_spawning_weapon", self, "_on_player_on_spawning_weapon")
 	_ui.add_minimap_object(ship)
 	
 func _on_enemy_on_destroyed(_node):
 	_ui.remove_minimap_object(_node)
-	var explosive = preload("res://assets/explosive/explosive.tscn").instance()
-	add_child(explosive)
-	explosive.translation = _node.translation
-	explosive.scale = Vector3.ONE * 10
 	_node.queue_free()
 	
 	
@@ -108,13 +118,7 @@ func _on_player_on_move(_node, _translation):
 	
 # camera and amining tes
 func _on_cameraPivot_on_body_exit_aim_sight(body):
-	if not body is KinematicBody:
-		return
-		
-	if body == $player:
-		return
-		
-	$player.lock_on_point = null
+	pass
 	
 func _on_cameraPivot_on_body_enter_aim_sight(body):
 	if not body is KinematicBody:
@@ -131,10 +135,12 @@ func _on_ui_on_respawn_click():
 	var pos = _terrain.feature_translations[randi() % _terrain.feature_translations.size()]
 	$player.destroyed = false
 	$player.hp = $player.max_hp
+	$player.weapons.clear()
+	for i in Weapon.TEMPLATES:
+		$player.weapons.append(i.duplicate())
 	$player.translation = pos
 	$player.translation.y = Ship.DEFAULT_ALTITUDE
 	$player.make_ready()
-
-
-
-
+	
+func _on_player_on_spawning_weapon(_node):
+	_ui.add_minimap_object(_node)

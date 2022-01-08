@@ -1,59 +1,58 @@
 extends Ship
 
-const MAX_PART_DAMAGE = 10
+const MAX_PART_DAMAGE = 7
 
 onready var _part = $pivot
 onready var _tween = $Tween
 onready var _hp_bar = $hpBar
-onready var _viewport_hp_bar = $hpBar/Viewport
-onready var _2d_hp_bar = $hpBar/Viewport/TextureProgress
+onready var _audio = $AudioStreamPlayer3D
 
 func make_ready():
+	.make_ready()
 	_ready()
-	emit_signal("on_ready", self)
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	._ready()
+	cruise_speed = 4.0
+	turn_speed = 1.5
+	
 	for i in _part.get_children():
 		i.visible = true
 		
-	_2d_hp_bar.max_value = max_hp
-	_2d_hp_bar.value = hp
-	_hp_bar.texture = _viewport_hp_bar.get_texture()
+	update_hp_bar()
 	
 func set_hp_bar_color(_color : Color):
-	_2d_hp_bar.tint_progress = _color
+	.set_hp_bar_color(_color)
+	_hp_bar.set_hp_bar_color(_color)
 	
 func show_hp_bar(_show : bool):
+	.show_hp_bar(_show)
 	_hp_bar.visible = _show
 	
 func take_damage(damage):
+	.take_damage(damage)
+	
 	if destroyed:
 		return
-		
-	hp -= damage
-	if hp < 0.0:
-		destroy()
-		
-	_2d_hp_bar.max_value = max_hp
-	_2d_hp_bar.value = hp
+	
+	update_hp_bar()
 	
 	if damage > 15.0:
 		_damage_random_part()
 	
-	emit_signal("on_take_damage", self, damage , hp)
-	
 func destroy():
+	.destroy()
 	_hp_bar.visible = false
-	destroyed = true
-	emit_signal("on_falling", self)
 	_tween.interpolate_property(self, "translation", translation, Vector3(translation.x, 1.0, translation.y), rand_range(4.0,8.0))
 	_tween.start()
 	
+func restock_ammo(weapon_slot, ammo_restock):
+	.restock_ammo(weapon_slot, ammo_restock)
+	
 func _on_Tween_tween_completed(object, key):
 	if str(key) == ":translation":
-		emit_signal("on_destroyed", self)
-	
+		.spawn_explosive_on_destroy()
 	
 func _damage_random_part():
 	var damage_part = 0
@@ -64,10 +63,14 @@ func _damage_random_part():
 			
 	if damage_part < MAX_PART_DAMAGE:
 		parts[randi() % parts.size()].visible = false
+	
+func play_sound(path : String):
+	.play_sound(path)
+#	_audio.stream = load(path)
+#	_audio.play()
 
-
-
-
-
+func update_hp_bar():
+	.update_hp_bar()
+	_hp_bar.update_bar(hp,max_hp)
 
 

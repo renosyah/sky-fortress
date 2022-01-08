@@ -39,14 +39,12 @@ func _on_cannon_pressed():
 	
 	
 func _on_player_on_take_damage(_node, damage, hp):
-	$CanvasLayer/Control2/Control/mid/hp_bar.max_value = _node.max_hp
-	$CanvasLayer/Control2/Control/mid/hp_bar.value = hp
+	$CanvasLayer/Control2/Control/mid/hp_bar.update_bar(hp, _node.max_hp)
 	
 func _on_player_on_ready(_node):
 	$CanvasLayer/Control2/Control.visible = true
 	$CanvasLayer/Control2/deadscreen.visible = false
-	$CanvasLayer/Control2/Control/mid/hp_bar.max_value = _node.max_hp
-	$CanvasLayer/Control2/Control/mid/hp_bar.value = _node.hp
+	$CanvasLayer/Control2/Control/mid/hp_bar.update_bar(_node.hp, _node.max_hp)
 	
 func _on_player_on_destroyed(_node):
 	$CanvasLayer/Control2/Control.visible = false
@@ -63,8 +61,14 @@ func _on_player_on_falling(_node):
 	_on_aim_toggled(false)
 	$CanvasLayer/Control2/Control.visible = false
 	
-
-
-
-
-
+	
+func _on_player_on_weapon_update(_node, weapon_index, _weapon):
+	if weapon_index == 0:
+		$CanvasLayer/Control2/Control/mid/HBoxContainer/cannon.text = "Cannon (" + str(_weapon.ammo) + "/" + str(_weapon.max_ammo) + ")"
+	elif weapon_index == 1:
+		$CanvasLayer/Control2/Control/mid/HBoxContainer/guided.text = "Guided (" + str(_weapon.ammo) + "/" + str(_weapon.max_ammo) + ")"
+	elif weapon_index == 2:
+		$CanvasLayer/Control2/Control/mid/HBoxContainer/lock_on.text = "Lock-On (" +  str(_weapon.ammo) + "/" + str(_weapon.max_ammo) + ")"
+	elif weapon_index == 3:
+		$CanvasLayer/Control2/Control/mid/HBoxContainer/plane.text = "Plane (" +  str(_weapon.ammo) + "/" + str(_weapon.max_ammo) + ")"
+	
