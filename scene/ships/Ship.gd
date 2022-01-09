@@ -199,11 +199,12 @@ func _process(delta):
 	var distance_to_target = 0.0
 	
 	if waypoint:
+		waypoint.y = DEFAULT_ALTITUDE
 		direction = translation.direction_to(waypoint)
 		distance_to_target = translation.distance_to(waypoint)
 		
 		if distance_to_target > 1.0:
-			velocity = Vector3(direction.x, 0.0, direction.z) * cruise_speed
+			velocity = Vector3(direction.x, 0.0 , direction.z) * cruise_speed
 			var new_transform = transform.looking_at((Vector3(waypoint.x , translation.y, waypoint.z)), Vector3.UP)
 			transform = transform.interpolate_with(new_transform, turn_speed * delta)
 			emit_signal("on_move",self, translation)

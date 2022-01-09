@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "KinematicBody",
+"class": "AirPlane",
+"language": "GDScript",
+"path": "res://scene/weapons/controlled/AirPlane.gd"
+}, {
+"base": "KinematicBody",
 "class": "Fort",
 "language": "GDScript",
 "path": "res://scene/fort/Fort.gd"
@@ -90,6 +95,7 @@ _global_script_classes=[ {
 "path": "res://scene/weapons/weapon.gd"
 } ]
 _global_script_class_icons={
+"AirPlane": "",
 "Fort": "",
 "GDUUID": "",
 "InputEventMultiScreenDrag": "",
@@ -111,7 +117,7 @@ _global_script_class_icons={
 [application]
 
 config/name="sky-fortress"
-run/main_scene="res://scene/battle-scene/battle-scene.tscn"
+run/main_scene="res://scene/battle-scene/battle_scene.tscn"
 config/icon="res://icon.png"
 
 [input]

@@ -1,12 +1,13 @@
 extends Node
 
-const HOSTILE_SHIPS = [
-	preload("res://scene/ships/cruiser/cruiser.tscn"),
-	preload("res://scene/ships/carrier/carrier.tscn")
-]
-const HOSTILE_INSTALATION = [
-	preload("res://scene/fort/aa-instalation/aa_instalation.tscn")
-]
+var HOSTILE_SHIPS = {
+	"res://scene/ships/cruiser/cruiser.tscn" : Weapon.CRUISER_TEMPLATES,
+	"res://scene/ships/carrier/carrier.tscn" : Weapon.CARRIER_TEMPLATES,
+}
+var HOSTILE_INSTALATION = {
+	"res://scene/fort/aa-instalation/aa_instalation.tscn" : Weapon.AA_FORT_TEMPLATE,
+	"res://scene/fort/airstrip/airstrip.tscn" : Weapon.CARRIER_TEMPLATES
+}
 
 const MAX_HOSTILE = 5
 const MAX_INSTALATION = 3
@@ -25,9 +26,11 @@ func _ready():
 	$player.MINIMAP_COLOR = Color.green
 	$player.show_hp_bar(false)
 	$player.set_hp_bar_color(Color.green)
+	
 	$player.weapons.clear()
-	for i in Weapon.PLAYER_TEMPLATES:
+	for i in Weapon.CARRIER_TEMPLATES:
 		$player.weapons.append(i.duplicate())
+		
 	$player.make_ready()
 	
 	_ui.add_minimap_object($player)
@@ -41,45 +44,64 @@ func _ready():
 		if forts_count >= MAX_HOSTILE:
 			return
 			
-		spawn_instalation(_pos.node_translation)
+		spawn_hostile_fort(_pos.node_translation)
 	
 # spawn instalation fort
-func spawn_instalation(_pos):
-	var fort = HOSTILE_INSTALATION[randi() % HOSTILE_INSTALATION.size()].instance()
+func spawn_hostile_fort(_pos):
+	var fort_data = HOSTILE_INSTALATION.keys()[randi() % HOSTILE_INSTALATION.keys().size()]
+	var fort = load(fort_data).instance()
+	var color = Color.orange #Color(randf(),randf(),randf(), 1)
+	
 	$instalation_holder.add_child(fort)
 	fort.translation = _pos
 	fort.translation.y = 1.0
+	
 	fort.weapons.clear()
-	fort.weapons.append({
-		name = "20MM",
-		damage = 5.0,
-		speed = 20.0,
-		type = Weapon.TYPE_UNGUIDED,
-		ammo_scene = "res://scene/weapons/un-guided/cannon-ball/cannon_ball.tscn",
-		min_range = 0.0,
-		max_range = 80.0,
-		ammo = 900,
-		max_ammo = 900
-	})
-	fort.weapons.append({
-		name = "H-S-M",
-		damage = 5.0,
-		speed = 5.0,
-		type = Weapon.TYPE_LOCK_ON,
-		ammo_scene = "res://scene/weapons/lock-on/lock-on-missile/lock_on_missile.tscn",
-		min_range = 0.0,
-		max_range = 70.0,
-		ammo = 15,
-		max_ammo = 15
-	})
-	fort.MINIMAP_COLOR = Color.orange
+	for i in HOSTILE_INSTALATION[fort_data]:
+		fort.weapons.append(i.duplicate())
+	
+	fort.MINIMAP_COLOR = color
 	fort.owner_id = str(GDUUID.v4())
 	fort.side = str(GDUUID.v4()) + "-side"
 	fort.show_hp_bar(true)
-	fort.set_hp_bar_color(Color.red)
+	fort.set_hp_bar_color(color)
 	fort.connect("on_destroyed", self, "_on_enemy_on_destroyed")
 	fort.connect("on_spawning_weapon", self, "_on_player_on_spawning_weapon")
 	_ui.add_minimap_object(fort)
+	
+	
+# spawn airship
+func spawn_hostile_airship():
+	var bots_count = $bot_holder.get_child_count()
+	if bots_count >= MAX_HOSTILE:
+		return
+		
+	if _terrain.cloud_spawn_points.empty():
+		return
+		
+	var spawn_pos = _terrain.cloud_spawn_points[randi() % _terrain.cloud_spawn_points.size()]
+	
+	var ship_data = HOSTILE_SHIPS.keys()[randi() % HOSTILE_SHIPS.keys().size()]
+	var ship = load(ship_data).instance()
+	var color = Color.red #Color(randf(),randf(),randf(), 1)
+	
+	$bot_holder.add_child(ship)
+	ship.translation = spawn_pos
+	ship.translation.y = Ship.DEFAULT_ALTITUDE
+	
+	ship.weapons.clear()
+	for i in HOSTILE_SHIPS[ship_data]:
+		ship.weapons.append(i.duplicate())
+		
+	ship.MINIMAP_COLOR = color
+	ship.owner_id = str(GDUUID.v4())
+	ship.side = str(GDUUID.v4()) + "-side"
+	ship.show_hp_bar(true)
+	ship.set_hp_bar_color(color)
+	ship.connect("on_destroyed", self, "_on_enemy_on_destroyed")
+	ship.connect("on_spawning_weapon", self, "_on_player_on_spawning_weapon")
+	_ui.add_minimap_object(ship)
+	
 	
 # test clicking ground
 func _on_terrain_on_ground_clicked(_translation):
@@ -160,30 +182,7 @@ func fort_bot():
 	
 	
 func _on_enemy_spawning_timer_timeout():
-	var bots_count = $bot_holder.get_child_count()
-	if bots_count >= MAX_HOSTILE:
-		return
-		
-	if _terrain.cloud_spawn_points.empty():
-		return
-		
-	var spawn_pos = _terrain.cloud_spawn_points[randi() % _terrain.cloud_spawn_points.size()]
-	
-	var ship = HOSTILE_SHIPS[randi() % HOSTILE_SHIPS.size()].instance()
-	$bot_holder.add_child(ship)
-	ship.translation = spawn_pos
-	ship.translation.y = Ship.DEFAULT_ALTITUDE
-	ship.weapons.clear()
-	for i in Weapon.TEMPLATES:
-		ship.weapons.append(i.duplicate())
-	ship.MINIMAP_COLOR = Color.red
-	ship.owner_id = str(GDUUID.v4())
-	ship.side = str(GDUUID.v4()) + "-side"
-	ship.show_hp_bar(true)
-	ship.set_hp_bar_color(Color.red)
-	ship.connect("on_destroyed", self, "_on_enemy_on_destroyed")
-	ship.connect("on_spawning_weapon", self, "_on_player_on_spawning_weapon")
-	_ui.add_minimap_object(ship)
+	spawn_hostile_airship()
 	
 	
 func _on_enemy_on_destroyed(_node):
@@ -222,12 +221,22 @@ func _on_ui_on_respawn_click():
 	var pos = _terrain.feature_translations[randi() % _terrain.feature_translations.size()]
 	$player.destroyed = false
 	$player.hp = $player.max_hp
+	
 	$player.weapons.clear()
-	for i in Weapon.PLAYER_TEMPLATES:
+	for i in Weapon.CARRIER_TEMPLATES:
 		$player.weapons.append(i.duplicate())
+		
 	$player.translation = pos
 	$player.translation.y = Ship.DEFAULT_ALTITUDE
 	$player.make_ready()
 	
 func _on_player_on_spawning_weapon(_node):
 	_ui.add_minimap_object(_node)
+
+
+
+
+
+
+
+

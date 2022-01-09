@@ -1,15 +1,17 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scene/fort/aa-instalation/simple_house.png" type="Texture" id=1]
 [ext_resource path="res://scene/fort/aa-instalation/wall.png" type="Texture" id=2]
 [ext_resource path="res://scene/fort/aa-instalation/turret.png" type="Texture" id=3]
-[ext_resource path="res://scene/fort/aa-instalation/aa_instalation.gd" type="Script" id=4]
+[ext_resource path="res://scene/fort/airstrip/airstrip.gd" type="Script" id=4]
 [ext_resource path="res://assets/ui/bar-3d/hp_bar_3d.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scene/fort/airstrip/tower.png" type="Texture" id=6]
+[ext_resource path="res://scene/fort/airstrip/flying_deck.png" type="Texture" id=7]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 3.75579, 1.65208, 2.93944 )
 
-[node name="aa_instalation" type="KinematicBody"]
+[node name="airstrip" type="KinematicBody"]
 input_ray_pickable = false
 script = ExtResource( 4 )
 
@@ -32,7 +34,7 @@ transform = Transform( 0.624916, 0.552033, -0.552033, 0, 0.707107, 0.707107, 0.7
 texture = ExtResource( 2 )
 
 [node name="wall5" type="Sprite3D" parent="pivot"]
-transform = Transform( 0.624916, 0.552033, -0.552033, 0, 0.707107, 0.707107, 0.780692, -0.441882, 0.441882, 2.8103, 0, -1.95908 )
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 3.0673, 0, -3.09028 )
 texture = ExtResource( 2 )
 
 [node name="wall3" type="Sprite3D" parent="pivot"]
@@ -40,19 +42,27 @@ transform = Transform( 0.624916, -0.552033, 0.552033, 0, 0.707107, 0.707107, -0.
 texture = ExtResource( 2 )
 
 [node name="wall4" type="Sprite3D" parent="pivot"]
-transform = Transform( 0.624916, -0.552033, 0.552033, 0, 0.707107, 0.707107, -0.780692, -0.441882, 0.441882, -2.80379, 0, -1.85601 )
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, -3.10137, -0.0344859, -3.13046 )
 texture = ExtResource( 2 )
 
+[node name="strip" type="Sprite3D" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.96289, -0.0344859, -1.42864 )
+texture = ExtResource( 7 )
+
+[node name="strip2" type="Sprite3D" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -3.02641, -0.0344859, -1.42864 )
+texture = ExtResource( 7 )
+
 [node name="house" type="Sprite3D" parent="pivot"]
-transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 1.01614, 0.32511, -0.331892 )
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 1.01614, 0.32511, 0.670739 )
 texture = ExtResource( 1 )
 
-[node name="turret" type="Sprite3D" parent="pivot"]
-transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, -1.76086, 0.32511, -0.990455 )
-texture = ExtResource( 3 )
+[node name="house2" type="Sprite3D" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 2.30578, 0.32511, -2.68856 )
+texture = ExtResource( 6 )
 
-[node name="turret2" type="Sprite3D" parent="pivot"]
-transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, -0.557164, 0.32511, 0.835998 )
+[node name="turret" type="Sprite3D" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, -1.13383, 0.32511, 0.294578 )
 texture = ExtResource( 3 )
 
 [node name="hpBar" parent="." instance=ExtResource( 5 )]
