@@ -20,7 +20,7 @@ __meta__ = {
 margin_right = 200.0
 margin_bottom = 200.0
 texture = ExtResource( 2 )
-region_rect = Rect2( -23, -28.0102, 529, 392.01 )
+region_rect = Rect2( -23, -22.5227, 529, 386.149 )
 patch_margin_left = 82
 patch_margin_top = 73
 patch_margin_right = 62
@@ -41,7 +41,7 @@ margin_top = 10.0
 margin_right = 190.0
 margin_bottom = 190.0
 mouse_filter = 2
-color = Color( 0.188235, 0.188235, 0.188235, 0.733333 )
+color = Color( 0.188235, 0.188235, 0.188235, 0.784314 )
 
 [node name="TroopMarker" type="Sprite" parent="MarginContainer/Grid"]
 visible = false

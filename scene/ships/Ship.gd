@@ -33,6 +33,8 @@ var hp = 100.0
 var max_hp = 100.0
 
 var tag_color = Color.white
+var owner_id = ""
+var side = ""
 
 func make_ready():
 	_ready()
@@ -97,13 +99,15 @@ func shot(weapon_index : int):
 		emit_signal("on_ready", self)
 		emit_signal("on_weapon_update", self, weapon_index, weapon)
 		return
-
+		
 		
 	var projectile = load(weapon.ammo_scene).instance()
 	projectile.damage = weapon.damage
 	projectile.speed = weapon.speed
-		
-		
+	projectile.owner_id = owner_id
+	projectile.side = side
+	projectile.tag_color = tag_color
+	
 	if weapon.type == Weapon.TYPE_UNGUIDED and aim_point:
 		var distance_to_target = translation.distance_to(aim_point)
 		if distance_to_target > weapon.max_range or distance_to_target < weapon.min_range:
@@ -157,6 +161,8 @@ func shot(weapon_index : int):
 		projectile.fuel = weapon.fuel
 		projectile.accuracy = weapon.accuracy
 		projectile.tag_color = tag_color
+		projectile.hp = weapon.hp
+		projectile.max_hp = weapon.max_hp
 		
 		add_child(projectile)
 		projectile.translation = translation + Vector3.ONE * rand_range(-3.0, 3.0)

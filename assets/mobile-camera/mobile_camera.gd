@@ -67,9 +67,12 @@ func _unhandled_input(event):
 				_camera.translation.z = new_zoom
 				last_drag_distance = drag_distance
 				
-	_aim.opacity = (((_camera.translation.z - min_zoom) * 100) / (max_zoom - min_zoom)) / 100.0
+	var _opacity = (((_camera.translation.z - min_zoom) * 100) / (max_zoom - min_zoom)) / 100.0
+	_aim.opacity = _opacity
+	if _opacity < 0.1:
+		_aim.opacity = 0.0
 		
-	emit_signal("on_camera_moving", translation, _aim.opacity)
+	emit_signal("on_camera_moving", translation, _opacity)
 		
 		
 		

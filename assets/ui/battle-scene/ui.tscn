@@ -50,24 +50,30 @@ margin_bottom = 600.0
 mouse_filter = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control2/Control/mid"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control2/Control/mid"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -269.5
-margin_top = -135.0
-margin_right = 264.5
-margin_bottom = -20.0
-rect_min_size = Vector2( 400, 115 )
+margin_left = -267.0
+margin_top = -174.0
+margin_right = 267.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control2/Control/mid/VBoxContainer"]
+margin_right = 534.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 400, 150 )
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="cannon" type="Button" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
+[node name="cannon" type="Button" parent="CanvasLayer/Control2/Control/mid/VBoxContainer/HBoxContainer"]
 margin_right = 120.0
-margin_bottom = 115.0
+margin_bottom = 150.0
 rect_min_size = Vector2( 120, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -76,16 +82,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/Control/mid/VBoxContainer/HBoxContainer"]
 margin_left = 124.0
 margin_right = 134.0
-margin_bottom = 115.0
+margin_bottom = 150.0
 rect_min_size = Vector2( 10, 0 )
 
-[node name="guided" type="Button" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
+[node name="guided" type="Button" parent="CanvasLayer/Control2/Control/mid/VBoxContainer/HBoxContainer"]
 margin_left = 138.0
 margin_right = 258.0
-margin_bottom = 115.0
+margin_bottom = 150.0
 rect_min_size = Vector2( 120, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -94,16 +100,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control2/Control/mid/VBoxContainer/HBoxContainer"]
 margin_left = 262.0
 margin_right = 272.0
-margin_bottom = 115.0
+margin_bottom = 150.0
 rect_min_size = Vector2( 10, 0 )
 
-[node name="lock_on" type="Button" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
+[node name="lock_on" type="Button" parent="CanvasLayer/Control2/Control/mid/VBoxContainer/HBoxContainer"]
 margin_left = 276.0
 margin_right = 396.0
-margin_bottom = 115.0
+margin_bottom = 150.0
 rect_min_size = Vector2( 120, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -112,16 +118,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
+[node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/Control2/Control/mid/VBoxContainer/HBoxContainer"]
 margin_left = 400.0
 margin_right = 410.0
-margin_bottom = 115.0
+margin_bottom = 150.0
 rect_min_size = Vector2( 10, 0 )
 
-[node name="plane" type="Button" parent="CanvasLayer/Control2/Control/mid/HBoxContainer"]
+[node name="plane" type="Button" parent="CanvasLayer/Control2/Control/mid/VBoxContainer/HBoxContainer"]
 margin_left = 414.0
 margin_right = 534.0
-margin_bottom = 115.0
+margin_bottom = 150.0
 rect_min_size = Vector2( 120, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -129,6 +135,12 @@ text = "Plane"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/Control/mid/VBoxContainer"]
+margin_top = 154.0
+margin_right = 534.0
+margin_bottom = 174.0
+rect_min_size = Vector2( 0, 20 )
 
 [node name="hp_bar" parent="CanvasLayer/Control2/Control/mid" instance=ExtResource( 2 )]
 
@@ -156,8 +168,8 @@ __meta__ = {
 }
 
 [connection signal="on_respawn_click" from="CanvasLayer/Control2/deadscreen" to="." method="_on_deadscreen_on_respawn_click"]
-[connection signal="pressed" from="CanvasLayer/Control2/Control/mid/HBoxContainer/cannon" to="." method="_on_cannon_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control2/Control/mid/HBoxContainer/guided" to="." method="_on_guided_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control2/Control/mid/HBoxContainer/lock_on" to="." method="_on_lock_on_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control2/Control/mid/HBoxContainer/plane" to="." method="_on_plane_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control2/Control/mid/VBoxContainer/HBoxContainer/cannon" to="." method="_on_cannon_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control2/Control/mid/VBoxContainer/HBoxContainer/guided" to="." method="_on_guided_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control2/Control/mid/VBoxContainer/HBoxContainer/lock_on" to="." method="_on_lock_on_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control2/Control/mid/VBoxContainer/HBoxContainer/plane" to="." method="_on_plane_pressed"]
 [connection signal="toggled" from="CanvasLayer/Control2/Control/right/aim" to="." method="_on_aim_toggled"]

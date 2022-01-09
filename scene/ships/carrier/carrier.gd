@@ -68,8 +68,8 @@ func _damage_random_part():
 	
 func play_sound(path : String):
 	.play_sound(path)
-	_audio.stream = load(path)
-	_audio.play()
+#	_audio.stream = load(path)
+#	_audio.play()
 	
 func update_hp_bar():
 	.update_hp_bar()

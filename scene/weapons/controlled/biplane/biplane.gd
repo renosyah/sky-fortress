@@ -11,6 +11,8 @@ onready var _tag = $tag
 onready var _tween = $Tween
 
 var tag_color = Color.white
+var owner_id = ""
+var side = ""
 
 var weapon_slot = 0
 var ammo_restock = 1
@@ -25,6 +27,8 @@ var _mission_over = false
 var _waypoint : Vector3
 var _target : Spatial
 
+var hp = 1.0
+var max_hp = 1.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -81,7 +85,7 @@ func _shot_bullet():
 func _update_course():
 	if is_instance_valid(_target):
 		while translation.distance_to(_waypoint) < 5.0:
-			_waypoint = Vector3.ONE * rand_range(-10.0, 10.0) + _target.translation
+			_waypoint = Vector3.ONE * rand_range(-12.0, 12.0) + _target.translation
 		
 	_waypoint.y = rand_range(8.0,20.0)
 
@@ -104,6 +108,10 @@ func _on_Area_body_entered(body):
 	queue_free()
 	
 func take_damage(damage):
+	hp -= damage
+	if hp > 0:
+		return
+		
 	set_process(false)
 	_mg_firing.visible = false
 	_tag.visible = false

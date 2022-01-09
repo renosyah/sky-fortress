@@ -45,12 +45,24 @@ const TEMPLATES = [
 		ranges = 10.0,
 		fuel = 45.0,
 		accuracy = 0.4,
+		hp = 5,
+		max_hp = 5,
 		type = TYPE_CONTROLLED,
 		ammo_scene = "res://scene/weapons/controlled/biplane/biplane.tscn",
 		min_range = 5.0,
 		max_range = 120.0,
 		ammo = 2,
 		max_ammo = 2
+	},
+	{
+		damage = 35.0,
+		speed = 0.0,
+		type = TYPE_UNGUIDED,
+		ammo_scene = "res://scene/weapons/un-guided/air-mine/air_mine.tscn",
+		min_range = 0.0,
+		max_range = 900.0,
+		ammo = 5,
+		max_ammo = 5
 	},
 #	{
 #		hp = 50.0,

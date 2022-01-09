@@ -1,5 +1,9 @@
 extends Spatial
 
+var tag_color = Color.white
+var owner_id = ""
+var side = ""
+
 var damage = 15.0
 var speed = 10.0
 var spread = 0.2

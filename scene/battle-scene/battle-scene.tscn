@@ -24,8 +24,17 @@ script = ExtResource( 6 )
 [node name="player" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0 )
 
-[node name="Sprite3D" type="Sprite3D" parent="player"]
-transform = Transform( 10, 0, 0, 0, -4.37114e-07, -10, 0, 10, -4.37114e-07, -0.0792354, -1.22112, -0.28034 )
+[node name="RemoteTransform" type="RemoteTransform" parent="player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+remote_path = NodePath("../../Spatial")
+update_rotation = false
+update_scale = false
+
+[node name="Spatial" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0 )
+
+[node name="Sprite3D" type="Sprite3D" parent="Spatial"]
+transform = Transform( 10, 0, 0, 0, -4.37114e-07, -10, 0, 10, -4.37114e-07, 0, -1, 0 )
 opacity = 0.5
 texture = ExtResource( 7 )
 
@@ -68,4 +77,3 @@ transform = Transform( 1, 0, 0, 0, 0.573576, 0.819152, 0, -0.819152, 0.573576, 0
 [connection signal="timeout" from="enemy_spawning_timer" to="." method="_on_enemy_spawning_timer_timeout"]
 [connection signal="on_ground_clicked" from="terrain" to="." method="_on_terrain_on_ground_clicked"]
 [connection signal="on_body_enter_aim_sight" from="cameraPivot" to="." method="_on_cameraPivot_on_body_enter_aim_sight"]
-[connection signal="on_body_exit_aim_sight" from="cameraPivot" to="." method="_on_cameraPivot_on_body_exit_aim_sight"]

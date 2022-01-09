@@ -8,8 +8,8 @@ const DENSITY = 0.2
 onready var _input_detection = $inputDetection
 	
 onready var _season_nodes = {
-	"summer" : $ground/season_1,
-	"winter" : $ground/season_2
+	"summer" : $ground/summer,
+	"winter" : $ground/winter
 }
 onready var _ground_textures = {
 	"summer" : Color(0.121569, 0.643137, 0.043137),
@@ -106,6 +106,9 @@ func _create_z_line_translations(_start_point : Vector3) -> Array:
 	
 	
 func _on_Timer_timeout():
+	if randf() < 0.5:
+		return
+		
 	randomize()
 	var p = cloud_spawn_points[randi() % cloud_spawn_points.size()]
 	var templates = _templates.get_children()

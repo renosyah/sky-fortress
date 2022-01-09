@@ -15,6 +15,8 @@ var is_aiming = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$player.owner_id = str(GDUUID.v4())
+	$player.side = "player"
 	$player.MINIMAP_COLOR = Color.green
 	$player.show_hp_bar(false)
 	$player.set_hp_bar_color(Color.green)
@@ -97,6 +99,8 @@ func _on_enemy_spawning_timer_timeout():
 	for i in Weapon.TEMPLATES:
 		ship.weapons.append(i.duplicate())
 	ship.MINIMAP_COLOR = Color.red
+	ship.owner_id = str(GDUUID.v4())
+	ship.side = str(GDUUID.v4()) + "-side"
 	ship.show_hp_bar(true)
 	ship.set_hp_bar_color(Color.red)
 	ship.connect("on_destroyed", self, "_on_enemy_on_destroyed")
@@ -115,11 +119,7 @@ func _on_player_on_move(_node, _translation):
 	if not is_aiming:
 		_camera.translation = _translation
 	
-	
 # camera and amining tes
-func _on_cameraPivot_on_body_exit_aim_sight(body):
-	pass
-	
 func _on_cameraPivot_on_body_enter_aim_sight(body):
 	if not body is KinematicBody:
 		return
@@ -127,6 +127,9 @@ func _on_cameraPivot_on_body_enter_aim_sight(body):
 	if body == $player:
 		return
 		
+	if body.owner_id == $player.owner_id:
+		return
+	
 	$player.lock_on_point = body
 	
 	

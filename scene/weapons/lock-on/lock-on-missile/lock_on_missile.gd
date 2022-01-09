@@ -3,6 +3,10 @@ extends KinematicBody
 const MINIMAP_MARKER = "weapon"
 var MINIMAP_COLOR = Color.white
 
+var tag_color = Color.white
+var owner_id = ""
+var side = ""
+
 var damage = 20.0
 var speed = 5.0
 
@@ -40,6 +44,9 @@ func _on_Area_body_entered(body):
 		return
 		
 	if not body is KinematicBody:
+		return
+		
+	if body.owner_id == owner_id or body.side == side:
 		return
 		
 	if body.has_method("take_damage"):
