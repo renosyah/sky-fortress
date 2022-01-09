@@ -19,7 +19,6 @@ func _process(delta):
 	
 func lauching_at(to: Vector3):
 	_velocity = translation.direction_to(to)
-	_velocity.y = 0.0
 	_velocity.z += rand_range(-spread, spread)
 	_velocity.x += rand_range(-spread, spread)
 	

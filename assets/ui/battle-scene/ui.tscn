@@ -161,7 +161,6 @@ margin_top = -85.0
 margin_right = -16.0
 margin_bottom = -27.0
 size_flags_vertical = 3
-toggle_mode = true
 text = "Aim"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -172,4 +171,5 @@ __meta__ = {
 [connection signal="pressed" from="CanvasLayer/Control2/Control/mid/VBoxContainer/HBoxContainer/guided" to="." method="_on_guided_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control2/Control/mid/VBoxContainer/HBoxContainer/lock_on" to="." method="_on_lock_on_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control2/Control/mid/VBoxContainer/HBoxContainer/plane" to="." method="_on_plane_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control2/Control/right/aim" to="." method="_on_aim_pressed"]
 [connection signal="toggled" from="CanvasLayer/Control2/Control/right/aim" to="." method="_on_aim_toggled"]

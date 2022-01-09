@@ -108,8 +108,9 @@ func add_object(object):
 	new_marker.show()
 	new_marker.self_modulate = Color(object.MINIMAP_COLOR)
 	markers[object] = new_marker
-		
-		
+	#markers[object].get_child(0).text = object.player_name
+	
+	
 func remove_object(object):
 	if object in markers:
 		markers[object].queue_free()

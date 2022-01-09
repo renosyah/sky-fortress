@@ -48,7 +48,6 @@ visible = false
 texture = ExtResource( 3 )
 
 [node name="Label" type="Label" parent="MarginContainer/Grid/TroopMarker"]
-visible = false
 margin_right = 40.0
 margin_bottom = 14.0
 
@@ -57,7 +56,6 @@ visible = false
 texture = ExtResource( 3 )
 
 [node name="Label2" type="Label" parent="MarginContainer/Grid/WeaponMarker"]
-visible = false
 margin_right = 40.0
 margin_bottom = 14.0
 

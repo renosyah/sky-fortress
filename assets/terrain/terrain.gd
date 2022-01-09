@@ -23,6 +23,7 @@ onready var _cloud_holder = $sky/cloudHolder
 var cloud_spawn_points = []
 var _click_translation = Vector3.ZERO
 
+var unused_translations = []
 var feature_translations = []
 var features = []
 var season : String = ""
@@ -39,8 +40,10 @@ func generate():
 	
 	if features.empty():
 		feature_translations = _create_box_shape_translations(Vector3.ZERO, 150)
-		features = _generate_new_terrain_features(feature_translations, _season_nodes[season])
-	
+		var _generated_translation = _generate_new_terrain_features(feature_translations, _season_nodes[season])
+		features = _generated_translation.feature_data
+		unused_translations = _generated_translation.unsused_data
+		
 	_generate_terrain_features(features, _season_nodes[season])
 	_set_ground_texture()
 	_generate_cloud_translations()
@@ -63,23 +66,32 @@ func _generate_terrain_features(_feature_data : Array, _season : Spatial):
 		_feature.translate(i.node_translation)
 		_feature_holder.add_child(_feature)
 	
-func _generate_new_terrain_features(_box_shape_translations : Array, _season : Spatial) -> Array:
-	var _feature_data = []
+func _generate_new_terrain_features(_box_shape_translations : Array, _season : Spatial) -> Dictionary:
+	var _data = {
+		unsused_data = [],
+		feature_data = []
+	}
+		
 	if _season.get_children().empty():
-		return _feature_data
+		return _data
 		
 	var _features = _season.get_children()
 	for p in _box_shape_translations:
+		var _node_translation = Vector3(rand_range(p.x - 5.0,p.x + 5.0), 0 ,rand_range(p.z - 5.0,p.z + 5.0))
 		if randf() < DENSITY:
 			randomize()
 			var _node_name = _features[randi() % _features.size()].name
-			var _node_translation = Vector3(rand_range(p.x - 5.0,p.x + 5.0), 0 ,rand_range(p.z - 5.0,p.z + 5.0))
-			_feature_data.append({
+			_data.feature_data.append({
 				"node_name" : _node_name,
 				"node_translation" : _node_translation
 			})
+		else:
+			_data.unsused_data.append({
+				"node_name" : "",
+				"node_translation" : _node_translation
+			})
 			
-	return _feature_data
+	return _data
 	
 	
 	

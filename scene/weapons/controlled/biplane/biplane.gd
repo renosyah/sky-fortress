@@ -117,6 +117,7 @@ func take_damage(damage):
 	_tag.visible = false
 	var _down = Vector3(translation.x, 1.0, translation.y)
 	look_at(_down, Vector3.UP)
+	_tween.interpolate_property(_pivot, "rotation", _pivot.rotation,  Vector3(0,0,120), rand_range(4.0,6.0))
 	_tween.interpolate_property(self, "translation", translation, _down, rand_range(2.0,4.0))
 	_tween.start()
 	

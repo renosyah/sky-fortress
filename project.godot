@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody",
+"class": "Fort",
+"language": "GDScript",
+"path": "res://scene/fort/Fort.gd"
+}, {
 "base": "Node",
 "class": "GDUUID",
 "language": "GDScript",
@@ -85,6 +90,7 @@ _global_script_classes=[ {
 "path": "res://scene/weapons/weapon.gd"
 } ]
 _global_script_class_icons={
+"Fort": "",
 "GDUUID": "",
 "InputEventMultiScreenDrag": "",
 "InputEventScreenPinch": "",

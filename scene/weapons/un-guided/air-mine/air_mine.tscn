@@ -7,8 +7,8 @@
 [ext_resource path="res://scene/weapons/controlled/biplane/tag.png" type="Texture" id=5]
 
 [sub_resource type="CylinderShape" id=4]
-radius = 0.658857
-height = 1.86242
+radius = 1.11692
+height = 2.63027
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -47,7 +47,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
 script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.49181, 0 )
 shape = SubResource( 4 )
 
 [node name="pivot" type="Spatial" parent="."]

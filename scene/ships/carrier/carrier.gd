@@ -49,7 +49,7 @@ func destroy():
 	
 func restock_ammo(weapon_slot, ammo_restock):
 	.restock_ammo(weapon_slot, ammo_restock)
-
+	
 func _on_Tween_tween_completed(object, key):
 	if str(key) == ":translation":
 		.spawn_explosive_on_destroy()

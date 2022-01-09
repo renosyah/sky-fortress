@@ -80,7 +80,7 @@ func shot(weapon_index : int):
 		
 	if weapons.empty():
 		return
-		
+	
 	var weapon = weapons[weapon_index]
 	
 	emit_signal("on_weapon_update", self, weapon_index, weapon)
@@ -109,7 +109,11 @@ func shot(weapon_index : int):
 	projectile.tag_color = tag_color
 	
 	if weapon.type == Weapon.TYPE_UNGUIDED and aim_point:
-		var distance_to_target = translation.distance_to(aim_point)
+		var _aim_at = aim_point
+		if is_instance_valid(lock_on_point):
+			_aim_at = lock_on_point.translation
+			
+		var distance_to_target = translation.distance_to(_aim_at)
 		if distance_to_target > weapon.max_range or distance_to_target < weapon.min_range:
 			return
 			
@@ -117,7 +121,8 @@ func shot(weapon_index : int):
 			
 		add_child(projectile)
 		projectile.translation = translation
-		projectile.lauching_at(aim_point)
+		projectile.lauching_at(_aim_at)
+		
 		play_sound("res://assets/sounds/cannon.wav")
 		
 	if weapon.type == Weapon.TYPE_GUIDED and is_instance_valid(guided_point):

@@ -4,7 +4,12 @@ const HOSTILE_SHIPS = [
 	preload("res://scene/ships/cruiser/cruiser.tscn"),
 	preload("res://scene/ships/carrier/carrier.tscn")
 ]
+const HOSTILE_INSTALATION = [
+	preload("res://scene/fort/aa-instalation/aa_instalation.tscn")
+]
+
 const MAX_HOSTILE = 5
+const MAX_INSTALATION = 3
 
 onready var _terrain = $terrain
 onready var _camera = $cameraPivot
@@ -21,7 +26,7 @@ func _ready():
 	$player.show_hp_bar(false)
 	$player.set_hp_bar_color(Color.green)
 	$player.weapons.clear()
-	for i in Weapon.TEMPLATES:
+	for i in Weapon.PLAYER_TEMPLATES:
 		$player.weapons.append(i.duplicate())
 	$player.make_ready()
 	
@@ -29,8 +34,52 @@ func _ready():
 	_ui.set_camera(_camera)
 	_terrain.generate()
 	_on_enemy_decision_timer_timeout()
+		
+	_terrain.unused_translations.shuffle()
+	for _pos in _terrain.unused_translations:
+		var forts_count = $instalation_holder.get_child_count()
+		if forts_count >= MAX_HOSTILE:
+			return
+			
+		spawn_instalation(_pos.node_translation)
 	
-	
+# spawn instalation fort
+func spawn_instalation(_pos):
+	var fort = HOSTILE_INSTALATION[randi() % HOSTILE_INSTALATION.size()].instance()
+	$instalation_holder.add_child(fort)
+	fort.translation = _pos
+	fort.translation.y = 1.0
+	fort.weapons.clear()
+	fort.weapons.append({
+		name = "20MM",
+		damage = 5.0,
+		speed = 20.0,
+		type = Weapon.TYPE_UNGUIDED,
+		ammo_scene = "res://scene/weapons/un-guided/cannon-ball/cannon_ball.tscn",
+		min_range = 0.0,
+		max_range = 80.0,
+		ammo = 900,
+		max_ammo = 900
+	})
+	fort.weapons.append({
+		name = "H-S-M",
+		damage = 5.0,
+		speed = 5.0,
+		type = Weapon.TYPE_LOCK_ON,
+		ammo_scene = "res://scene/weapons/lock-on/lock-on-missile/lock_on_missile.tscn",
+		min_range = 0.0,
+		max_range = 70.0,
+		ammo = 15,
+		max_ammo = 15
+	})
+	fort.MINIMAP_COLOR = Color.orange
+	fort.owner_id = str(GDUUID.v4())
+	fort.side = str(GDUUID.v4()) + "-side"
+	fort.show_hp_bar(true)
+	fort.set_hp_bar_color(Color.red)
+	fort.connect("on_destroyed", self, "_on_enemy_on_destroyed")
+	fort.connect("on_spawning_weapon", self, "_on_player_on_spawning_weapon")
+	_ui.add_minimap_object(fort)
 	
 # test clicking ground
 func _on_terrain_on_ground_clicked(_translation):
@@ -55,15 +104,23 @@ func _on_ui_on_shot_press(_index):
 	
 # testing bots
 func _on_enemy_decision_timer_timeout():
+	fort_bot()
+	airborne_bot()
+	
+func airborne_bot():
 	var bots = $bot_holder.get_children()
 	
 	if bots.empty():
 		return
-	
-	var bot = bots[randi() % bots.size()]
-	
+		
 	var targets = bots.duplicate()
 	targets.append($player)
+	
+	var forts = $instalation_holder.get_children()
+	if not forts.empty():
+		targets.append_array(forts)
+		
+	var bot = bots[randi() % bots.size()]
 	targets.erase(bot)
 	
 	if _terrain.feature_translations.empty():
@@ -80,6 +137,27 @@ func _on_enemy_decision_timer_timeout():
 		bot.lock_on_point = target
 		bot.shot(rand_range(0,bot.weapons.size()))
 		
+	
+func fort_bot():
+	var forts = $instalation_holder.get_children()
+	if forts.empty():
+		return
+		
+	var bots = $bot_holder.get_children()
+	if bots.empty():
+		return
+		
+	var targets = bots.duplicate()
+	targets.append($player)
+	
+	var target = targets[randi() % targets.size()]
+	var fort = forts[randi() % forts.size()]
+	
+	fort.aim_point = target.translation
+	fort.guided_point = target
+	fort.lock_on_point = target
+	fort.shot(rand_range(0,fort.weapons.size()))
+	
 	
 func _on_enemy_spawning_timer_timeout():
 	var bots_count = $bot_holder.get_child_count()
@@ -107,6 +185,7 @@ func _on_enemy_spawning_timer_timeout():
 	ship.connect("on_spawning_weapon", self, "_on_player_on_spawning_weapon")
 	_ui.add_minimap_object(ship)
 	
+	
 func _on_enemy_on_destroyed(_node):
 	_ui.remove_minimap_object(_node)
 	_node.queue_free()
@@ -118,6 +197,11 @@ func _on_enemy_on_destroyed(_node):
 func _on_player_on_move(_node, _translation):
 	if not is_aiming:
 		_camera.translation = _translation
+		
+func _on_player_on_falling(_node):
+	_camera.translation =_node.translation
+	
+	
 	
 # camera and amining tes
 func _on_cameraPivot_on_body_enter_aim_sight(body):
@@ -139,7 +223,7 @@ func _on_ui_on_respawn_click():
 	$player.destroyed = false
 	$player.hp = $player.max_hp
 	$player.weapons.clear()
-	for i in Weapon.TEMPLATES:
+	for i in Weapon.PLAYER_TEMPLATES:
 		$player.weapons.append(i.duplicate())
 	$player.translation = pos
 	$player.translation.y = Ship.DEFAULT_ALTITUDE
