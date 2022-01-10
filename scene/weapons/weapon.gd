@@ -7,6 +7,12 @@ const TYPE_LOCK_ON = "LOCKON"
 const TYPE_CONTROLLED = "CONTROLLED"
 const TYPE_UTILITY = "UTILITY"
 
+const DAMAGE_MULTIPLIER = 0.25
+
+static func get_damage_mult(damage) -> float:
+	var r_dmg = DAMAGE_MULTIPLIER * damage
+	return rand_range(damage - r_dmg, damage + r_dmg)
+
 const CRUISER_TEMPLATES = [
 	{
 		name = "H-S-M",
@@ -51,7 +57,7 @@ const CARRIER_TEMPLATES = [
 	},
 	{
 		name = "Bomber",
-		damage = 25.0,
+		damage = 55.0,
 		speed = 4.0,
 		ammo_restock = 1,
 		ranges = 10.0,
@@ -138,6 +144,9 @@ const BOMBER_TEMPLATES = [
 		max_ammo = 5
 	},
 ]
+
+
+
 const TEMPLATES = [
 	{
 		name = "20MM",
@@ -150,17 +159,17 @@ const TEMPLATES = [
 		ammo = 250,
 		max_ammo = 250
 	},
-#	{
-#		name = "Bomb",
-#		damage = 40.0,
-#		speed = 3.0,
-#		type = TYPE_UNGUIDED,
-#		ammo_scene = "res://scene/weapons/un-guided/bomb/bomb.tscn",
-#		min_range = 0.0,
-#		max_range = 900.0,
-#		ammo = 50,
-#		max_ammo = 50
-#	},
+	{
+		name = "Bomb",
+		damage = 40.0,
+		speed = 3.0,
+		type = TYPE_UNGUIDED,
+		ammo_scene = "res://scene/weapons/un-guided/bomb/bomb.tscn",
+		min_range = 0.0,
+		max_range = 900.0,
+		ammo = 50,
+		max_ammo = 50
+	},
 	{
 		name = "G-M",
 		damage = 20.0,
@@ -211,24 +220,24 @@ const TEMPLATES = [
 		ammo = 5,
 		max_ammo = 5
 	},
-#	{
-#		name = "Repair",
-#		hp = 50.0,
-#		max_hp = 50.0,
-#		cruise_speed = -0.6,
-#		turn_speed = -0.3,
-#		type = TYPE_UTILITY,
-#		ammo = 1,
-#		max_ammo = 1
-#	},
-#	{
-#		name = "Overdrive",
-#		hp = -25.0,
-#		max_hp = -25.0,
-#		cruise_speed = 2.0,
-#		turn_speed = 1.0,
-#		type = TYPE_UTILITY,
-#		ammo = 1,
-#		max_ammo = 1
-#	}
+	{
+		name = "Repair",
+		hp = 50.0,
+		max_hp = 50.0,
+		cruise_speed = -0.6,
+		turn_speed = -0.3,
+		type = TYPE_UTILITY,
+		ammo = 1,
+		max_ammo = 1
+	},
+	{
+		name = "Overdrive",
+		hp = -25.0,
+		max_hp = -25.0,
+		cruise_speed = 2.0,
+		turn_speed = 1.0,
+		type = TYPE_UTILITY,
+		ammo = 1,
+		max_ammo = 1
+	}
 ]

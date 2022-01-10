@@ -106,6 +106,7 @@ func spawn_hostile_airship():
 	_ui.add_minimap_object(ship)
 	
 	
+	
 # test clicking ground
 func _on_terrain_on_ground_clicked(_translation):
 	$player.waypoint= _translation
@@ -119,11 +120,17 @@ func _on_ui_on_aim_press(_is_press):
 	_camera.aim_reticle(_is_press)
 	is_aiming = _is_press
 	
+	if is_instance_valid($player.lock_on_point):
+		$player.lock_on_point.highlight(is_aiming)
+		
 func _on_ui_on_shot_press(_index):
 	if $player.has_method("shot"):
 		$player.aim_point = _camera.translation
 		$player.guided_point = _camera
 		$player.shot(_index)
+	
+	
+	
 	
 	
 	
@@ -163,6 +170,9 @@ func airborne_bot():
 		bot.shot(rand_range(0,bot.weapons.size()))
 		
 	
+	
+	
+	
 func fort_bot():
 	var forts = $instalation_holder.get_children()
 	if forts.empty():
@@ -187,10 +197,10 @@ func fort_bot():
 func _on_enemy_spawning_timer_timeout():
 	spawn_hostile_airship()
 	
-	
 func _on_enemy_on_destroyed(_node):
 	_ui.remove_minimap_object(_node)
 	_node.queue_free()
+	
 	
 	
 	
@@ -201,12 +211,19 @@ func _on_player_on_move(_node, _translation):
 		_camera.translation = _translation
 		
 func _on_player_on_falling(_node):
+	if is_instance_valid($player.lock_on_point):
+		$player.lock_on_point.highlight(false)
+		
 	_camera.translation =_node.translation
+	
 	
 	
 	
 # camera and amining tes
 func _on_cameraPivot_on_body_enter_aim_sight(body):
+	if not is_aiming:
+		return
+		
 	if not body is KinematicBody:
 		return
 		
@@ -221,6 +238,9 @@ func _on_cameraPivot_on_body_enter_aim_sight(body):
 		
 	$player.lock_on_point = body
 	$player.lock_on_point.highlight(true)
+	
+	
+	
 	
 # respawn
 func _on_ui_on_respawn_click():

@@ -5,7 +5,11 @@ const DEFAULT_PORT : int = 31400
 const MAX_PLAYERS : int = 5
 const PLAYER_HOST_ID : int = 1
 
+# for server data only
 var players : Dictionary = {}
+
+# for local each player data
+# including server
 var data : Dictionary = {}
 
 signal server_player_connected(player_network_unique_id, data)
@@ -23,6 +27,8 @@ func _ready():
 	get_tree().connect('network_peer_disconnected', self, '_on_peer_disconnected')
 	get_tree().connect('server_disconnected', self, '_on_server_disconnected')
 	
+# for player to want become host
+# hosting server
 func create_server(_max_player : int = MAX_PLAYERS, _port :int = DEFAULT_PORT, _data : Dictionary = {}) -> int:
 	data = _data
 	players[PLAYER_HOST_ID] = data
@@ -36,7 +42,8 @@ func create_server(_max_player : int = MAX_PLAYERS, _port :int = DEFAULT_PORT, _
 	emit_signal("server_player_connected", PLAYER_HOST_ID, data)
 	return OK
 	
-	
+# for player to want become client
+# join to server
 func connect_to_server(_ip:String = DEFAULT_IP, _port :int = DEFAULT_PORT, _data: Dictionary = {}) -> int:
 	data = _data
 	var peer = NetworkedMultiplayerENet.new()
@@ -51,7 +58,9 @@ func connect_to_server(_ip:String = DEFAULT_IP, _port :int = DEFAULT_PORT, _data
 	return OK
 	
 	
-	
+# server just went dive crash LOL
+# this function is call for
+# pov from joined player
 func _on_server_disconnected():
 	for _signal in get_tree().get_signal_connection_list("connected_to_server"):
 		get_tree().disconnect("connected_to_server",self, _signal.method)
@@ -81,13 +90,15 @@ func _connected_to_server():
 	rpc_id(PLAYER_HOST_ID,'_send_player_info', local_player_id, data)
 	
 	
+# player failed connect to server
+# pov from joined player
 func _connection_to_server_failed():
 	emit_signal("connection_failed")
 	
 	
 # server receive data
-# from joined player and prepare
-# puppet for newly joined player
+# from joined player and added
+# to player array data
 remote func _send_player_info(player_network_unique_id : int, _data : Dictionary):
 	if not get_tree().is_network_server():
 		return
@@ -97,14 +108,18 @@ remote func _send_player_info(player_network_unique_id : int, _data : Dictionary
 	emit_signal("player_connected_data_receive", player_network_unique_id, _data)
 	
 # this will be emit by everybody
-# except joined player
+# except joined player and prepare
+# puppet for newly joined player
 func _network_peer_connected(player_network_unique_id : int):
 	if get_tree().is_network_server():
 		return
 		
 	emit_signal("player_connected", player_network_unique_id)
 	
-	
+# other client request
+# data from newly join player
+# then they will get response
+# from _receive_player_info
 func request_player_info(player_network_unique_id : int) -> void:
 	rpc_id(PLAYER_HOST_ID,'_request_player_info', get_tree().get_network_unique_id(), player_network_unique_id)
 	

@@ -38,16 +38,6 @@ func lauching_at(to: Spatial):
 	
 	
 	
-func shot_bullet():
-	if _target.has_method("take_damage") and randf() < accuracy:
-		_target.take_damage(damage)
-		
-	var projectile = load("res://scene/weapons/un-guided/bullet/bullet.tscn").instance()
-	add_child(projectile)
-	projectile.lauching_at(_target.translation)
-	
-	
-	
 func take_damage(damage):
 	if destroyed:
 		return

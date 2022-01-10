@@ -21,7 +21,6 @@ shape = SubResource( 1 )
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 1, 0, 0, 0 )
-visible = false
 opacity = 0.7
 texture = ExtResource( 2 )
 
@@ -30,5 +29,8 @@ transform = Transform( 1, 0, 0, 0, 0.996195, 0.0871558, 0, -0.0871558, 0.996195,
 current = true
 size = 20.0
 
-[connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
-[connection signal="body_exited" from="Area" to="." method="_on_Area_body_exited"]
+[node name="RayCast" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.999792, 0, 0, 0, 0.999792, 0, 7.30157e-07, 15 )
+enabled = true
+cast_to = Vector3( 0, 0, -25 )
+debug_shape_thickness = 5.0

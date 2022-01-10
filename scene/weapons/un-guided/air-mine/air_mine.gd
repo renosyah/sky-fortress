@@ -33,7 +33,7 @@ func _on_air_mine_body_entered(body):
 		return
 		
 	if body.has_method("take_damage"):
-		body.take_damage(damage)
+		body.take_damage(Weapon.get_damage_mult(damage))
 		
 	spawn_explosive()
 	
@@ -44,3 +44,6 @@ func spawn_explosive():
 	explosive.translation = translation
 	explosive.scale = Vector3.ONE * 10
 	queue_free()
+	
+	
+	

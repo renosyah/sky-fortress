@@ -32,7 +32,10 @@ func _process(delta):
 	if _mission_over:
 		var landing_target = get_parent().translation
 		.transform_turning(landing_target, delta)
-		move_and_slide(translation.direction_to(landing_target) * speed)
+		var collide = move_and_collide(translation.direction_to(landing_target) * speed * delta)
+		if collide:
+			.perform_landing(collide.get_collider())
+			
 		
 	# target destroy or fuel empty
 	_mission_over = not is_instance_valid(_target) or _fuel.is_stopped() or delivered
@@ -49,10 +52,6 @@ func lauching_at(to: Spatial):
 	
 	
 	
-func _on_Area_body_entered(body):
-	.perform_landing(body)
-	
-	
 	
 func take_damage(damage):
 	.take_damage(damage)
@@ -65,8 +64,8 @@ func falling():
 	_tag.visible = false
 	var _down = Vector3(translation.x, 1.0, translation.y)
 	look_at(_down, Vector3.UP)
-	_tween.interpolate_property(_pivot, "rotation", _pivot.rotation,  Vector3(0,0,120), rand_range(4.0,6.0))
-	_tween.interpolate_property(self, "translation", translation, _down, rand_range(2.0,4.0))
+	_tween.interpolate_property(_pivot, "rotation", _pivot.rotation,  Vector3(0,0,120), 10.0)
+	_tween.interpolate_property(self, "translation", translation, _down, rand_range(3.0,4.0))
 	_tween.start()
 	
 	

@@ -62,7 +62,7 @@ func take_damage(damage):
 	if destroyed:
 		return
 	
-	hp -= damage
+	hp = round(hp - damage)
 	
 	if hp < 0.0:
 		destroy()

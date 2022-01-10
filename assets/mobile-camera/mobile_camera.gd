@@ -2,12 +2,12 @@ extends Spatial
 class_name MobileCamera
 
 signal on_body_enter_aim_sight(_body)
-signal on_body_exit_aim_sight(_body)
 signal on_camera_moving(_translation, _zoom)
 
 onready var _camera = $Camera
 onready var _aim = $Sprite3D
 onready var _area = $Area
+onready var _raycast = $RayCast
 
 var min_zoom : float = 5.0
 var max_zoom : float = 35.0
@@ -31,7 +31,10 @@ func _process(delta):
 	velocity.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	velocity.z = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up") 
 	
-	translation += velocity * delta * 50
+	translation += velocity * delta * 25
+	
+	if _raycast.get_collider():
+		emit_signal("on_body_enter_aim_sight", _raycast.get_collider())
 	
 func parsing_input(event):
 	_unhandled_input(event)
@@ -76,11 +79,3 @@ func _unhandled_input(event):
 		
 		
 		
-func _on_Area_body_entered(body):
-	emit_signal("on_body_enter_aim_sight", body)
-	
-func _on_Area_body_exited(body):
-	emit_signal("on_body_exit_aim_sight", body)
-	
-	
-	
