@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scene/fort/aa-instalation/simple_house.png" type="Texture" id=1]
 [ext_resource path="res://scene/fort/aa-instalation/wall.png" type="Texture" id=2]
 [ext_resource path="res://scene/fort/aa-instalation/turret.png" type="Texture" id=3]
 [ext_resource path="res://scene/fort/aa-instalation/aa_instalation.gd" type="Script" id=4]
 [ext_resource path="res://assets/ui/bar-3d/hp_bar_3d.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/ui/highlight/highlight.tscn" type="PackedScene" id=6]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 3.75579, 1.65208, 2.93944 )
@@ -59,3 +60,6 @@ texture = ExtResource( 3 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.86086, -1.58125 )
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+
+[node name="highlight" parent="." instance=ExtResource( 6 )]
+transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0 )

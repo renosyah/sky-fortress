@@ -114,7 +114,30 @@ const AA_FORT_TEMPLATE = [
 		max_ammo = 15
 	}
 ]
-
+const BOMBER_TEMPLATES = [
+	{
+		name = "G-M",
+		damage = 20.0,
+		speed = 5.0,
+		type = TYPE_GUIDED,
+		ammo_scene = "res://scene/weapons/guided/guided-missile/guided_missile.tscn",
+		min_range = 10.0,
+		max_range = 80.0,
+		ammo = 25,
+		max_ammo = 25
+	},
+	{
+		name = "A-Mine",
+		damage = 35.0,
+		speed = 0.0,
+		type = TYPE_UNGUIDED,
+		ammo_scene = "res://scene/weapons/un-guided/air-mine/air_mine.tscn",
+		min_range = 0.0,
+		max_range = 900.0,
+		ammo = 5,
+		max_ammo = 5
+	},
+]
 const TEMPLATES = [
 	{
 		name = "20MM",

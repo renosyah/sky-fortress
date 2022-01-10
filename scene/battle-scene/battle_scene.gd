@@ -3,13 +3,14 @@ extends Node
 var HOSTILE_SHIPS = {
 	"res://scene/ships/cruiser/cruiser.tscn" : Weapon.CRUISER_TEMPLATES,
 	"res://scene/ships/carrier/carrier.tscn" : Weapon.CARRIER_TEMPLATES,
+	"res://scene/ships/bomber/bomber.tscn" : Weapon.BOMBER_TEMPLATES,
 }
 var HOSTILE_INSTALATION = {
 	"res://scene/fort/aa-instalation/aa_instalation.tscn" : Weapon.AA_FORT_TEMPLATE,
 	"res://scene/fort/airstrip/airstrip.tscn" : Weapon.CARRIER_TEMPLATES
 }
 
-const MAX_HOSTILE = 5
+const MAX_HOSTILE = 4
 const MAX_INSTALATION = 3
 
 onready var _terrain = $terrain
@@ -41,7 +42,7 @@ func _ready():
 	_terrain.unused_translations.shuffle()
 	for _pos in _terrain.unused_translations:
 		var forts_count = $instalation_holder.get_child_count()
-		if forts_count >= MAX_HOSTILE:
+		if forts_count >= MAX_INSTALATION:
 			return
 			
 		spawn_hostile_fort(_pos.node_translation)
@@ -63,6 +64,8 @@ func spawn_hostile_fort(_pos):
 	fort.MINIMAP_COLOR = color
 	fort.owner_id = str(GDUUID.v4())
 	fort.side = str(GDUUID.v4()) + "-side"
+	fort.hp = 500.0
+	fort.max_hp = 500.0
 	fort.show_hp_bar(true)
 	fort.set_hp_bar_color(color)
 	fort.connect("on_destroyed", self, "_on_enemy_on_destroyed")
@@ -153,7 +156,7 @@ func airborne_bot():
 	
 	var target = targets[randi() % targets.size()]
 	
-	if randf() < 0.8 and targets.size() >= 5:
+	if randf() < 0.8:
 		bot.aim_point = target.translation
 		bot.guided_point = target
 		bot.lock_on_point = target
@@ -213,8 +216,11 @@ func _on_cameraPivot_on_body_enter_aim_sight(body):
 	if body.owner_id == $player.owner_id:
 		return
 	
+	if is_instance_valid($player.lock_on_point):
+		$player.lock_on_point.highlight(false)
+		
 	$player.lock_on_point = body
-	
+	$player.lock_on_point.highlight(true)
 	
 # respawn
 func _on_ui_on_respawn_click():

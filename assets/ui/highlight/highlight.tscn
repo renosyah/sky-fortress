@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/ui/highlight/aim.png" type="Texture" id=1]
+[ext_resource path="res://assets/ui/highlight/highlight.gd" type="Script" id=2]
+
+[node name="highlight" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="aim" type="Sprite3D" parent="."]
+billboard = 1
+texture = ExtResource( 1 )

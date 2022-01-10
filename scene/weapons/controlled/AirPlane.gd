@@ -22,6 +22,7 @@ var _mission_over = false
 var _waypoint : Vector3
 var _target : Spatial
 
+var destroyed = false
 var hp = 1.0
 var max_hp = 1.0
 
@@ -48,13 +49,20 @@ func shot_bullet():
 	
 	
 func take_damage(damage):
+	if destroyed:
+		return
+		
+	spawn_small_explosive_on_damage()
 	hp -= damage
 	if hp > 0:
 		return
 		
+	destroyed = true
 	set_process(false)
+	falling()
 	
-	
+func falling():
+	pass
 	
 func update_course():
 	if is_instance_valid(_target):
@@ -70,6 +78,12 @@ func spawn_explosive_on_destroy():
 	explosive.translation = translation
 	explosive.scale = Vector3.ONE * 10
 	queue_free()
+	
+func spawn_small_explosive_on_damage():
+	var explosive = preload("res://assets/explosive/explosive.tscn").instance()
+	get_parent().add_child(explosive)
+	explosive.translation = translation
+	explosive.scale = Vector3.ONE * 6
 	
 func transform_turning(direction, delta):
 	var new_transform = transform.looking_at(direction, Vector3.UP)

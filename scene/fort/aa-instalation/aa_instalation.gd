@@ -5,6 +5,7 @@ const MAX_PART_DAMAGE = 3
 onready var _part = $pivot
 onready var _hp_bar = $hpBar
 onready var _audio = $AudioStreamPlayer3D
+onready var _highlight = $highlight
 
 func make_ready():
 	.make_ready()
@@ -16,8 +17,15 @@ func _ready():
 	
 	for i in _part.get_children():
 		i.visible = true
-	
+		
+	_highlight.highlight(false)
 	update_hp_bar()
+	
+func highlight(_show : bool):
+	if destroyed:
+		return
+		
+	_highlight.highlight(_show)
 	
 func set_hp_bar_color(_color : Color):
 	.set_hp_bar_color(_color)
@@ -41,6 +49,7 @@ func take_damage(damage):
 func destroy():
 	.destroy()
 	_hp_bar.visible = false
+	_highlight.highlight(false)
 	
 func restock_ammo(weapon_slot, ammo_restock):
 	.restock_ammo(weapon_slot, ammo_restock)

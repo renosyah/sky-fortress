@@ -2,5 +2,5 @@ extends "res://scene/ships/cruiser/cruiser.gd"
 
 func _ready():
 	._ready()
-	cruise_speed = 2.0
-	turn_speed = 0.5
+	cruise_speed = 3.0
+	turn_speed = 1.0

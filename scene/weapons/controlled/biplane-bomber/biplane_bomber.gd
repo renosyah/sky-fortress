@@ -4,6 +4,7 @@ onready var _fuel = $Fuel
 onready var _pivot = $Pivot
 onready var _tag = $tag
 onready var _tween = $Tween
+onready var _highlight = $highlight
 
 var delivered = false
 
@@ -11,14 +12,16 @@ var delivered = false
 func _ready():
 	._ready()
 	_tag.modulate = tag_color
+	_highlight.highlight(false)
 	
-	
+func highlight(_show : bool):
+	_highlight.highlight(_show)
 	
 func _process(delta):
 	if is_instance_valid(_target) and not _mission_over:
 		var target_translation = _target.translation + Vector3(0, DEFAULT_ALTITUDE, 0)
 		var distance_to_target = translation.distance_to(target_translation)
-		if distance_to_target <= 5.0 and not delivered:
+		if distance_to_target <= 1.0 and not delivered:
 			deliver_payload()
 			delivered = true
 			return
@@ -53,6 +56,12 @@ func _on_Area_body_entered(body):
 	
 func take_damage(damage):
 	.take_damage(damage)
+	
+	
+	
+func falling():
+	.falling()
+	_highlight.visible = false
 	_tag.visible = false
 	var _down = Vector3(translation.x, 1.0, translation.y)
 	look_at(_down, Vector3.UP)
@@ -67,16 +76,17 @@ func _on_Tween_tween_completed(object, key):
 		.spawn_explosive_on_destroy()
 	
 	
+	
 func deliver_payload():
-	var projectile = load("res://scene/weapons/guided/guided-missile/guided_missile.tscn").instance()
+	var projectile = load("res://scene/weapons/un-guided/bomb/bomb.tscn").instance()
 	projectile.damage = damage
-	projectile.speed = speed
+	projectile.speed = speed * 2
 	projectile.owner_id = owner_id
 	projectile.side = side
 	projectile.tag_color = tag_color
 	get_parent().add_child(projectile)
 	projectile.translation = translation
-	projectile.lauching_at(_target)
+	projectile.lauching_at(_target.translation)
 
 
 

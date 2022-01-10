@@ -6,12 +6,19 @@ onready var _mg_firing = $Pivot/mg_firing
 onready var _pivot = $Pivot
 onready var _tag = $tag
 onready var _tween = $Tween
+onready var _highlight = $highlight
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	._ready()
+	_highlight.highlight(false)
 	_tag.modulate = tag_color
 	
+func highlight(_show : bool):
+	if destroyed:
+		return
+		
+	_highlight.highlight(_show)
 	
 	
 func _process(delta):
@@ -62,6 +69,11 @@ func _on_Area_body_entered(body):
 	
 func take_damage(damage):
 	.take_damage(damage)
+	
+	
+func falling():
+	.falling()
+	_highlight.visible = false
 	_mg_firing.visible = false
 	_tag.visible = false
 	var _down = Vector3(translation.x, 1.0, translation.y)
@@ -69,8 +81,6 @@ func take_damage(damage):
 	_tween.interpolate_property(_pivot, "rotation", _pivot.rotation,  Vector3(0,0,120), rand_range(4.0,6.0))
 	_tween.interpolate_property(self, "translation", translation, _down, rand_range(2.0,4.0))
 	_tween.start()
-	
-	
 	
 func _on_Tween_tween_completed(object, key):
 	if str(key) == ":translation":

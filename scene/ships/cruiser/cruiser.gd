@@ -1,11 +1,12 @@
 extends Ship
 
-const MAX_PART_DAMAGE = 7
+const MAX_PART_DAMAGE = 3
 
 onready var _part = $pivot
 onready var _tween = $Tween
 onready var _hp_bar = $hpBar
 onready var _audio = $AudioStreamPlayer3D
+onready var _highlight = $highlight
 
 func make_ready():
 	.make_ready()
@@ -20,6 +21,7 @@ func _ready():
 	for i in _part.get_children():
 		i.visible = true
 		
+	_highlight.highlight(false)
 	update_hp_bar()
 	
 func set_hp_bar_color(_color : Color):
@@ -40,10 +42,17 @@ func take_damage(damage):
 	
 	if damage > 15.0:
 		_damage_random_part()
+		
+func highlight(_show : bool):
+	if destroyed:
+		return
+		
+	_highlight.highlight(_show)
 	
 func destroy():
 	.destroy()
 	_hp_bar.visible = false
+	_highlight.visible = false
 	_tween.interpolate_property(self, "translation", translation, Vector3(translation.x, 1.0, translation.y), rand_range(4.0,8.0))
 	_tween.start()
 	

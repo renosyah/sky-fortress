@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scene/weapons/controlled/biplane/biplane.gd" type="Script" id=1]
 [ext_resource path="res://scene/ships/carrier/bridge.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://scene/weapons/controlled/biplane/fusselages.png" type="Texture" id=6]
 [ext_resource path="res://assets/mg-firing/mg_firing.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scene/weapons/controlled/biplane/tag.png" type="Texture" id=8]
+[ext_resource path="res://assets/ui/highlight/highlight.tscn" type="PackedScene" id=9]
 
 [sub_resource type="SphereShape" id=4]
 radius = 0.75931
@@ -86,6 +87,9 @@ texture = ExtResource( 8 )
 shape = SubResource( 3 )
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="highlight" parent="." instance=ExtResource( 9 )]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
 
 [connection signal="timeout" from="UpdateCourse" to="." method="_on_UpdateCourse_timeout"]
 [connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
