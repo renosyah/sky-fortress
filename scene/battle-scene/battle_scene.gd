@@ -13,6 +13,8 @@ var HOSTILE_INSTALATION = {
 const MAX_HOSTILE = 4
 const MAX_INSTALATION = 3
 
+var airborne_targets = []
+
 onready var _terrain = $terrain
 onready var _camera = $cameraPivot
 onready var _cursor = $cursor
@@ -33,6 +35,7 @@ func _ready():
 		$player.weapons.append(i.duplicate())
 		
 	$player.make_ready()
+	airborne_targets.append($player)
 	
 	_ui.add_minimap_object($player)
 	_ui.set_camera(_camera)
@@ -105,7 +108,7 @@ func spawn_hostile_airship():
 	ship.connect("on_spawning_weapon", self, "_on_player_on_spawning_weapon")
 	_ui.add_minimap_object(ship)
 	
-	
+	airborne_targets.append(ship)
 	
 # test clicking ground
 func _on_terrain_on_ground_clicked(_translation):
@@ -141,17 +144,13 @@ func _on_enemy_decision_timer_timeout():
 	
 func airborne_bot():
 	var bots = $bot_holder.get_children()
-	
 	if bots.empty():
 		return
 		
-	var targets = bots.duplicate()
-	targets.append($player)
+	var targets = airborne_targets.duplicate()
+	if targets.empty():
+		return
 	
-	var forts = $instalation_holder.get_children()
-	if not forts.empty():
-		targets.append_array(forts)
-		
 	var bot = bots[randi() % bots.size()]
 	targets.erase(bot)
 	
@@ -162,7 +161,9 @@ func airborne_bot():
 	bot.waypoint= pos
 	
 	var target = targets[randi() % targets.size()]
-	
+	while not is_instance_valid(target):
+		target = targets[randi() % targets.size()]
+		
 	if randf() < 0.8:
 		bot.aim_point = target.translation
 		bot.guided_point = target
@@ -178,14 +179,13 @@ func fort_bot():
 	if forts.empty():
 		return
 		
-	var bots = $bot_holder.get_children()
-	if bots.empty():
+	if  airborne_targets.empty():
 		return
 		
-	var targets = bots.duplicate()
-	targets.append($player)
-	
-	var target = targets[randi() % targets.size()]
+	var target = airborne_targets[randi() % airborne_targets.size()]
+	while not is_instance_valid(target):
+		target = airborne_targets[randi() % airborne_targets.size()]
+		
 	var fort = forts[randi() % forts.size()]
 	
 	fort.aim_point = target.translation
@@ -197,9 +197,17 @@ func fort_bot():
 func _on_enemy_spawning_timer_timeout():
 	spawn_hostile_airship()
 	
+func _on_player_on_spawning_weapon(_node):
+	if _node.has_method("take_damage"):
+		airborne_targets.append(_node)
+	_ui.add_minimap_object(_node)
+	
+	
 func _on_enemy_on_destroyed(_node):
+	airborne_targets.erase(_node)
 	_ui.remove_minimap_object(_node)
 	_node.queue_free()
+	
 	
 	
 	
@@ -255,9 +263,6 @@ func _on_ui_on_respawn_click():
 	$player.translation = pos
 	$player.translation.y = Ship.DEFAULT_ALTITUDE
 	$player.make_ready()
-	
-func _on_player_on_spawning_weapon(_node):
-	_ui.add_minimap_object(_node)
 
 
 

@@ -93,7 +93,7 @@ const CARRIER_TEMPLATES = [
 		max_range = 60.0,
 		ammo = 150,
 		max_ammo = 150
-	},
+	}
 ]
 
 const AA_FORT_TEMPLATE = [
@@ -135,7 +135,7 @@ const BOMBER_TEMPLATES = [
 	{
 		name = "A-Mine",
 		damage = 35.0,
-		speed = 0.0,
+		speed = 1.4,
 		type = TYPE_UNGUIDED,
 		ammo_scene = "res://scene/weapons/un-guided/air-mine/air_mine.tscn",
 		min_range = 0.0,

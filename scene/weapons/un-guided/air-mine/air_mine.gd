@@ -7,20 +7,26 @@ var owner_id = ""
 var side = ""
 
 var damage = 35.0
-var speed = 10.0
+var speed = 0.4
 var spread = 0.2
+
+var _velocity : Vector3
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_tag.modulate = tag_color
 	set_as_toplevel(true)
 	
+func _process(delta):
+	translation += _velocity * speed * delta
 	
 func _on_Timer_timeout():
 	spawn_explosive()
 	
 func lauching_at(_to: Vector3):
-	pass
+	_velocity = Vector3.ONE * rand_range(-2.0,2.0)
+	_velocity.y = translation.y
+	_velocity = translation.direction_to(_velocity)
 	
 func _on_air_mine_body_entered(body):
 	if body.is_a_parent_of(self):
