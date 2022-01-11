@@ -1,12 +1,10 @@
 extends Spatial
-class_name MobileCamera
 
 signal on_body_enter_aim_sight(_body)
 signal on_camera_moving(_translation, _zoom)
 
 onready var _camera = $Camera
-onready var _aim = $Sprite3D
-onready var _area = $Area
+onready var _aim = $Camera/Sprite3D
 onready var _raycast = $RayCast
 
 var min_zoom : float = 5.0
@@ -22,7 +20,6 @@ func _ready():
 	pass
 	
 func aim_reticle(_show : bool, _color : Color = Color.white):
-	_area.monitoring = _show
 	_aim.visible = _show
 	_aim.modulate = _color
 	
