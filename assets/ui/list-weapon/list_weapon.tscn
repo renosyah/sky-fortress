@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/ui/list-weapon/list_weapon.gd" type="Script" id=2]
+
+[node name="VBoxContainer" type="VBoxContainer"]
+anchor_right = 1.0
+margin_bottom = 174.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 0, 150 )
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_top = 154.0
+margin_right = 1024.0
+margin_bottom = 174.0
+rect_min_size = Vector2( 0, 20 )

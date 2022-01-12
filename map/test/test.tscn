@@ -1,12 +1,12 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scene/ships/carrier/carrier.tscn" type="PackedScene" id=1]
-[ext_resource path="res://assets/cursor/cursor.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/ui/battle-scene/ui.tscn" type="PackedScene" id=3]
-[ext_resource path="res://assets/gameplay-camera/gameplay_camera.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/gameplay-camera/gameplay_camera.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/cursor/cursor.tscn" type="PackedScene" id=3]
+[ext_resource path="res://map/test/ui/ui.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/terrain/terrain.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/cursor/cursor_5.png" type="Texture" id=6]
-[ext_resource path="res://scene/battle-scene/battle_scene.gd" type="Script" id=7]
+[ext_resource path="res://map/test/test.gd" type="Script" id=7]
 
 [sub_resource type="ProceduralSky" id=1]
 ground_bottom_color = Color( 0.647059, 0.839216, 0.945098, 1 )
@@ -19,7 +19,7 @@ background_sky = SubResource( 1 )
 [node name="battle-scene" type="Node"]
 script = ExtResource( 7 )
 
-[node name="ui" parent="." instance=ExtResource( 3 )]
+[node name="ui" parent="." instance=ExtResource( 4 )]
 
 [node name="player" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0 )
@@ -48,7 +48,7 @@ autostart = true
 wait_time = 5.0
 autostart = true
 
-[node name="cursor" parent="." instance=ExtResource( 2 )]
+[node name="cursor" parent="." instance=ExtResource( 3 )]
 transform = Transform( 5, 0, 0, 0, -2.18557e-07, 1, 0, -5, -4.37114e-08, 0, 0, 0 )
 
 [node name="terrain" parent="." instance=ExtResource( 5 )]
@@ -61,7 +61,7 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )
 
-[node name="cameraPivot" parent="." instance=ExtResource( 4 )]
+[node name="cameraPivot" parent="." instance=ExtResource( 2 )]
 
 [connection signal="on_aim_press" from="ui" to="." method="_on_ui_on_aim_press"]
 [connection signal="on_respawn_click" from="ui" to="." method="_on_ui_on_respawn_click"]

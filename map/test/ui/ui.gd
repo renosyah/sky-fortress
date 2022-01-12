@@ -24,22 +24,12 @@ func _on_aim_pressed():
 	emit_signal("on_aim_press", toggled)
 	$CanvasLayer/Control2/Control/mid/VBoxContainer.visible = toggled
 	
-func _on_plane_pressed():
-	emit_signal("on_shot_press" , 3)
 	
+func _on_VBoxContainer_on_item_press(index, data):
+	emit_signal("on_shot_press" , index)
 	
-func _on_lock_on_pressed():
-		emit_signal("on_shot_press" , 2)
-	
-	
-func _on_guided_pressed():
-		emit_signal("on_shot_press" , 1)
-	
-	
-func _on_cannon_pressed():
-		emit_signal("on_shot_press" , 0)
-	
-	
+func _on_player_on_weapon_update(_node, weapon_index, _weapon):
+	pass
 	
 func _on_player_on_take_damage(_node, damage, hp):
 	$CanvasLayer/Control2/Control/mid/hp_bar.update_bar(hp, _node.max_hp)
@@ -48,6 +38,8 @@ func _on_player_on_ready(_node):
 	$CanvasLayer/Control2/Control.visible = true
 	$CanvasLayer/Control2/deadscreen.visible = false
 	$CanvasLayer/Control2/Control/mid/hp_bar.update_bar(_node.hp, _node.max_hp)
+	$CanvasLayer/Control2/Control/mid/VBoxContainer.datas = _node.weapons
+	$CanvasLayer/Control2/Control/mid/VBoxContainer.update_list()
 	
 func _on_player_on_destroyed(_node):
 	$CanvasLayer/Control2/Control.visible = false
@@ -66,14 +58,4 @@ func _on_player_on_falling(_node):
 	$CanvasLayer/Control2/Control/mid/VBoxContainer.visible = toggled
 	$CanvasLayer/Control2/Control.visible = toggled
 	
-	
-func _on_player_on_weapon_update(_node, weapon_index, _weapon):
-	if weapon_index == 0:
-		$CanvasLayer/Control2/Control/mid/VBoxContainer/HBoxContainer/cannon.text = _weapon.name + " (" + str(_weapon.ammo) + "/" + str(_weapon.max_ammo) + ")"
-	elif weapon_index == 1:
-		$CanvasLayer/Control2/Control/mid/VBoxContainer/HBoxContainer/guided.text = _weapon.name + " (" + str(_weapon.ammo) + "/" + str(_weapon.max_ammo) + ")"
-	elif weapon_index == 2:
-		$CanvasLayer/Control2/Control/mid/VBoxContainer/HBoxContainer/lock_on.text = _weapon.name + " (" +  str(_weapon.ammo) + "/" + str(_weapon.max_ammo) + ")"
-	elif weapon_index == 3:
-		$CanvasLayer/Control2/Control/mid/VBoxContainer/HBoxContainer/plane.text = _weapon.name + " (" +  str(_weapon.ammo) + "/" + str(_weapon.max_ammo) + ")"
 	

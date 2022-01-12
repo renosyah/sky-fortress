@@ -28,6 +28,8 @@ var feature_translations = []
 var features = []
 var season : String = ""
 	
+var blank_map = false
+	
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -38,7 +40,7 @@ func generate():
 	if season.empty():
 		season = SEASON_LABEL[randi() % SEASON_LABEL.size()]
 	
-	if features.empty():
+	if features.empty() and not blank_map:
 		feature_translations = _create_box_shape_translations(Vector3.ZERO, 150)
 		var _generated_translation = _generate_new_terrain_features(feature_translations, _season_nodes[season])
 		features = _generated_translation.feature_data
@@ -118,10 +120,16 @@ func _create_z_line_translations(_start_point : Vector3) -> Array:
 	
 	
 func _on_Timer_timeout():
+	if blank_map:
+		return
+		
 	if randf() < 0.5:
 		return
 		
 	randomize()
+	if cloud_spawn_points.empty():
+		return
+		
 	var p = cloud_spawn_points[randi() % cloud_spawn_points.size()]
 	var templates = _templates.get_children()
 	var _cloud = templates[randi() % templates.size()].duplicate()

@@ -1,6 +1,49 @@
 extends KinematicBody
 class_name Ship
 
+const SHIP_LIST = [
+	{
+		id = "",
+		name = "Carrier",
+		icon = "res://scene/ships/carrier/icon.png",
+		scene = "res://scene/ships/carrier/carrier.tscn", 
+		owner_id = "",
+		side = "",
+		max_hp = 150,
+		hp = 150,
+		cruise_speed = 2.0,
+		turn_speed = 0.5,
+		weapons = []
+	},
+	{
+		id = "",
+		name = "Bomber",
+		icon = "res://scene/ships/bomber/icon.png",
+		scene = "res://scene/ships/bomber/bomber.tscn", 
+		owner_id = "",
+		side = "",
+		max_hp = 250,
+		hp = 250,
+		cruise_speed = 3.0,
+		turn_speed = 1.0,
+		weapons = []
+	},
+	{
+		id = "",
+		name = "Cruiser",
+		icon = "res://scene/ships/cruiser/icon.png",
+		scene = "res://scene/ships/cruiser/cruiser.tscn", 
+		owner_id = "",
+		side = "",
+		max_hp = 100,
+		hp = 100,
+		cruise_speed = 4.0,
+		turn_speed = 1.5,
+		weapons = []
+	}
+	
+]
+
 const DEFAULT_ALTITUDE = 10.0
 const MINIMAP_MARKER = "troop"
 var MINIMAP_COLOR = Color.white
@@ -199,14 +242,13 @@ func _process(delta):
 	var distance_to_target = 0.0
 	
 	if waypoint:
-		waypoint.y = DEFAULT_ALTITUDE
+		waypoint.y = altitude
 		direction = translation.direction_to(waypoint)
 		distance_to_target = translation.distance_to(waypoint)
 		
 		if distance_to_target > 1.0:
 			velocity = Vector3(direction.x, 0.0 , direction.z) * cruise_speed
-			var new_transform = transform.looking_at((Vector3(waypoint.x , translation.y, waypoint.z)), Vector3.UP)
-			transform = transform.interpolate_with(new_transform, turn_speed * delta)
+			transform_turning((Vector3(waypoint.x , translation.y, waypoint.z)), delta)
 			emit_signal("on_move",self, translation)
 			
 		else:
@@ -214,6 +256,10 @@ func _process(delta):
 		
 		move_and_slide(velocity)
 		
+func transform_turning(direction, delta):
+	var new_transform = transform.looking_at(direction, Vector3.UP)
+	transform = transform.interpolate_with(new_transform, turn_speed * delta)
+	
 func spawn_explosive_on_destroy():
 	var explosive = preload("res://assets/explosive/explosive.tscn").instance()
 	explosive.connect("on_finish_explode", self , "_on_finish_explode")

@@ -1,0 +1,95 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/ui/button/bg.png" type="Texture" id=1]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/ui/button/bg_press.png" type="Texture" id=3]
+[ext_resource path="res://menu/main-menu/ui/ui.gd" type="Script" id=4]
+[ext_resource path="res://assets/ui/list-panel/list_panel.tscn" type="PackedScene" id=5]
+
+[node name="ui" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 0, 80 )
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 73.0
+alignment = 1
+
+[node name="Container" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer"]
+margin_left = 405.0
+margin_right = 605.0
+margin_bottom = 66.0
+
+[node name="battle_button" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/Container"]
+modulate = Color( 0.619608, 0.180392, 0.180392, 1 )
+margin_right = 200.0
+margin_bottom = 66.0
+rect_min_size = Vector2( 200, 50 )
+texture_normal = ExtResource( 1 )
+texture_pressed = ExtResource( 3 )
+expand = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/Container"]
+margin_top = 13.0
+margin_right = 200.0
+margin_bottom = 53.0
+custom_fonts/font = ExtResource( 2 )
+text = "Battle"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="CanvasLayer/Control/VBoxContainer"]
+margin_top = 84.0
+margin_right = 1024.0
+margin_bottom = 482.0
+mouse_filter = 2
+size_flags_vertical = 3
+
+[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/Control/VBoxContainer"]
+self_modulate = Color( 1, 1, 1, 0.694118 )
+margin_top = 486.0
+margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="list_panel" parent="CanvasLayer/Control/VBoxContainer/PanelContainer2" instance=ExtResource( 5 )]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 107.0
+
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/Container/battle_button" to="." method="_on_battle_button_pressed"]
+[connection signal="on_item_press" from="CanvasLayer/Control/VBoxContainer/PanelContainer2/list_panel" to="." method="_on_list_panel_on_item_press"]

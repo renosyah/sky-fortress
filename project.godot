@@ -111,8 +111,12 @@ _global_script_class_icons={
 [application]
 
 config/name="sky-fortress"
-run/main_scene="res://scene/battle-scene/battle_scene.tscn"
+run/main_scene="res://map/test/test.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Global="*res://script/Global.gd"
 
 [input]
 

@@ -7,3 +7,4 @@ func _ready():
 	cruise_speed = 3.0
 	turn_speed = 1.0
 	update_hp_bar()
+	show_hp_bar(false)

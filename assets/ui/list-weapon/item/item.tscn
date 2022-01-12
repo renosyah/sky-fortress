@@ -1,0 +1,121 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_14.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/ui/list-weapon/cooldown_bar.png" type="Texture" id=2]
+[ext_resource path="res://assets/ui/list-weapon/cannon_img.png" type="Texture" id=3]
+[ext_resource path="res://assets/ui/list-weapon/item/item.gd" type="Script" id=4]
+
+[node name="item" type="HBoxContainer"]
+margin_right = 109.0
+margin_bottom = 115.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="button" type="Button" parent="."]
+margin_right = 100.0
+margin_bottom = 115.0
+rect_min_size = Vector2( 100, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="button"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -25.0
+texture = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="Panel" parent="button"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -51.0
+margin_top = -48.0
+margin_right = 50.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="button/PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 5.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="button/PanelContainer/VBoxContainer"]
+margin_right = 101.0
+margin_bottom = 16.0
+custom_fonts/font = ExtResource( 1 )
+text = "Cannon"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="button/PanelContainer/VBoxContainer"]
+margin_top = 20.0
+margin_right = 101.0
+margin_bottom = 34.0
+text = "20/45"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="button/PanelContainer/VBoxContainer"]
+margin_top = 38.0
+margin_right = 101.0
+margin_bottom = 43.0
+rect_min_size = Vector2( 0, 5 )
+
+[node name="TextureProgress" type="TextureProgress" parent="button"]
+modulate = Color( 0, 0, 0, 1 )
+self_modulate = Color( 1, 1, 1, 0.533333 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+step = 0.1
+value = 23.0
+texture_progress = ExtResource( 2 )
+fill_mode = 5
+nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="TextureRect" parent="button"]
+visible = false
+modulate = Color( 0, 0, 0, 0.682353 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_left = 104.0
+margin_right = 109.0
+margin_bottom = 115.0
+rect_min_size = Vector2( 5, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="cooldown" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="pressed" from="button" to="." method="_on_button_pressed"]

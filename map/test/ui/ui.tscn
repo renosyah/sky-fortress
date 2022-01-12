@@ -1,0 +1,91 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://map/test/ui/ui.gd" type="Script" id=1]
+[ext_resource path="res://assets/ui/bar/hp_bar.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/ui/list-weapon/list_weapon.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/ui/deadscreen/deadscreen.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/ui/mini_map/MiniMap.tscn" type="PackedScene" id=5]
+
+[node name="ui" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control2" type="Control" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="deadscreen" parent="CanvasLayer/Control2" instance=ExtResource( 4 )]
+visible = false
+
+[node name="Control" type="HBoxContainer" parent="CanvasLayer/Control2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="left" type="Control" parent="CanvasLayer/Control2/Control"]
+margin_right = 338.0
+margin_bottom = 600.0
+mouse_filter = 2
+size_flags_horizontal = 3
+
+[node name="MiniMap" parent="CanvasLayer/Control2/Control/left" instance=ExtResource( 5 )]
+
+[node name="mid" type="Control" parent="CanvasLayer/Control2/Control"]
+margin_left = 342.0
+margin_right = 681.0
+margin_bottom = 600.0
+mouse_filter = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" parent="CanvasLayer/Control2/Control/mid" instance=ExtResource( 3 )]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -169.5
+margin_top = -174.0
+margin_right = 169.5
+margin_bottom = 0.0
+
+[node name="hp_bar" parent="CanvasLayer/Control2/Control/mid" instance=ExtResource( 2 )]
+
+[node name="right" type="Control" parent="CanvasLayer/Control2/Control"]
+margin_left = 685.0
+margin_right = 1024.0
+margin_bottom = 600.0
+mouse_filter = 2
+size_flags_horizontal = 3
+
+[node name="aim" type="Button" parent="CanvasLayer/Control2/Control/right"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -155.0
+margin_top = -85.0
+margin_right = -16.0
+margin_bottom = -27.0
+size_flags_vertical = 3
+text = "Aim"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="on_respawn_click" from="CanvasLayer/Control2/deadscreen" to="." method="_on_deadscreen_on_respawn_click"]
+[connection signal="on_item_press" from="CanvasLayer/Control2/Control/mid/VBoxContainer" to="." method="_on_VBoxContainer_on_item_press"]
+[connection signal="pressed" from="CanvasLayer/Control2/Control/right/aim" to="." method="_on_aim_pressed"]
+[connection signal="toggled" from="CanvasLayer/Control2/Control/right/aim" to="." method="_on_aim_toggled"]

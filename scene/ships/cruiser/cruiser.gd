@@ -23,6 +23,7 @@ func _ready():
 		
 	_highlight.highlight(false)
 	update_hp_bar()
+	show_hp_bar(false)
 	
 func set_hp_bar_color(_color : Color):
 	.set_hp_bar_color(_color)
