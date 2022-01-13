@@ -4,6 +4,7 @@ onready var _camera = $cameraPivot
 onready var _terrain = $terrain
 onready var _cursor = $cursor
 onready var _network_tick = $network_tick
+onready var _ui = $ui
 
 # must be generated
 # this will set a purpose on server
@@ -23,14 +24,17 @@ func _ready():
 	
 	# all own by server
 	_player_1.set_network_master(Network.PLAYER_HOST_ID)
+	_player_1.aim_point = _player_1_aim.translation
 	_player_1.guided_point = _player_1_aim
 	_player_1.show_hp_bar(false)
 	
 	_player_2.set_network_master(Network.PLAYER_HOST_ID)
+	_player_2.aim_point = _player_2_aim.translation
 	_player_2.guided_point = _player_2_aim
 	_player_2.show_hp_bar(true)
 	
 	_player_1.connect("on_move", self, "_on_player_on_move")
+	
 	
 ################################################################
 # network connection
@@ -75,13 +79,17 @@ func _on_cameraPivot_on_camera_moving(_translation, _zoom):
 	
 func _on_cameraPivot_on_body_enter_aim_sight(_body):
 	if _body != _player_1:
-		_lock_on(_player_1.get_path(), _body.get_path())
+		_lock_on = _body
 		_body.highlight(true)
 	
 ################################################################
 # network tick to send automatic request
 func _on_network_tick_timeout():
-	rpc("_aim",_player_1_aim.get_path(), _aim_point)
+	rpc_unreliable("_aim",_player_2.get_path(), _aim_point)
+	rpc_unreliable("_guide_aim", _player_2_aim.get_path(), _aim_point)
+	
+	if _lock_on:
+		rpc_unreliable("_lock_on",_player_1.get_path(),_lock_on.get_path())
 	
 ################################################################
 # on ui action

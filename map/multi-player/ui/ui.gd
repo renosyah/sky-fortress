@@ -2,7 +2,7 @@ extends Control
 
 signal on_aim_mode(_aim_mode)
 
-var _aim_mode = true
+var _aim_mode = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
