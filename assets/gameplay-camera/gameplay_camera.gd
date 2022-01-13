@@ -31,7 +31,9 @@ func _process(delta):
 	translation += velocity * delta * 25
 	
 	if _raycast.get_collider():
-		emit_signal("on_body_enter_aim_sight", _raycast.get_collider())
+		var _body = _raycast.get_collider()
+		if _body is KinematicBody:
+			emit_signal("on_body_enter_aim_sight", _body)
 	
 func parsing_input(event):
 	_unhandled_input(event)

@@ -1,7 +1,11 @@
 extends Node
 class_name MP_Battle
 
-var airborne_targets = []
+var _aim_mode = false
+
+var _aim_point :Vector3
+
+var _airborne_targets = []
 
 ################################################################
 # template for client request terrain data section
@@ -20,11 +24,29 @@ remote func _receive_terrain_data(
 	pass
 	
 ################################################################
-# template for client request object to move
-remote func _move(
-	node_path : NodePath,
-	translation : Vector3
-):
-	pass
+# client request object to move
+remote func _move(node_path : NodePath,translation : Vector3):
+	get_node(node_path).waypoint = translation
 	
 ################################################################
+# client request to object to
+# move at aim position
+remotesync func _aim(node_path : NodePath,translation : Vector3):
+	get_node(node_path).translation = translation
+	get_node(node_path).translation.y = 10.0
+	
+################################################################
+# client request to object to lock on
+remote func _lock_on(node_path : NodePath,node_path_target : NodePath):
+	get_node(node_path).lock_on_point = get_node(node_path_target)
+	
+################################################################
+
+
+
+
+
+
+
+
+

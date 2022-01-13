@@ -82,10 +82,19 @@ var side = ""
 # multiplayer sync
 var _network_timmer : Timer = null
 func _network_timmer_timeout():
+	if not waypoint:
+		return
+		
 	if is_network_master():
+		rset_unreliable("_puppet_data", _get_data())
 		rset_unreliable("_puppet_translation", translation)
 		rset_unreliable("_puppet_rotation", rotation)
-
+		
+puppet var _puppet_data : Dictionary setget _set_puppet_data
+func _set_puppet_data(_val : Dictionary):
+	_puppet_data = _val
+	set_data(_puppet_data)
+	
 puppet var _puppet_translation :Vector3 setget _set_puppet_translation
 func _set_puppet_translation(_val :Vector3):
 	_puppet_translation = _val
@@ -121,10 +130,17 @@ func set_data(_ship_data):
 	hp = _ship_data.hp
 	cruise_speed = _ship_data.cruise_speed
 	turn_speed = _ship_data.turn_speed
+	weapons = _ship_data.weapons
 	
-	weapons.clear()
-	for i in _ship_data.weapons:
-		weapons.append(i.duplicate())
+func _get_data():
+	var _ship_data = {
+		max_hp = max_hp,
+		hp = hp,
+		cruise_speed = cruise_speed,
+		turn_speed = turn_speed,
+		weapons = weapons,
+	}
+	return _ship_data
 	
 func show_hp_bar(_show : bool):
 	pass
@@ -268,6 +284,7 @@ func _process(delta):
 		rotation.x = lerp_angle(rotation.x, _puppet_rotation.x, delta * 5)
 		rotation.y = lerp_angle(rotation.y, _puppet_rotation.y, delta * 5)
 		rotation.z = lerp_angle(rotation.z, _puppet_rotation.z, delta * 5)
+		
 		emit_signal("on_move",self, translation)
 		return
 		
