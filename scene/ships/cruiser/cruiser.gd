@@ -8,6 +8,27 @@ onready var _hp_bar = $hpBar
 onready var _audio = $AudioStreamPlayer3D
 onready var _highlight = $highlight
 
+###############################################################
+# multiplayer sync
+func _set_puppet_translation(_val :Vector3):
+	._set_puppet_translation(_val)
+	if destroyed:
+		translation = _puppet_translation
+		return
+		
+	_tween.interpolate_property(self,"translation",translation, _puppet_translation, 0.1)
+	_tween.start()
+	
+func _set_puppet_rotation(_val:Vector3):
+	._set_puppet_rotation(_val)
+	if destroyed:
+		rotation = _puppet_rotation
+		return
+	
+###############################################################
+
+
+
 func make_ready():
 	.make_ready()
 	_ready()
@@ -15,9 +36,7 @@ func make_ready():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	._ready()
-	cruise_speed = 4.0
-	turn_speed = 1.5
-	
+
 	for i in _part.get_children():
 		i.visible = true
 		
@@ -61,6 +80,9 @@ func restock_ammo(weapon_slot, ammo_restock):
 	.restock_ammo(weapon_slot, ammo_restock)
 	
 func _on_Tween_tween_completed(object, key):
+	if not destroyed:
+		return
+		
 	if str(key) == ":translation":
 		.spawn_explosive_on_destroy()
 	
@@ -82,5 +104,5 @@ func play_sound(path : String):
 func update_hp_bar():
 	.update_hp_bar()
 	_hp_bar.update_bar(hp,max_hp)
-
+	
 

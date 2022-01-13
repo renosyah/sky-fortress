@@ -13,7 +13,7 @@ const SHIP_LIST = [
 		hp = 150,
 		cruise_speed = 2.0,
 		turn_speed = 0.5,
-		weapons = []
+		weapons = Weapon.CARRIER_TEMPLATES
 	},
 	{
 		id = "",
@@ -26,7 +26,7 @@ const SHIP_LIST = [
 		hp = 250,
 		cruise_speed = 3.0,
 		turn_speed = 1.0,
-		weapons = []
+		weapons = Weapon.BOMBER_TEMPLATES
 	},
 	{
 		id = "",
@@ -39,7 +39,7 @@ const SHIP_LIST = [
 		hp = 100,
 		cruise_speed = 4.0,
 		turn_speed = 1.5,
-		weapons = []
+		weapons = Weapon.CRUISER_TEMPLATES
 	}
 	
 ]
@@ -51,7 +51,6 @@ var MINIMAP_COLOR = Color.white
 signal on_move(_node, _translation)
 signal on_ready(_node)
 signal on_take_damage(_node, damage, hp)
-signal on_weapon_update(_node, _weapon_index, _weapon)
 signal on_spawning_weapon(_node)
 signal on_falling(_node)
 signal on_destroyed(_node)
@@ -79,21 +78,53 @@ var tag_color = Color.white
 var owner_id = ""
 var side = ""
 
+###############################################################
+# multiplayer sync
+var _network_timmer : Timer = null
+func _network_timmer_timeout():
+	if is_network_master():
+		rset_unreliable("_puppet_translation", translation)
+		rset_unreliable("_puppet_rotation", rotation)
+
+puppet var _puppet_translation :Vector3 setget _set_puppet_translation
+func _set_puppet_translation(_val :Vector3):
+	_puppet_translation = _val
+	
+puppet var _puppet_rotation: Vector3 setget _set_puppet_rotation
+func _set_puppet_rotation(_val:Vector3):
+	_puppet_rotation = _val
+	
+###############################################################
+	
+	
 func make_ready():
 	_ready()
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if not _network_timmer:
+		_network_timmer = Timer.new()
+		_network_timmer.wait_time = 0.08
+		_network_timmer.connect("timeout", self , "_network_timmer_timeout")
+		_network_timmer.autostart = true
+		add_child(_network_timmer)
+		
 	destroyed = false
 	visible = true
-	
-	for i in weapons.size():
-		emit_signal("on_weapon_update", self, i, weapons[i])
-	
 	emit_signal("on_ready", self)
 	
 func set_hp_bar_color(_color : Color):
 	tag_color = _color
+	
+func set_data(_ship_data):
+	max_hp = _ship_data.max_hp
+	hp = _ship_data.hp
+	cruise_speed = _ship_data.cruise_speed
+	turn_speed = _ship_data.turn_speed
+	
+	weapons.clear()
+	for i in _ship_data.weapons:
+		weapons.append(i.duplicate())
 	
 func show_hp_bar(_show : bool):
 	pass
@@ -126,7 +157,6 @@ func shot(weapon_index : int):
 	
 	var weapon = weapons[weapon_index]
 	
-	emit_signal("on_weapon_update", self, weapon_index, weapon)
 	
 	if weapons[weapon_index].ammo <= 0:
 		return
@@ -140,7 +170,6 @@ func shot(weapon_index : int):
 		update_hp_bar()
 		
 		emit_signal("on_ready", self)
-		emit_signal("on_weapon_update", self, weapon_index, weapon)
 		return
 		
 		
@@ -220,23 +249,30 @@ func shot(weapon_index : int):
 		
 		emit_signal("on_spawning_weapon", projectile)
 	
-	emit_signal("on_weapon_update", self, weapon_index, weapon)
-	
 func restock_ammo(weapon_slot, ammo_restock):
 	if weapons[weapon_slot].ammo < weapons[weapon_slot].max_ammo:
 		weapons[weapon_slot].ammo += ammo_restock
 	play_sound("res://assets/sounds/click.wav")
 	
-	emit_signal("on_weapon_update", self, weapon_slot, weapons[weapon_slot])
 	
 func play_sound(path : String):
 	pass
-	
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if destroyed:
 		return
 		
+	# is a puppet
+	if not is_network_master():
+		rotation.x = lerp_angle(rotation.x, _puppet_rotation.x, delta * 5)
+		rotation.y = lerp_angle(rotation.y, _puppet_rotation.y, delta * 5)
+		rotation.z = lerp_angle(rotation.z, _puppet_rotation.z, delta * 5)
+		emit_signal("on_move",self, translation)
+		return
+		
+	check_weapon_status()
+	
 	var velocity = Vector3.ZERO
 	var direction = Vector3.ZERO
 	var distance_to_target = 0.0
@@ -271,7 +307,30 @@ func _on_finish_explode():
 	visible = false
 	emit_signal("on_destroyed", self)
 
-
+func check_weapon_status():
+	for weapon in weapons:
+		weapon.can_fire = false
+		
+		if weapon.type == Weapon.TYPE_UNGUIDED and aim_point:
+			var _aim_at = aim_point
+			if is_instance_valid(lock_on_point):
+				_aim_at = lock_on_point.translation
+				
+			var distance_to_target = translation.distance_to(_aim_at)
+			weapon.can_fire = distance_to_target < weapon.max_range and distance_to_target > weapon.min_range
+			
+		if weapon.type == Weapon.TYPE_GUIDED and is_instance_valid(guided_point):
+			var distance_to_target = translation.distance_to(guided_point.translation)
+			weapon.can_fire = distance_to_target < weapon.max_range and distance_to_target > weapon.min_range
+			
+		if weapon.type == Weapon.TYPE_LOCK_ON and is_instance_valid(lock_on_point):
+			var distance_to_target = translation.distance_to(lock_on_point.translation)
+			weapon.can_fire =  distance_to_target < weapon.max_range and distance_to_target > weapon.min_range
+			
+		if weapon.type == Weapon.TYPE_CONTROLLED and is_instance_valid(lock_on_point):
+			var distance_to_target = translation.distance_to(lock_on_point.translation)
+			weapon.can_fire = distance_to_target < weapon.max_range and distance_to_target > weapon.min_range
+			
 
 
 

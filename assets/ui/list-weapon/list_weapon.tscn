@@ -2,9 +2,10 @@
 
 [ext_resource path="res://assets/ui/list-weapon/list_weapon.gd" type="Script" id=2]
 
-[node name="VBoxContainer" type="VBoxContainer"]
-anchor_right = 1.0
-margin_bottom = 174.0
+[node name="weapon_list" type="VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 159.0
+mouse_filter = 2
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -14,6 +15,7 @@ __meta__ = {
 margin_right = 1024.0
 margin_bottom = 150.0
 rect_min_size = Vector2( 0, 150 )
+mouse_filter = 2
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -22,5 +24,6 @@ __meta__ = {
 [node name="MarginContainer" type="MarginContainer" parent="."]
 margin_top = 154.0
 margin_right = 1024.0
-margin_bottom = 174.0
-rect_min_size = Vector2( 0, 20 )
+margin_bottom = 159.0
+rect_min_size = Vector2( 0, 5 )
+mouse_filter = 2

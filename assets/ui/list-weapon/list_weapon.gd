@@ -5,6 +5,7 @@ signal on_item_press(data)
 onready var _container = $HBoxContainer
 
 var datas = []
+var clickable = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -20,6 +21,7 @@ func update_list():
 		item.connect("pressed", self ,"_pressed")
 		item.data = i
 		item.index = idx
+		item.clickable = clickable
 		_container.add_child(item)
 		item.display_item()
 		idx += 1

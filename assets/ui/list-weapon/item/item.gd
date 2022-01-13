@@ -11,6 +11,7 @@ onready var _enable = $button/TextureRect2
 
 var index = 0
 var data = {}
+var clickable = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -32,9 +33,12 @@ func display_item():
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if data.has("ammo"):
+	if not clickable:
+		return
+		
+	if data.has("ammo") and data.has("can_fire"):
 		_ammo.text = str(data.ammo)
-		_enable.visible = data.ammo == 0
+		_enable.visible = data.ammo == 0 or not data.can_fire
 		
 	if _cooldown.is_stopped():
 		return
@@ -44,6 +48,12 @@ func _process(delta):
 	
 	
 func _on_button_pressed():
+	if not clickable:
+		return
+		
+	if not data.can_fire:
+		return
+		
 	if data.ammo <= 0:
 		return
 		

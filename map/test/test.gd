@@ -1,20 +1,23 @@
 extends Node
 
 var HOSTILE_SHIPS = {
-	"res://scene/ships/cruiser/cruiser.tscn" : Weapon.CRUISER_TEMPLATES,
-	"res://scene/ships/carrier/carrier.tscn" : Weapon.CARRIER_TEMPLATES,
-	"res://scene/ships/bomber/bomber.tscn" : Weapon.BOMBER_TEMPLATES,
+	"res://scene/ships/cruiser/cruiser.tscn" : Ship.SHIP_LIST[2],
+	"res://scene/ships/carrier/carrier.tscn" : Ship.SHIP_LIST[0],
+	"res://scene/ships/bomber/bomber.tscn" : Ship.SHIP_LIST[1],
 }
 var HOSTILE_INSTALATION = {
 	"res://scene/fort/aa-instalation/aa_instalation.tscn" : Weapon.AA_FORT_TEMPLATE,
 	"res://scene/fort/airstrip/airstrip.tscn" : Weapon.CARRIER_TEMPLATES
 }
 
+signal player_on_ready(player)
+
 const MAX_HOSTILE = 4
 const MAX_INSTALATION = 3
 
 var airborne_targets = []
 
+onready var _player = null
 onready var _terrain = $terrain
 onready var _camera = $cameraPivot
 onready var _cursor = $cursor
@@ -24,21 +27,33 @@ var is_aiming = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$player.owner_id = str(GDUUID.v4())
-	$player.side = "player"
-	$player.MINIMAP_COLOR = Color.green
-	$player.show_hp_bar(false)
-	$player.set_hp_bar_color(Color.green)
+	_player= load(Global.selected_ship.scene).instance()
+	_player.owner_id = str(GDUUID.v4())
+	_player.side = "player"
+	_player.MINIMAP_COLOR = Color.green
+
+	_player.set_data(Global.selected_ship)
+	add_child(_player)
 	
-	$player.weapons.clear()
-	for i in Weapon.CARRIER_TEMPLATES:
-		$player.weapons.append(i.duplicate())
-		
-	$player.make_ready()
-	airborne_targets.append($player)
+	_player.connect("on_destroyed",_ui,"_on_player_on_destroyed")
+	_player.connect("on_falling",self,"_on_player_on_falling")
+	_player.connect("on_falling",_ui,"_on_player_on_falling")
+	_player.connect("on_move",self,"_on_player_on_move")
+	_player.connect("on_spawning_weapon" ,self,"_on_player_on_spawning_weapon")
+	_player.connect("on_take_damage",_ui,"_on_player_on_take_damage")
 	
-	_ui.add_minimap_object($player)
+	_player.translation = Vector3(0, 10, 0)
+	_player.show_hp_bar(false)
+	_player.set_hp_bar_color(Color.green)
+	_player.make_ready()
+	
+	emit_signal("player_on_ready", _player)
+	
+	airborne_targets.append(_player)
+	
+	_ui.add_minimap_object(_player)
 	_ui.set_camera(_camera)
+	
 	_terrain.generate()
 	_on_enemy_decision_timer_timeout()
 		
@@ -87,21 +102,17 @@ func spawn_hostile_airship():
 		
 	var spawn_pos = _terrain.cloud_spawn_points[randi() % _terrain.cloud_spawn_points.size()]
 	
-	var ship_data = HOSTILE_SHIPS.keys()[randi() % HOSTILE_SHIPS.keys().size()]
-	var ship = load(ship_data).instance()
+	var ship_data_key = HOSTILE_SHIPS.keys()[randi() % HOSTILE_SHIPS.keys().size()]
+	var ship = load(ship_data_key).instance()
 	var color = Color.red #Color(randf(),randf(),randf(), 1)
 	
 	$bot_holder.add_child(ship)
 	ship.translation = spawn_pos
 	ship.translation.y = Ship.DEFAULT_ALTITUDE
-	
-	ship.weapons.clear()
-	for i in HOSTILE_SHIPS[ship_data]:
-		ship.weapons.append(i.duplicate())
-		
 	ship.MINIMAP_COLOR = color
 	ship.owner_id = str(GDUUID.v4())
 	ship.side = str(GDUUID.v4()) + "-side"
+	ship.set_data(HOSTILE_SHIPS[ship_data_key])
 	ship.show_hp_bar(true)
 	ship.set_hp_bar_color(color)
 	ship.connect("on_destroyed", self, "_on_enemy_on_destroyed")
@@ -112,7 +123,7 @@ func spawn_hostile_airship():
 	
 # test clicking ground
 func _on_terrain_on_ground_clicked(_translation):
-	$player.waypoint= _translation
+	_player.waypoint= _translation
 	_cursor.translation = _translation
 	_cursor.show()
 	
@@ -123,14 +134,12 @@ func _on_ui_on_aim_press(_is_press):
 	_camera.aim_reticle(_is_press)
 	is_aiming = _is_press
 	
-	if is_instance_valid($player.lock_on_point):
-		$player.lock_on_point.highlight(is_aiming)
+	if is_instance_valid(_player.lock_on_point):
+		_player.lock_on_point.highlight(is_aiming)
 		
 func _on_ui_on_shot_press(_index):
-	if $player.has_method("shot"):
-		$player.aim_point = _camera.translation
-		$player.guided_point = _camera
-		$player.shot(_index)
+	if _player.has_method("shot"):
+		_player.shot(_index)
 	
 	
 	
@@ -215,12 +224,14 @@ func _on_enemy_on_destroyed(_node):
 	
 # testing player
 func _on_player_on_move(_node, _translation):
+	$marker.translation = _translation
+	$marker.translation.y = 8.0
 	if not is_aiming:
 		_camera.translation = _translation
 		
 func _on_player_on_falling(_node):
-	if is_instance_valid($player.lock_on_point):
-		$player.lock_on_point.highlight(false)
+	if is_instance_valid(_player.lock_on_point):
+		_player.lock_on_point.highlight(false)
 		
 	_camera.translation =_node.translation
 	
@@ -235,39 +246,34 @@ func _on_cameraPivot_on_body_enter_aim_sight(body):
 	if not body is KinematicBody:
 		return
 		
-	if body == $player:
+	if body == _player:
 		return
 		
-	if body.owner_id == $player.owner_id:
+	if body.owner_id == _player.owner_id:
 		return
 	
-	if is_instance_valid($player.lock_on_point):
-		$player.lock_on_point.highlight(false)
+	if is_instance_valid(_player.lock_on_point):
+		_player.lock_on_point.highlight(false)
 		
-	$player.lock_on_point = body
-	$player.lock_on_point.highlight(true)
+	_player.lock_on_point = body
+	_player.lock_on_point.highlight(true)
 	
-	
+func _on_cameraPivot_on_camera_moving(_translation, _zoom):
+	_player.aim_point = _translation
+	_player.guided_point = _camera
 	
 	
 # respawn
 func _on_ui_on_respawn_click():
 	var pos = _terrain.feature_translations[randi() % _terrain.feature_translations.size()]
-	$player.destroyed = false
-	$player.hp = $player.max_hp
+	_player.destroyed = false
+	_player.hp = _player.max_hp
 	
-	$player.weapons.clear()
+	_player.weapons.clear()
 	for i in Weapon.CARRIER_TEMPLATES:
-		$player.weapons.append(i.duplicate())
+		_player.weapons.append(i.duplicate())
 		
-	$player.translation = pos
-	$player.translation.y = Ship.DEFAULT_ALTITUDE
-	$player.make_ready()
-
-
-
-
-
-
-
-
+	_player.translation = pos
+	_player.translation.y = Ship.DEFAULT_ALTITUDE
+	_player.make_ready()
+	

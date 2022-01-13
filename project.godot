@@ -54,6 +54,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/Godot-Touch-Input-Manager/CustomInputEvents/InputEventSingleScreenTouch.gd"
 }, {
+"base": "Node",
+"class": "MP_Battle",
+"language": "GDScript",
+"path": "res://map/multi-player/Battle.gd"
+}, {
 "base": "MarginContainer",
 "class": "MiniMap",
 "language": "GDScript",
@@ -99,6 +104,7 @@ _global_script_class_icons={
 "InputEventSingleScreenDrag": "",
 "InputEventSingleScreenTap": "",
 "InputEventSingleScreenTouch": "",
+"MP_Battle": "",
 "MiniMap": "",
 "RandomNameGenerator": "",
 "SaveLoad": "",
@@ -111,12 +117,13 @@ _global_script_class_icons={
 [application]
 
 config/name="sky-fortress"
-run/main_scene="res://map/test/test.tscn"
+run/main_scene="res://map/multi-player/client/battle.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 Global="*res://script/Global.gd"
+Network="*res://addons/network/Network.gd"
 
 [input]
 

@@ -1,6 +1,5 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://scene/ships/carrier/carrier.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/gameplay-camera/gameplay_camera.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/cursor/cursor.tscn" type="PackedScene" id=3]
 [ext_resource path="res://map/test/ui/ui.tscn" type="PackedScene" id=4]
@@ -21,18 +20,10 @@ script = ExtResource( 7 )
 
 [node name="ui" parent="." instance=ExtResource( 4 )]
 
-[node name="player" parent="." instance=ExtResource( 1 )]
+[node name="marker" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0 )
 
-[node name="RemoteTransform" type="RemoteTransform" parent="player"]
-remote_path = NodePath("../../Spatial")
-update_rotation = false
-update_scale = false
-
-[node name="Spatial" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0 )
-
-[node name="Sprite3D" type="Sprite3D" parent="Spatial"]
+[node name="Sprite3D" type="Sprite3D" parent="marker"]
 transform = Transform( 10, 0, 0, 0, -4.37114e-07, -10, 0, 10, -4.37114e-07, 0, -1, 0 )
 opacity = 0.5
 texture = ExtResource( 6 )
@@ -63,18 +54,12 @@ environment = SubResource( 2 )
 
 [node name="cameraPivot" parent="." instance=ExtResource( 2 )]
 
+[connection signal="player_on_ready" from="." to="ui" method="_on_battlescene_player_on_ready"]
 [connection signal="on_aim_press" from="ui" to="." method="_on_ui_on_aim_press"]
 [connection signal="on_respawn_click" from="ui" to="." method="_on_ui_on_respawn_click"]
 [connection signal="on_shot_press" from="ui" to="." method="_on_ui_on_shot_press"]
-[connection signal="on_destroyed" from="player" to="ui" method="_on_player_on_destroyed"]
-[connection signal="on_falling" from="player" to="." method="_on_player_on_falling"]
-[connection signal="on_falling" from="player" to="ui" method="_on_player_on_falling"]
-[connection signal="on_move" from="player" to="." method="_on_player_on_move"]
-[connection signal="on_ready" from="player" to="ui" method="_on_player_on_ready"]
-[connection signal="on_spawning_weapon" from="player" to="." method="_on_player_on_spawning_weapon"]
-[connection signal="on_take_damage" from="player" to="ui" method="_on_player_on_take_damage"]
-[connection signal="on_weapon_update" from="player" to="ui" method="_on_player_on_weapon_update"]
 [connection signal="timeout" from="enemy_decision_timer" to="." method="_on_enemy_decision_timer_timeout"]
 [connection signal="timeout" from="enemy_spawning_timer" to="." method="_on_enemy_spawning_timer_timeout"]
 [connection signal="on_ground_clicked" from="terrain" to="." method="_on_terrain_on_ground_clicked"]
 [connection signal="on_body_enter_aim_sight" from="cameraPivot" to="." method="_on_cameraPivot_on_body_enter_aim_sight"]
+[connection signal="on_camera_moving" from="cameraPivot" to="." method="_on_cameraPivot_on_camera_moving"]

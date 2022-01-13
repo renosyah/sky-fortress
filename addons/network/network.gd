@@ -107,9 +107,8 @@ remote func _send_player_info(player_network_unique_id : int, _data : Dictionary
 	emit_signal("player_connected", player_network_unique_id)
 	emit_signal("player_connected_data_receive", player_network_unique_id, _data)
 	
-# this will be emit by everybody
-# except joined player and prepare
-# puppet for newly joined player
+# this will be emit for everybody
+# after new player join
 func _network_peer_connected(player_network_unique_id : int):
 	if get_tree().is_network_server():
 		return
