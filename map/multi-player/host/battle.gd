@@ -30,7 +30,7 @@ func _ready():
 	_player_1.set_network_master(Network.PLAYER_HOST_ID)
 	_player_1.aim_point = _player_1_aim.translation
 	_player_1.guided_point = _player_1_aim
-	_player_1.set_data(Ship.SHIP_LIST[0])
+	_player_1.set_data(Ship.SHIP_LIST[1])
 	_player_1.show_hp_bar(false)
 	_player_1.set_hp_bar_color(Color.green)
 	
@@ -39,7 +39,7 @@ func _ready():
 	_player_2.set_network_master(Network.PLAYER_HOST_ID)
 	_player_2.aim_point = _player_2_aim.translation
 	_player_2.guided_point = _player_2_aim
-	_player_2.set_data(Ship.SHIP_LIST[0])
+	_player_2.set_data(Ship.SHIP_LIST[1])
 	_player_2.show_hp_bar(true)
 	_player_2.set_hp_bar_color(Color.blue)
 	
