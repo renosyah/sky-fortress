@@ -116,8 +116,8 @@ remotesync func _destroy():
 	destroyed = true
 	emit_signal("on_falling", self)
 	
-remotesync func _shot(weapon_index : int):
-	_launch(weapon_index)
+remotesync func _shot(weapon_index : int, name : String):
+	_launch(weapon_index, name)
 	
 remotesync func _restock_ammo(weapon_slot, ammo_restock):
 	if weapons[weapon_slot].ammo < weapons[weapon_slot].max_ammo:
@@ -169,9 +169,9 @@ func destroy():
 	rpc("_destroy")
 	
 func shot(weapon_index : int):
-	rpc("_shot", weapon_index)
+	rpc("_shot", weapon_index, "weapon-" + str(GDUUID.v4()))
 	
-func _launch(weapon_index : int):
+func _launch(weapon_index : int, name : String):
 	if destroyed:
 		return
 		
@@ -197,6 +197,7 @@ func _launch(weapon_index : int):
 		
 	var projectile = load(weapon.ammo_scene).instance()
 	projectile.set_network_master(get_network_master())
+	projectile.name = name
 	projectile.damage = weapon.damage
 	projectile.speed = weapon.speed
 	projectile.owner_id = owner_id

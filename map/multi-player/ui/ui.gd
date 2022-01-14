@@ -2,8 +2,8 @@ extends Control
 
 signal on_shot_press(_index)
 signal on_aim_mode(_aim_mode)
-signal on_respawn_click()
 
+onready var _spectatescreen = $CanvasLayer/Control2/spectate
 onready var _deadscreen = $CanvasLayer/Control2/deadscreen
 onready var _ui_control = $CanvasLayer/Control2/Control
 onready var _hp_bar = $CanvasLayer/Control2/Control/mid/hp_bar
@@ -13,10 +13,11 @@ var _aim_mode = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	_weapons_bar.visible = false
 	
 func _on_aim_pressed():
 	_aim_mode = not _aim_mode
+	_weapons_bar.visible = _aim_mode
 	emit_signal("on_aim_mode" ,_aim_mode)
 	
 func _on_VBoxContainer_on_item_press(index, data):
@@ -41,5 +42,10 @@ func _on_player_on_falling(player):
 	_ui_control.visible = false
 	emit_signal("on_aim_mode" ,_aim_mode)
 	
-func _on_deadscreen_on_respawn_click():
-	emit_signal("on_respawn_click")
+func _on_deadscreen_on_spectate_click():
+	_ui_control.visible = false
+	_deadscreen.visible = false
+	_spectatescreen.visible = true
+	
+	
+	

@@ -28,6 +28,24 @@ var max_hp = 1.0
 
 ###############################################################
 # multiplayer sync
+var _network_timmer : Timer = null
+func _network_timmer_timeout():
+	if destroyed:
+		return
+		
+	if is_network_master():
+		rset_unreliable("_puppet_translation", translation)
+		rset_unreliable("_puppet_rotation", rotation)
+		
+	
+puppet var _puppet_translation :Vector3 setget _set_puppet_translation
+func _set_puppet_translation(_val :Vector3):
+	_puppet_translation = _val
+	
+puppet var _puppet_rotation: Vector3 setget _set_puppet_rotation
+func _set_puppet_rotation(_val:Vector3):
+	_puppet_rotation = _val
+	
 remotesync func _take_damage(damage):
 	if destroyed:
 		return
@@ -51,9 +69,27 @@ remotesync func clean_it():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if not _network_timmer:
+		_network_timmer = Timer.new()
+		_network_timmer.wait_time = 0.08
+		_network_timmer.connect("timeout", self , "_network_timmer_timeout")
+		_network_timmer.autostart = true
+		add_child(_network_timmer)
+		
 	MINIMAP_COLOR = tag_color
 	set_as_toplevel(true)
 	
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	if destroyed:
+		return
+		
+	# is a puppet
+	if not is_network_master():
+		rotation.x = lerp_angle(rotation.x, _puppet_rotation.x, delta * 5)
+		rotation.y = lerp_angle(rotation.y, _puppet_rotation.y, delta * 5)
+		rotation.z = lerp_angle(rotation.z, _puppet_rotation.z, delta * 5)
+		return
 	
 func lauching_at(to: Spatial):
 	_target = to

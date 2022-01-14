@@ -30,6 +30,9 @@ func _on_cannonBall_body_entered(body):
 	if not body is KinematicBody:
 		return
 		
+	if body.owner_id == owner_id or body.side == side:
+		return
+		
 	if body.has_method("take_damage"):
 		body.take_damage(Weapon.get_damage_mult(damage))
 		

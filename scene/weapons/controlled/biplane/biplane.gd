@@ -8,6 +8,39 @@ onready var _tag = $tag
 onready var _tween = $Tween
 onready var _highlight = $highlight
 
+###############################################################
+# multiplayer sync
+func _set_puppet_translation(_val :Vector3):
+	._set_puppet_translation(_val)
+	if destroyed:
+		translation = _puppet_translation
+		return
+		
+	_tween.interpolate_property(self,"translation",translation, _puppet_translation, 0.1)
+	_tween.start()
+	
+func _set_puppet_rotation(_val:Vector3):
+	._set_puppet_rotation(_val)
+	if destroyed:
+		rotation = _puppet_rotation
+		return
+	
+remotesync func _take_damage(damage):
+	._take_damage(damage)
+	
+remotesync func _falling():
+	._falling()
+	_highlight.visible = false
+	_mg_firing.visible = false
+	_tag.visible = false
+	var _down = Vector3(translation.x, 1.0, translation.y)
+	look_at(_down, Vector3.UP)
+	_tween.interpolate_property(_pivot, "rotation", _pivot.rotation,  Vector3(0,0,120), 10.0)
+	_tween.interpolate_property(self, "translation", translation, _down, rand_range(4.0,6.0))
+	_tween.start()
+	
+###############################################################
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	._ready()
@@ -22,6 +55,11 @@ func highlight(_show : bool):
 	
 	
 func _process(delta):
+	._process(delta)
+	
+	if not is_network_master():
+		return
+		
 	if is_instance_valid(_target) and not _mission_over:
 		var distance_to_target = translation.distance_to(_target.translation)
 		var distance_to_waypoint = translation.distance_to(_waypoint)
@@ -70,25 +108,12 @@ func lauching_at(to: Spatial):
 func _on_UpdateCourse_timeout():
 	.update_course()
 	
-	
-	
-	
-remotesync func _take_damage(damage):
-	._take_damage(damage)
-	
-	
-remotesync func _falling():
-	._falling()
-	_highlight.visible = false
-	_mg_firing.visible = false
-	_tag.visible = false
-	var _down = Vector3(translation.x, 1.0, translation.y)
-	look_at(_down, Vector3.UP)
-	_tween.interpolate_property(_pivot, "rotation", _pivot.rotation,  Vector3(0,0,120), 10.0)
-	_tween.interpolate_property(self, "translation", translation, _down, rand_range(4.0,6.0))
-	_tween.start()
+
 	
 func _on_Tween_tween_completed(object, key):
+	if not destroyed:
+		return
+		
 	if str(key) == ":translation":
 		.spawn_explosive_on_destroy()
 	

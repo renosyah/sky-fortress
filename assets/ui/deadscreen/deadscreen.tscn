@@ -58,12 +58,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="respawn" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="spectate" type="Button" parent="CenterContainer/VBoxContainer"]
 margin_top = 240.0
 margin_right = 530.0
 margin_bottom = 360.0
 rect_min_size = Vector2( 0, 120 )
 custom_fonts/font = ExtResource( 2 )
-text = "Respawn"
+text = "Spectate"
 
-[connection signal="pressed" from="CenterContainer/VBoxContainer/respawn" to="." method="_on_respawn_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/spectate" to="." method="_on_spectate_pressed"]

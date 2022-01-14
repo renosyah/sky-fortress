@@ -80,5 +80,4 @@ mouse_filter = 2
 [connection signal="on_camera_moving" from="cameraPivot" to="." method="_on_cameraPivot_on_camera_moving"]
 [connection signal="timeout" from="network_tick" to="." method="_on_network_tick_timeout"]
 [connection signal="on_aim_mode" from="ui" to="." method="_on_ui_on_aim_mode"]
-[connection signal="on_respawn_click" from="ui" to="." method="_on_ui_on_respawn_click"]
 [connection signal="on_shot_press" from="ui" to="." method="_on_ui_on_shot_press"]

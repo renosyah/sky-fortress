@@ -3,16 +3,16 @@ class_name MP_Battle
 
 signal player_on_ready(player)
 
-
 var _aim_mode = false
 
 var _aim_point :Vector3
 var _lock_on_point : Spatial
 
+# for every targetable airborne node
 var _airborne_targets = []
 
 ################################################################
-# template for client request terrain data section
+# client request terrain data section
 # and receive terrain data section
 remote func _request_terrain_data(
 	from_id : int
@@ -28,27 +28,48 @@ remote func _receive_terrain_data(
 	pass
 	
 ################################################################
-# client request object to move
+# request object to move
 remote func _move(node_path : NodePath, translation : Vector3):
-	get_node(node_path).waypoint = translation
+	var _node = get_node(node_path)
+	if not is_instance_valid(_node):
+		return
+		
+	_node.waypoint = translation
 	
 ################################################################
 # client request to object to
 # move at guided aim position
 remotesync func _guide_aim(node_path : NodePath, translation : Vector3):
-	get_node(node_path).translation = translation
-	get_node(node_path).translation.y = 10.0
+	var _node = get_node(node_path)
+	if not is_instance_valid(_node):
+		return
+		
+	_node.translation = translation
+	_node.translation.y = 10.0
 	
-################################################################
-# client request to object to
+
+# request to object to
 # move at guided aim position
 remotesync func _aim(node_path : NodePath, translation : Vector3):
-	get_node(node_path).aim_point = translation
+	var _node = get_node(node_path)
+	if not is_instance_valid(_node):
+		return
+		
+	_node.aim_point = translation
 	
-################################################################
-# client request to object to lock on
+
+# request to object to
+# lock on target node
 remotesync func _lock_on(node_path : NodePath, node_path_target : NodePath):
-	get_node(node_path).lock_on_point = get_node(node_path_target)
+	var _node = get_node(node_path)
+	if not is_instance_valid(_node):
+		return
+		
+	var _node_target = get_node(node_path_target)
+	if not is_instance_valid(_node_target):
+		return
+		
+	_node.lock_on_point = _node_target
 	
 ################################################################
 

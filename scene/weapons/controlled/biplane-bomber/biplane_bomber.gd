@@ -8,6 +8,52 @@ onready var _highlight = $highlight
 
 var delivered = false
 
+###############################################################
+# multiplayer sync
+func _set_puppet_translation(_val :Vector3):
+	._set_puppet_translation(_val)
+	if destroyed:
+		translation = _puppet_translation
+		return
+		
+	_tween.interpolate_property(self,"translation",translation, _puppet_translation, 0.1)
+	_tween.start()
+	
+func _set_puppet_rotation(_val:Vector3):
+	._set_puppet_rotation(_val)
+	if destroyed:
+		rotation = _puppet_rotation
+		return
+	
+remotesync func _take_damage(damage):
+	._take_damage(damage)
+	
+	
+remotesync func _falling():
+	._falling()
+	_highlight.visible = false
+	_tag.visible = false
+	var _down = Vector3(translation.x, 1.0, translation.y)
+	look_at(_down, Vector3.UP)
+	_tween.interpolate_property(_pivot, "rotation", _pivot.rotation,  Vector3(0,0,120), 10.0)
+	_tween.interpolate_property(self, "translation", translation, _down, rand_range(3.0,4.0))
+	_tween.start()
+	
+remotesync func _deliver_payload():
+	var projectile = load("res://scene/weapons/un-guided/bomb/bomb.tscn").instance()
+	projectile.damage = damage
+	projectile.speed = speed * 2
+	projectile.owner_id = owner_id
+	projectile.side = side
+	projectile.tag_color = tag_color
+	get_parent().add_child(projectile)
+	projectile.translation = translation
+	projectile.lauching_at(_target.translation)
+	
+###############################################################
+
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	._ready()
@@ -18,6 +64,11 @@ func highlight(_show : bool):
 	_highlight.highlight(_show)
 	
 func _process(delta):
+	._process(delta)
+		
+	if not is_network_master():
+		return
+		
 	if is_instance_valid(_target) and not _mission_over:
 		var target_translation = _target.translation + Vector3(0, DEFAULT_ALTITUDE, 0)
 		var distance_to_target = translation.distance_to(target_translation)
@@ -51,40 +102,19 @@ func lauching_at(to: Spatial):
 	
 	
 	
-	
-	
-remotesync func _take_damage(damage):
-	._take_damage(damage)
-	
-	
-remotesync func _falling():
-	._falling()
-	_highlight.visible = false
-	_tag.visible = false
-	var _down = Vector3(translation.x, 1.0, translation.y)
-	look_at(_down, Vector3.UP)
-	_tween.interpolate_property(_pivot, "rotation", _pivot.rotation,  Vector3(0,0,120), 10.0)
-	_tween.interpolate_property(self, "translation", translation, _down, rand_range(3.0,4.0))
-	_tween.start()
-	
-	
-	
 func _on_Tween_tween_completed(object, key):
+	if not destroyed:
+		return
+		
 	if str(key) == ":translation":
 		.spawn_explosive_on_destroy()
 	
 	
 	
 func deliver_payload():
-	var projectile = load("res://scene/weapons/un-guided/bomb/bomb.tscn").instance()
-	projectile.damage = damage
-	projectile.speed = speed * 2
-	projectile.owner_id = owner_id
-	projectile.side = side
-	projectile.tag_color = tag_color
-	get_parent().add_child(projectile)
-	projectile.translation = translation
-	projectile.lauching_at(_target.translation)
+	rpc("_deliver_payload")
+	
+
 
 
 
