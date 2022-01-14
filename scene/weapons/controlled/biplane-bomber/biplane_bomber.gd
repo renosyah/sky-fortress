@@ -66,7 +66,7 @@ func highlight(_show : bool):
 func _process(delta):
 	._process(delta)
 		
-	if not is_network_master():
+	if get_tree().network_peer and not is_network_master():
 		return
 		
 	if is_instance_valid(_target) and not _mission_over:
@@ -112,7 +112,11 @@ func _on_Tween_tween_completed(object, key):
 	
 	
 func deliver_payload():
-	rpc("_deliver_payload")
+	if get_tree().network_peer:
+		rpc("_deliver_payload")
+		return
+		
+	_deliver_payload()
 	
 
 

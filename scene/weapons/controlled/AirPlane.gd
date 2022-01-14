@@ -33,7 +33,7 @@ func _network_timmer_timeout():
 	if destroyed:
 		return
 		
-	if is_network_master():
+	if get_tree().network_peer and is_network_master():
 		rset_unreliable("_puppet_translation", translation)
 		rset_unreliable("_puppet_rotation", rotation)
 		
@@ -85,7 +85,7 @@ func _process(delta):
 		return
 		
 	# is a puppet
-	if not is_network_master():
+	if get_tree().network_peer and not is_network_master():
 		rotation.x = lerp_angle(rotation.x, _puppet_rotation.x, delta * 5)
 		rotation.y = lerp_angle(rotation.y, _puppet_rotation.y, delta * 5)
 		rotation.z = lerp_angle(rotation.z, _puppet_rotation.z, delta * 5)
@@ -98,10 +98,18 @@ func lauching_at(to: Spatial):
 	
 	
 func take_damage(damage):
-	rpc("_take_damage", damage)
+	if get_tree().network_peer:
+		rpc("_take_damage", damage)
+		return
+		
+	_take_damage(damage)
 	
 func falling():
-	rpc("_falling")
+	if get_tree().network_peer:
+		rpc("_falling")
+		return
+	
+	_falling()
 	
 func update_course():
 	if is_instance_valid(_target):
@@ -116,7 +124,12 @@ func spawn_explosive_on_destroy():
 	get_parent().add_child(explosive)
 	explosive.translation = translation
 	explosive.scale = Vector3.ONE * 10
-	rpc("clean_it")
+	
+	if get_tree().network_peer:
+		rpc("clean_it")
+		return
+		
+	clean_it()
 	
 func spawn_small_explosive_on_damage():
 	var explosive = preload("res://assets/explosive/explosive.tscn").instance()
@@ -141,7 +154,11 @@ func perform_landing(body):
 	if body.has_method("restock_ammo"):
 		body.restock_ammo(weapon_slot, ammo_restock)
 		
-	rpc("clean_it")
+	if get_tree().network_peer:
+		rpc("clean_it")
+		return
+		
+	clean_it()
 
 
 

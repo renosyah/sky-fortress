@@ -85,7 +85,7 @@ func _network_timmer_timeout():
 	if not waypoint:
 		return
 		
-	if is_network_master():
+	if get_tree().network_peer and is_network_master():
 		rset_unreliable("_puppet_translation", translation)
 		rset_unreliable("_puppet_rotation", rotation)
 		
@@ -127,7 +127,11 @@ remotesync func _restock_ammo(weapon_slot, ammo_restock):
 ###############################################################
 	
 func make_ready():
-	rpc("_make_ready")
+	if get_tree().network_peer:
+		rpc("_make_ready")
+		return
+		
+	_make_ready()
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -163,13 +167,25 @@ func update_hp_bar():
 	pass
 	
 func take_damage(damage):
-	rpc("_take_damage",damage)
+	if get_tree().network_peer:
+		rpc("_take_damage",damage)
+		return
+		
+	_take_damage(damage)
 	
 func destroy():
-	rpc("_destroy")
+	if get_tree().network_peer:
+		rpc("_destroy")
+		return
+		
+	_destroy()
 	
 func shot(weapon_index : int):
-	rpc("_shot", weapon_index, "weapon-" + str(GDUUID.v4()))
+	if get_tree().network_peer:
+		rpc("_shot", weapon_index, "weapon-" + str(GDUUID.v4()))
+		return
+		
+	_shot(weapon_index, "weapon-" + str(GDUUID.v4()))
 	
 func _launch(weapon_index : int, name : String):
 	if destroyed:
@@ -274,7 +290,12 @@ func _launch(weapon_index : int, name : String):
 		emit_signal("on_spawning_weapon", projectile)
 	
 func restock_ammo(weapon_slot : int, ammo_restock : float):
-	rpc("_restock_ammo",weapon_slot, ammo_restock)
+	if get_tree().network_peer:
+		rpc("_restock_ammo",weapon_slot, ammo_restock)
+		return
+		
+	_restock_ammo(weapon_slot, ammo_restock)
+	
 	
 func play_sound(path : String):
 	pass
@@ -287,7 +308,7 @@ func _process(delta):
 	check_weapon_status()
 	
 	# is a puppet
-	if not is_network_master():
+	if get_tree().network_peer and not is_network_master():
 		rotation.x = lerp_angle(rotation.x, _puppet_rotation.x, delta * 5)
 		rotation.y = lerp_angle(rotation.y, _puppet_rotation.y, delta * 5)
 		rotation.z = lerp_angle(rotation.z, _puppet_rotation.z, delta * 5)
