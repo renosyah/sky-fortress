@@ -53,13 +53,12 @@ func lauching_at(to: Spatial):
 	
 	
 	
-func take_damage(damage):
-	.take_damage(damage)
+remotesync func _take_damage(damage):
+	._take_damage(damage)
 	
 	
-	
-func falling():
-	.falling()
+remotesync func _falling():
+	._falling()
 	_highlight.visible = false
 	_tag.visible = false
 	var _down = Vector3(translation.x, 1.0, translation.y)

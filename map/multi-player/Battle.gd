@@ -1,10 +1,13 @@
 extends Node
 class_name MP_Battle
 
+signal player_on_ready(player)
+
+
 var _aim_mode = false
 
 var _aim_point :Vector3
-var _lock_on : Spatial
+var _lock_on_point : Spatial
 
 var _airborne_targets = []
 
@@ -26,25 +29,25 @@ remote func _receive_terrain_data(
 	
 ################################################################
 # client request object to move
-remote func _move(node_path : NodePath,translation : Vector3):
+remote func _move(node_path : NodePath, translation : Vector3):
 	get_node(node_path).waypoint = translation
 	
 ################################################################
 # client request to object to
 # move at guided aim position
-remotesync func _guide_aim(node_path : NodePath,translation : Vector3):
+remotesync func _guide_aim(node_path : NodePath, translation : Vector3):
 	get_node(node_path).translation = translation
 	get_node(node_path).translation.y = 10.0
 	
 ################################################################
 # client request to object to
 # move at guided aim position
-remotesync func _aim(node_path : NodePath,translation : Vector3):
+remotesync func _aim(node_path : NodePath, translation : Vector3):
 	get_node(node_path).aim_point = translation
 	
 ################################################################
 # client request to object to lock on
-remotesync func _lock_on(node_path : NodePath,node_path_target : NodePath):
+remotesync func _lock_on(node_path : NodePath, node_path_target : NodePath):
 	get_node(node_path).lock_on_point = get_node(node_path_target)
 	
 ################################################################

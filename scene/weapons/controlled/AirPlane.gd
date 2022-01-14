@@ -26,6 +26,29 @@ var destroyed = false
 var hp = 1.0
 var max_hp = 1.0
 
+###############################################################
+# multiplayer sync
+remotesync func _take_damage(damage):
+	if destroyed:
+		return
+		
+	spawn_small_explosive_on_damage()
+	hp -= damage
+	if hp > 0:
+		return
+		
+	destroyed = true
+	set_process(false)
+	falling()
+	
+remotesync func _falling():
+	pass
+	
+remotesync func clean_it():
+	queue_free()
+	
+###############################################################
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	MINIMAP_COLOR = tag_color
@@ -39,20 +62,10 @@ func lauching_at(to: Spatial):
 	
 	
 func take_damage(damage):
-	if destroyed:
-		return
-		
-	spawn_small_explosive_on_damage()
-	hp -= damage
-	if hp > 0:
-		return
-		
-	destroyed = true
-	set_process(false)
-	falling()
+	rpc("_take_damage", damage)
 	
 func falling():
-	pass
+	rpc("_falling")
 	
 func update_course():
 	if is_instance_valid(_target):
@@ -67,7 +80,7 @@ func spawn_explosive_on_destroy():
 	get_parent().add_child(explosive)
 	explosive.translation = translation
 	explosive.scale = Vector3.ONE * 10
-	queue_free()
+	rpc("clean_it")
 	
 func spawn_small_explosive_on_damage():
 	var explosive = preload("res://assets/explosive/explosive.tscn").instance()
@@ -92,10 +105,7 @@ func perform_landing(body):
 	if body.has_method("restock_ammo"):
 		body.restock_ammo(weapon_slot, ammo_restock)
 		
-	queue_free()
-
-
-
+	rpc("clean_it")
 
 
 

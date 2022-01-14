@@ -21,17 +21,31 @@ func _ready():
 	init_client()
 	
 	# all own by server
+	_player_1.owner_id = "1"
+	_player_1.side = "1"
 	_player_1.set_network_master(Network.PLAYER_HOST_ID)
 	_player_1.aim_point = _player_1_aim.translation
 	_player_1.guided_point = _player_1_aim
+	_player_1.set_data(Ship.SHIP_LIST[0])
 	_player_1.show_hp_bar(true)
+	_player_1.set_hp_bar_color(Color.red)
 	
+	_player_2.owner_id = "2"
+	_player_2.side = "2"
 	_player_2.set_network_master(Network.PLAYER_HOST_ID)
 	_player_2.aim_point = _player_2_aim.translation
-	_player_1.guided_point = _player_2_aim
+	_player_2.guided_point = _player_2_aim
+	_player_2.set_data(Ship.SHIP_LIST[0])
 	_player_2.show_hp_bar(false)
+	_player_2.set_hp_bar_color(Color.green)
 	
 	_player_2.connect("on_move", self, "_on_player_on_move")
+	_player_2.connect("on_destroyed",_ui,"_on_player_on_destroyed")
+	_player_2.connect("on_falling",self,"_on_player_on_falling")
+	_player_2.connect("on_falling",_ui,"_on_player_on_falling")
+	_player_2.connect("on_spawning_weapon" ,self,"_on_player_on_spawning_weapon")
+	_player_2.connect("on_take_damage",_ui,"_on_player_on_take_damage")
+	emit_signal("player_on_ready", _player_2)
 	
 ################################################################
 # network connection
@@ -76,17 +90,18 @@ func _on_cameraPivot_on_camera_moving(_translation, _zoom):
 	
 func _on_cameraPivot_on_body_enter_aim_sight(_body):
 	if _body != _player_2:
-		_lock_on = _body
+		_lock_on_point = _body
 		_body.highlight(true)
 	
 ################################################################
 # network tick to send automatic request
 func _on_network_tick_timeout():
-	rpc_unreliable("_aim",_player_2.get_path(), _aim_point)
-	rpc_unreliable("_guide_aim", _player_2_aim.get_path(), _aim_point)
+	if _aim_point:
+		rpc_unreliable("_aim",_player_2.get_path(), _aim_point)
+		rpc_unreliable("_guide_aim", _player_2_aim.get_path(), _aim_point)
 	
-	if _lock_on:
-		rpc("_lock_on",_player_2.get_path(),_lock_on.get_path())
+	if is_instance_valid(_lock_on_point):
+		rpc_unreliable("_lock_on",_player_2.get_path(), _lock_on_point.get_path())
 	
 ################################################################
 # on ui action
@@ -94,11 +109,24 @@ func _on_ui_on_aim_mode(_val):
 	_aim_mode = _val
 	_camera.aim_reticle(_aim_mode)
 	
+func _on_ui_on_shot_press(_index):
+	if _player_2.has_method("shot"):
+		_player_2.shot(_index)
+		
+func _on_ui_on_respawn_click():
+	pass
+	
 ################################################################
+# player signal handle event
+func _on_player_on_spawning_weapon(_node):
+	pass
+	
+func _on_player_on_falling(_node):
+	if is_instance_valid(_player_2.lock_on_point):
+		_player_2.lock_on_point.highlight(false)
+		
+	_camera.translation = _node.translation
 
-
-
-
-
+################################################################
 
 

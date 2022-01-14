@@ -86,14 +86,9 @@ func _network_timmer_timeout():
 		return
 		
 	if is_network_master():
-		rset_unreliable("_puppet_data", _get_data())
 		rset_unreliable("_puppet_translation", translation)
 		rset_unreliable("_puppet_rotation", rotation)
 		
-puppet var _puppet_data : Dictionary setget _set_puppet_data
-func _set_puppet_data(_val : Dictionary):
-	_puppet_data = _val
-	set_data(_puppet_data)
 	
 puppet var _puppet_translation :Vector3 setget _set_puppet_translation
 func _set_puppet_translation(_val :Vector3):
@@ -103,11 +98,36 @@ puppet var _puppet_rotation: Vector3 setget _set_puppet_rotation
 func _set_puppet_rotation(_val:Vector3):
 	_puppet_rotation = _val
 	
+remotesync func _make_ready():
+	_ready()
+	
+remotesync func _take_damage(damage):
+	if destroyed:
+		return
+		
+	hp = round(hp - damage)
+	
+	if hp < 0.0:
+		destroy()
+		
+	emit_signal("on_take_damage", self, damage , hp)
+	
+remotesync func _destroy():
+	destroyed = true
+	emit_signal("on_falling", self)
+	
+remotesync func _shot(weapon_index : int):
+	_launch(weapon_index)
+	
+remotesync func _restock_ammo(weapon_slot, ammo_restock):
+	if weapons[weapon_slot].ammo < weapons[weapon_slot].max_ammo:
+		weapons[weapon_slot].ammo += ammo_restock
+	play_sound("res://assets/sounds/click.wav")
+	
 ###############################################################
 	
-	
 func make_ready():
-	_ready()
+	rpc("_make_ready")
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -120,27 +140,21 @@ func _ready():
 		
 	destroyed = false
 	visible = true
-	emit_signal("on_ready", self)
 	
-func set_hp_bar_color(_color : Color):
-	tag_color = _color
+	emit_signal("on_ready", self)
 	
 func set_data(_ship_data):
 	max_hp = _ship_data.max_hp
 	hp = _ship_data.hp
 	cruise_speed = _ship_data.cruise_speed
 	turn_speed = _ship_data.turn_speed
-	weapons = _ship_data.weapons
 	
-func _get_data():
-	var _ship_data = {
-		max_hp = max_hp,
-		hp = hp,
-		cruise_speed = cruise_speed,
-		turn_speed = turn_speed,
-		weapons = weapons,
-	}
-	return _ship_data
+	weapons.clear()
+	for i in _ship_data.weapons:
+		weapons.append(i.duplicate())
+	
+func set_hp_bar_color(_color : Color):
+	tag_color = _color
 	
 func show_hp_bar(_show : bool):
 	pass
@@ -149,30 +163,22 @@ func update_hp_bar():
 	pass
 	
 func take_damage(damage):
-	if destroyed:
-		return
-	
-	hp = round(hp - damage)
-	
-	if hp < 0.0:
-		destroy()
-		
-	emit_signal("on_take_damage", self, damage , hp)
+	rpc("_take_damage",damage)
 	
 func destroy():
-	destroyed = true
-	emit_signal("on_falling", self)
-	
+	rpc("_destroy")
 	
 func shot(weapon_index : int):
+	rpc("_shot", weapon_index)
+	
+func _launch(weapon_index : int):
 	if destroyed:
 		return
 		
 	if weapons.empty():
 		return
-	
+		
 	var weapon = weapons[weapon_index]
-	
 	
 	if weapons[weapon_index].ammo <= 0:
 		return
@@ -190,6 +196,7 @@ func shot(weapon_index : int):
 		
 		
 	var projectile = load(weapon.ammo_scene).instance()
+	projectile.set_network_master(get_network_master())
 	projectile.damage = weapon.damage
 	projectile.speed = weapon.speed
 	projectile.owner_id = owner_id
@@ -265,11 +272,8 @@ func shot(weapon_index : int):
 		
 		emit_signal("on_spawning_weapon", projectile)
 	
-func restock_ammo(weapon_slot, ammo_restock):
-	if weapons[weapon_slot].ammo < weapons[weapon_slot].max_ammo:
-		weapons[weapon_slot].ammo += ammo_restock
-	play_sound("res://assets/sounds/click.wav")
-	
+func restock_ammo(weapon_slot : int, ammo_restock : float):
+	rpc("_restock_ammo",weapon_slot, ammo_restock)
 	
 func play_sound(path : String):
 	pass
@@ -279,6 +283,8 @@ func _process(delta):
 	if destroyed:
 		return
 		
+	check_weapon_status()
+	
 	# is a puppet
 	if not is_network_master():
 		rotation.x = lerp_angle(rotation.x, _puppet_rotation.x, delta * 5)
@@ -288,8 +294,6 @@ func _process(delta):
 		emit_signal("on_move",self, translation)
 		return
 		
-	check_weapon_status()
-	
 	var velocity = Vector3.ZERO
 	var direction = Vector3.ZERO
 	var distance_to_target = 0.0
@@ -336,15 +340,15 @@ func check_weapon_status():
 			var distance_to_target = translation.distance_to(_aim_at)
 			weapon.can_fire = distance_to_target < weapon.max_range and distance_to_target > weapon.min_range
 			
-		if weapon.type == Weapon.TYPE_GUIDED and is_instance_valid(guided_point):
+		elif weapon.type == Weapon.TYPE_GUIDED and is_instance_valid(guided_point):
 			var distance_to_target = translation.distance_to(guided_point.translation)
 			weapon.can_fire = distance_to_target < weapon.max_range and distance_to_target > weapon.min_range
 			
-		if weapon.type == Weapon.TYPE_LOCK_ON and is_instance_valid(lock_on_point):
+		elif weapon.type == Weapon.TYPE_LOCK_ON and is_instance_valid(lock_on_point):
 			var distance_to_target = translation.distance_to(lock_on_point.translation)
 			weapon.can_fire =  distance_to_target < weapon.max_range and distance_to_target > weapon.min_range
 			
-		if weapon.type == Weapon.TYPE_CONTROLLED and is_instance_valid(lock_on_point):
+		elif weapon.type == Weapon.TYPE_CONTROLLED and is_instance_valid(lock_on_point):
 			var distance_to_target = translation.distance_to(lock_on_point.translation)
 			weapon.can_fire = distance_to_target < weapon.max_range and distance_to_target > weapon.min_range
 			

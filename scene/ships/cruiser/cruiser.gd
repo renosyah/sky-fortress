@@ -24,15 +24,24 @@ func _set_puppet_rotation(_val:Vector3):
 	if destroyed:
 		rotation = _puppet_rotation
 		return
+
+remotesync func _make_ready():
+	._make_ready()
+	
+remotesync func _take_damage(damage):
+	._take_damage(damage)
+	
+	if destroyed:
+		return
+	
+	update_hp_bar()
+	
+	if damage > 15.0:
+		_damage_random_part()
 	
 ###############################################################
 
 
-
-func make_ready():
-	.make_ready()
-	_ready()
-	
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	._ready()
@@ -51,17 +60,6 @@ func set_hp_bar_color(_color : Color):
 func show_hp_bar(_show : bool):
 	.show_hp_bar(_show)
 	_hp_bar.visible = _show
-	
-func take_damage(damage):
-	.take_damage(damage)
-	
-	if destroyed:
-		return
-	
-	update_hp_bar()
-	
-	if damage > 15.0:
-		_damage_random_part()
 		
 func highlight(_show : bool):
 	if destroyed:

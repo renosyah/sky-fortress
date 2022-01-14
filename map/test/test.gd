@@ -277,3 +277,4 @@ func _on_ui_on_respawn_click():
 	_player.translation.y = Ship.DEFAULT_ALTITUDE
 	_player.make_ready()
 	
+	emit_signal("player_on_ready", _player)

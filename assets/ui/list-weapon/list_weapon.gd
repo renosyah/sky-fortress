@@ -1,6 +1,6 @@
 extends VBoxContainer
 
-signal on_item_press(data)
+signal on_item_press(index, data)
 
 onready var _container = $HBoxContainer
 

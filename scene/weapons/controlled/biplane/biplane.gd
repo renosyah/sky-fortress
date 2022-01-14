@@ -73,12 +73,12 @@ func _on_UpdateCourse_timeout():
 	
 	
 	
-func take_damage(damage):
-	.take_damage(damage)
+remotesync func _take_damage(damage):
+	._take_damage(damage)
 	
 	
-func falling():
-	.falling()
+remotesync func _falling():
+	._falling()
 	_highlight.visible = false
 	_mg_firing.visible = false
 	_tag.visible = false
