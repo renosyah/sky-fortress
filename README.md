@@ -19,13 +19,13 @@ the game top down paper style art 3D for mobile and pc with multiplayer LAN made
 
 
 ## Gameplay
-![GitHub Logo](/ss/1.png) 
+![GitHub Logo](/ss/01.png) 
 
 
-![GitHub Logo](/ss/2.png) 
+![GitHub Logo](/ss/02.png) 
 
 
-![GitHub Logo](/ss/3.png) 
+![GitHub Logo](/ss/03.png) 
  
 
 
