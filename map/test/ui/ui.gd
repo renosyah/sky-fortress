@@ -44,10 +44,15 @@ func _on_player_on_destroyed(_node):
 	
 	
 func _on_deadscreen_on_respawn_click():
-	$CanvasLayer/Control2/Control.visible = true
+	$CanvasLayer/Control2/Control.visible = false
 	$CanvasLayer/Control2/deadscreen.visible = false
-	emit_signal("on_respawn_click")
+	$CanvasLayer/Control2/spectate.visible = true
+	#emit_signal("on_respawn_click")
 	
+func _on_deadscreen_on_spectate_click():
+	$CanvasLayer/Control2/Control.visible = false
+	$CanvasLayer/Control2/deadscreen.visible = false
+	$CanvasLayer/Control2/spectate.visible = true
 	
 func _on_player_on_falling(_node):
 	toggled = false
@@ -59,7 +64,14 @@ func _on_player_on_falling(_node):
 func _on_quit_pressed():
 	get_tree().change_scene("res://menu/main-menu/main_menu.tscn")
 	
+func _on_spectate_on_exit_click():
+	_on_quit_pressed()
 	
 	
 	
-	
+
+
+
+
+
+

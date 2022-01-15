@@ -8,6 +8,7 @@ const SHIP_LIST = [
 		icon = "res://scene/ships/carrier/icon.png",
 		scene = "res://scene/ships/carrier/carrier.tscn", 
 		owner_id = "",
+		player_name = "",
 		side = "",
 		max_hp = 150,
 		hp = 150,
@@ -21,6 +22,7 @@ const SHIP_LIST = [
 		icon = "res://scene/ships/bomber/icon.png",
 		scene = "res://scene/ships/bomber/bomber.tscn", 
 		owner_id = "",
+		player_name = "",
 		side = "",
 		max_hp = 250,
 		hp = 250,
@@ -34,6 +36,7 @@ const SHIP_LIST = [
 		icon = "res://scene/ships/cruiser/icon.png",
 		scene = "res://scene/ships/cruiser/cruiser.tscn", 
 		owner_id = "",
+		player_name = "",
 		side = "",
 		max_hp = 100,
 		hp = 100,
@@ -74,6 +77,7 @@ var destroyed = false
 var hp = 100.0
 var max_hp = 100.0
 
+# tag
 var tag_color = Color.white
 var owner_id = ""
 var side = ""
@@ -83,6 +87,9 @@ var side = ""
 var _network_timmer : Timer = null
 func _network_timmer_timeout():
 	if not waypoint:
+		return
+		
+	if destroyed:
 		return
 		
 	if get_tree().network_peer and is_network_master():
@@ -116,8 +123,8 @@ remotesync func _destroy():
 	destroyed = true
 	emit_signal("on_falling", self)
 	
-remotesync func _shot(weapon_index : int, name : String):
-	_launch(weapon_index, name)
+remotesync func _shot(weapon_index : int, name : String, _aim_point : Vector3, _guided_point : NodePath, _lock_on_point : NodePath):
+	_launch(weapon_index, name, _aim_point, _guided_point, _lock_on_point)
 	
 remotesync func _restock_ammo(weapon_slot, ammo_restock):
 	if weapons[weapon_slot].ammo < weapons[weapon_slot].max_ammo:
@@ -166,6 +173,9 @@ func show_hp_bar(_show : bool):
 func update_hp_bar():
 	pass
 	
+func set_hp_bar_name(_name):
+	pass
+
 func take_damage(damage):
 	if get_tree().network_peer:
 		rpc("_take_damage",damage)
@@ -180,14 +190,16 @@ func destroy():
 		
 	_destroy()
 	
-func shot(weapon_index : int):
+func shot(weapon_index : int, _aim_point : Vector3 = Vector3.ZERO, _guided_point : NodePath = NodePath(""), _lock_on_point : NodePath = NodePath("")):
+	var _weapon_name = "weapon-" + str(GDUUID.v4())
+	
 	if get_tree().network_peer:
-		rpc("_shot", weapon_index, "weapon-" + str(GDUUID.v4()))
+		rpc("_shot", weapon_index, _weapon_name,  _aim_point, _guided_point, _lock_on_point)
 		return
 		
-	_shot(weapon_index, "weapon-" + str(GDUUID.v4()))
+	_shot(weapon_index, _weapon_name, _aim_point, _guided_point, _lock_on_point)
 	
-func _launch(weapon_index : int, name : String):
+func _launch(weapon_index : int, name : String, _aim_point : Vector3, _guided_point : NodePath, _lock_on_point : NodePath):
 	if destroyed:
 		return
 		
@@ -195,7 +207,7 @@ func _launch(weapon_index : int, name : String):
 		return
 		
 	var weapon = weapons[weapon_index]
-	
+		
 	if weapons[weapon_index].ammo <= 0:
 		return
 		
@@ -209,6 +221,16 @@ func _launch(weapon_index : int, name : String):
 		
 		emit_signal("on_ready", self)
 		return
+		
+		
+	if not _aim_point == Vector3.ZERO:
+		aim_point = _aim_point
+		
+	if not _guided_point.is_empty():
+		guided_point = get_node(_guided_point)
+		
+	if not _lock_on_point.is_empty():
+		lock_on_point = get_node(_lock_on_point)
 		
 		
 	var projectile = load(weapon.ammo_scene).instance()
@@ -347,7 +369,7 @@ func spawn_explosive_on_destroy():
 	explosive.scale = Vector3.ONE * 10
 	
 func _on_finish_explode():
-	visible = false
+	#visible = false
 	emit_signal("on_destroyed", self)
 
 func check_weapon_status():

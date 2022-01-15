@@ -15,8 +15,14 @@ func display_selected_ship(ship_data):
 	
 	var ship = load(ship_data.scene).instance()
 	_ship_holder.add_child(ship)
+	ship.destroyed = true
 	
 func _on_ui_on_list_panel_on_item_press(ship_data):
-	display_selected_ship(ship_data)
-	Global.selected_ship = ship_data
-	SaveLoad.save("ship.dat", ship_data)
+	Global.selected_ship = ship_data.duplicate()
+	Global.selected_ship.owner_id = Global.player_data.id
+	Global.selected_ship.player_name = Global.player_data.name
+	Global.save_player_selected_ship(Global.selected_ship)
+	display_selected_ship(Global.selected_ship)
+
+
+

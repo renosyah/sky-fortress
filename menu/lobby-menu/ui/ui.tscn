@@ -1,0 +1,219 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_16.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/ui/button/bg.png" type="Texture" id=2]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=3]
+[ext_resource path="res://assets/ui/button/bg_press.png" type="Texture" id=4]
+[ext_resource path="res://menu/lobby-menu/ui/ui.gd" type="Script" id=5]
+
+[node name="ui" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 94.0
+rect_min_size = Vector2( 0, 80 )
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 87.0
+
+[node name="btn" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer"]
+margin_right = 100.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 100, 0 )
+
+[node name="exit" type="Button" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/btn"]
+margin_right = 100.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 100, 50 )
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/btn"]
+margin_top = 26.0
+margin_right = 100.0
+margin_bottom = 54.0
+custom_fonts/font = ExtResource( 1 )
+text = "Back"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer"]
+margin_left = 104.0
+margin_right = 906.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+
+[node name="battle_button" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer"]
+margin_left = 276.0
+margin_right = 526.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 250, 80 )
+
+[node name="battle_button" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/battle_button"]
+modulate = Color( 0.619608, 0.180392, 0.180392, 1 )
+margin_right = 250.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 200, 50 )
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 4 )
+expand = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/battle_button"]
+margin_top = 20.0
+margin_right = 250.0
+margin_bottom = 60.0
+custom_fonts/font = ExtResource( 3 )
+text = "Battle"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="btn2" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer"]
+margin_left = 910.0
+margin_right = 1010.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 100, 0 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer"]
+margin_top = 98.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="player_slot" type="Control" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
+margin_right = 200.0
+margin_bottom = 502.0
+rect_min_size = Vector2( 200, 0 )
+size_flags_vertical = 3
+
+[node name="TextureRect" type="ColorRect" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/player_slot"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.733333 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/player_slot"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/player_slot/VBoxContainer"]
+margin_right = 200.0
+margin_bottom = 28.0
+custom_fonts/font = ExtResource( 1 )
+text = "Fleet"
+align = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/player_slot/VBoxContainer"]
+margin_top = 32.0
+margin_right = 200.0
+margin_bottom = 502.0
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_slots" type="VBoxContainer" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/player_slot/VBoxContainer/ScrollContainer"]
+margin_right = 200.0
+size_flags_horizontal = 3
+
+[node name="chat" type="Control" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
+margin_left = 204.0
+margin_right = 1024.0
+margin_bottom = 502.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect2" type="ColorRect" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/chat"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.733333 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/chat"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/chat/VBoxContainer"]
+margin_right = 820.0
+margin_bottom = 398.0
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="chat_list" type="VBoxContainer" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/chat/VBoxContainer/ScrollContainer"]
+margin_right = 820.0
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/chat/VBoxContainer"]
+margin_top = 402.0
+margin_right = 820.0
+margin_bottom = 502.0
+rect_min_size = Vector2( 0, 80 )
+
+[node name="input_chat" type="LineEdit" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/chat/VBoxContainer/HBoxContainer"]
+margin_right = 616.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 100 )
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 3 )
+max_length = 20
+placeholder_text = "Type Something..."
+
+[node name="send" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/chat/VBoxContainer/HBoxContainer"]
+margin_left = 620.0
+margin_right = 820.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 200, 0 )
+custom_fonts/font = ExtResource( 3 )
+text = " Send "
+
+[node name="exit_timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/btn/exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/battle_button/battle_button" to="." method="_on_battle_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer/chat/VBoxContainer/HBoxContainer/send" to="." method="_on_send_pressed"]
+[connection signal="timeout" from="exit_timer" to="." method="_on_exit_timer_timeout"]

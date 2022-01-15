@@ -53,6 +53,7 @@ shadow_enabled = true
 environment = SubResource( 2 )
 
 [node name="cameraPivot" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 0.573576, 0.819152, 0, -0.819152, 0.573576, 0, 10, 0.1 )
 
 [connection signal="player_on_ready" from="." to="ui" method="_on_battlescene_player_on_ready"]
 [connection signal="on_aim_press" from="ui" to="." method="_on_ui_on_aim_press"]

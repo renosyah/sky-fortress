@@ -1,16 +1,18 @@
 extends Node
 class_name SaveLoad
 
+const prefix = "user://"
+
 static func save(_filename: String, _data : Dictionary):
 	var file = File.new()
-	file.open(_filename, File.WRITE)
+	file.open(prefix + _filename, File.WRITE)
 	file.store_var(_data, true)
 	file.close()
 
 static func load_save(_filename : String):
 	var file = File.new()
-	if file.file_exists(_filename):
-		file.open(_filename, File.READ)
+	if file.file_exists(prefix + _filename):
+		file.open(prefix + _filename, File.READ)
 		var _data = file.get_var(true)
 		file.close()
 		return _data
@@ -18,4 +20,4 @@ static func load_save(_filename : String):
 
 static func delete_save(_filename : String):
 	var dir = Directory.new()
-	dir.remove(_filename)
+	dir.remove(prefix + _filename)

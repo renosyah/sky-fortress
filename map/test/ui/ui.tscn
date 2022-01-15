@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://map/test/ui/ui.gd" type="Script" id=1]
 [ext_resource path="res://assets/ui/bar/hp_bar.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/ui/list-weapon/list_weapon.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/ui/deadscreen/deadscreen.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/ui/mini_map/MiniMap.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/ui/spectate-screen/spectate.tscn" type="PackedScene" id=6]
 
 [node name="ui" type="Control"]
 anchor_right = 1.0
@@ -24,6 +25,9 @@ mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="spectate" parent="CanvasLayer/Control2" instance=ExtResource( 6 )]
+visible = false
 
 [node name="deadscreen" parent="CanvasLayer/Control2" instance=ExtResource( 4 )]
 visible = false
@@ -62,6 +66,10 @@ margin_right = 169.5
 margin_bottom = 0.0
 
 [node name="hp_bar" parent="CanvasLayer/Control2/Control/mid" instance=ExtResource( 2 )]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -250.0
+margin_right = 250.0
 
 [node name="right" type="Control" parent="CanvasLayer/Control2/Control"]
 margin_left = 685.0
@@ -98,7 +106,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="on_respawn_click" from="CanvasLayer/Control2/deadscreen" to="." method="_on_deadscreen_on_respawn_click"]
+[connection signal="on_exit_click" from="CanvasLayer/Control2/spectate" to="." method="_on_spectate_on_exit_click"]
+[connection signal="on_spectate_click" from="CanvasLayer/Control2/deadscreen" to="." method="_on_deadscreen_on_spectate_click"]
 [connection signal="on_item_press" from="CanvasLayer/Control2/Control/mid/VBoxContainer" to="." method="_on_VBoxContainer_on_item_press"]
 [connection signal="pressed" from="CanvasLayer/Control2/Control/right/aim" to="." method="_on_aim_pressed"]
 [connection signal="toggled" from="CanvasLayer/Control2/Control/right/aim" to="." method="_on_aim_toggled"]

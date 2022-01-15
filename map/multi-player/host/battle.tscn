@@ -1,16 +1,10 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://map/multi-player/host/battle.gd" type="Script" id=1]
 [ext_resource path="res://assets/gameplay-camera/gameplay_camera.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/terrain/terrain.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/cursor/cursor.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scene/ships/carrier/carrier.tscn" type="PackedScene" id=5]
 [ext_resource path="res://map/multi-player/ui/ui.tscn" type="PackedScene" id=6]
-
-[sub_resource type="SphereMesh" id=3]
-
-[sub_resource type="SpatialMaterial" id=4]
-albedo_color = Color( 1, 0, 0, 1 )
 
 [sub_resource type="ProceduralSky" id=1]
 ground_bottom_color = Color( 0.647059, 0.839216, 0.945098, 1 )
@@ -28,32 +22,11 @@ transform = Transform( 5, 0, 0, 0, -2.18557e-07, 1, 0, -5, -4.37114e-08, 0, 0, 0
 
 [node name="targeting_guide_holder" type="Node" parent="."]
 
-[node name="player_1" type="Spatial" parent="targeting_guide_holder"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0 )
-visible = false
+[node name="player_holder" type="Node" parent="."]
 
-[node name="MeshInstance" type="MeshInstance" parent="targeting_guide_holder/player_1"]
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
+[node name="bot_airship_holder" type="Node" parent="."]
 
-[node name="player_2" type="Spatial" parent="targeting_guide_holder"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.88781, 10, 0 )
-visible = false
-
-[node name="MeshInstance" type="MeshInstance" parent="targeting_guide_holder/player_2"]
-mesh = SubResource( 3 )
-skeleton = NodePath("../../player_1")
-material/0 = SubResource( 4 )
-
-[node name="airborne_target_holder" type="Node" parent="."]
-
-[node name="player_1" parent="airborne_target_holder" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0 )
-
-[node name="player_2" parent="airborne_target_holder" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.70266, 10, 0 )
-
-[node name="ground_target_holder" type="Node" parent="."]
+[node name="bot_fort_holder" type="Node" parent="."]
 
 [node name="terrain" parent="." instance=ExtResource( 3 )]
 
@@ -71,6 +44,14 @@ transform = Transform( 1, 0, 0, 0, 0.573576, 0.819152, 0, -0.819152, 0.573576, 0
 [node name="network_tick" type="Timer" parent="."]
 wait_time = 0.2
 
+[node name="event_timer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[node name="bot_command_timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
 [node name="ui" parent="." instance=ExtResource( 6 )]
 mouse_filter = 2
 
@@ -79,5 +60,9 @@ mouse_filter = 2
 [connection signal="on_body_enter_aim_sight" from="cameraPivot" to="." method="_on_cameraPivot_on_body_enter_aim_sight"]
 [connection signal="on_camera_moving" from="cameraPivot" to="." method="_on_cameraPivot_on_camera_moving"]
 [connection signal="timeout" from="network_tick" to="." method="_on_network_tick_timeout"]
+[connection signal="timeout" from="event_timer" to="." method="_on_event_timer_timeout"]
+[connection signal="timeout" from="bot_command_timer" to="." method="_on_bot_command_timer_timeout"]
 [connection signal="on_aim_mode" from="ui" to="." method="_on_ui_on_aim_mode"]
+[connection signal="on_exit_click" from="ui" to="." method="_on_ui_on_exit_click"]
+[connection signal="on_next_click" from="ui" to="." method="_on_ui_on_next_click"]
 [connection signal="on_shot_press" from="ui" to="." method="_on_ui_on_shot_press"]

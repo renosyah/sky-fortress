@@ -2,7 +2,10 @@ extends Control
 
 signal on_shot_press(_index)
 signal on_aim_mode(_aim_mode)
+signal on_exit_click()
+signal on_next_click()
 
+onready var _minimap = $CanvasLayer/Control2/Control/left/MiniMap
 onready var _spectatescreen = $CanvasLayer/Control2/spectate
 onready var _deadscreen = $CanvasLayer/Control2/deadscreen
 onready var _ui_control = $CanvasLayer/Control2/Control
@@ -14,6 +17,15 @@ var _aim_mode = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_weapons_bar.visible = false
+	
+func set_camera(object : Spatial):
+	_minimap.set_camera(object)
+	
+func add_minimap_object(object : Spatial):
+	_minimap.add_object(object)
+	
+func remove_minimap_object(object : Spatial):
+	_minimap.remove_object(object)
 	
 func _on_aim_pressed():
 	_aim_mode = not _aim_mode
@@ -40,12 +52,18 @@ func _on_player_on_destroyed(player):
 func _on_player_on_falling(player):
 	_aim_mode = false
 	_ui_control.visible = false
-	emit_signal("on_aim_mode" ,_aim_mode)
+	emit_signal("on_aim_mode", false)
 	
 func _on_deadscreen_on_spectate_click():
 	_ui_control.visible = false
 	_deadscreen.visible = false
 	_spectatescreen.visible = true
 	
-	
-	
+func _on_spectate_on_exit_click():
+	emit_signal("on_exit_click")
+
+func _on_exit_pressed():
+	emit_signal("on_exit_click")
+
+func _on_spectate_on_next_click():
+	emit_signal("on_next_click")

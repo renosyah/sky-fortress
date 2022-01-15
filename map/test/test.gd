@@ -233,6 +233,7 @@ func _on_player_on_falling(_node):
 	if is_instance_valid(_player.lock_on_point):
 		_player.lock_on_point.highlight(false)
 		
+	$marker.visible = false
 	_camera.translation =_node.translation
 	
 	

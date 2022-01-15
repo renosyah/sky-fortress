@@ -56,6 +56,12 @@ func _ready():
 func set_hp_bar_color(_color : Color):
 	.set_hp_bar_color(_color)
 	_hp_bar.set_hp_bar_color(_color)
+
+	
+func set_hp_bar_name(player_name):
+	.set_hp_bar_name(player_name)
+	_hp_bar.set_player_name(player_name)
+	
 	
 func show_hp_bar(_show : bool):
 	.show_hp_bar(_show)
@@ -71,7 +77,7 @@ func destroy():
 	.destroy()
 	_hp_bar.visible = false
 	_highlight.visible = false
-	_tween.interpolate_property(self, "translation", translation, Vector3(translation.x, 1.0, translation.y), rand_range(4.0,8.0))
+	_tween.interpolate_property(self, "translation", translation, Vector3(translation.x, 1.0, translation.y), 5.0)
 	_tween.start()
 	
 func restock_ammo(weapon_slot, ammo_restock):
