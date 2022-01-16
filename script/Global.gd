@@ -54,6 +54,16 @@ func load_player_ships():
 		
 	ship_list  = _ship_list
 	
+func update_player_ships(_current_ship):
+	var pos = 0
+	for i in ship_list:
+		if i.id == _current_ship.id:
+			break
+		pos += 1
+		
+	ship_list[pos] = _current_ship
+	save_player_ships(ship_list)
+	
 func save_player_ships(_ship_list):
 	if PERSISTEN_SAVE:
 		SaveLoad.save("ship_list.dat", _ship_list)

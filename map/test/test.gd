@@ -225,7 +225,7 @@ func _on_enemy_on_destroyed(_node):
 # testing player
 func _on_player_on_move(_node, _translation):
 	$marker.translation = _translation
-	$marker.translation.y = 8.0
+	$marker.translation.y = 9.5
 	if not is_aiming:
 		_camera.translation = _translation
 		
