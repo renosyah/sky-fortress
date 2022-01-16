@@ -3,7 +3,7 @@ class_name Ship
 
 const SHIP_LIST = [
 	{
-		id = "",
+		id = "s-1",
 		name = "Carrier",
 		icon = "res://scene/ships/carrier/icon.png",
 		scene = "res://scene/ships/carrier/carrier.tscn", 
@@ -17,7 +17,7 @@ const SHIP_LIST = [
 		weapons = Weapon.CARRIER_TEMPLATES
 	},
 	{
-		id = "",
+		id = "s-2",
 		name = "Bomber",
 		icon = "res://scene/ships/bomber/icon.png",
 		scene = "res://scene/ships/bomber/bomber.tscn", 
@@ -31,7 +31,7 @@ const SHIP_LIST = [
 		weapons = Weapon.BOMBER_TEMPLATES
 	},
 	{
-		id = "",
+		id = "s-3",
 		name = "Cruiser",
 		icon = "res://scene/ships/cruiser/icon.png",
 		scene = "res://scene/ships/cruiser/cruiser.tscn", 

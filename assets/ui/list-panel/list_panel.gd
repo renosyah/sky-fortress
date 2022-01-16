@@ -16,10 +16,15 @@ func update_list():
 		
 	for i in datas:
 		var item = preload("res://assets/ui/list-panel/item/item.tscn").instance()
-		item.connect("pressed", self ,"_pressed",[i])
 		item.data = i
 		_container.add_child(item)
+		item.connect("pressed", self ,"_pressed", [item.get_path(), i])
 		item.display_item()
 	
-func _pressed(data):
+	
+func _pressed(node_path : NodePath, data : Dictionary):
+	for i in _container.get_children():
+		i.selected(false)
+		
+	get_node(node_path).selected(true)
 	emit_signal("on_item_press", data)

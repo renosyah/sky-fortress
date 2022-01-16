@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://map/test/ui/ui.gd" type="Script" id=1]
 [ext_resource path="res://assets/ui/bar/hp_bar.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/ui/list-weapon/list_weapon.tscn" type="PackedScene" id=3]
-[ext_resource path="res://assets/ui/deadscreen/deadscreen.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=4]
 [ext_resource path="res://assets/ui/mini_map/MiniMap.tscn" type="PackedScene" id=5]
-[ext_resource path="res://assets/ui/spectate-screen/spectate.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/ui/deadscreen/deadscreen.gd" type="Script" id=6]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_86.tres" type="DynamicFont" id=7]
 
 [node name="ui" type="Control"]
 anchor_right = 1.0
@@ -26,11 +27,68 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="spectate" parent="CanvasLayer/Control2" instance=ExtResource( 6 )]
+[node name="deadscreen" type="Control" parent="CanvasLayer/Control2"]
 visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="deadscreen" parent="CanvasLayer/Control2" instance=ExtResource( 4 )]
-visible = false
+[node name="bg" type="ColorRect" parent="CanvasLayer/Control2/deadscreen"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.117647, 0.117647, 0.117647, 0.478431 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control2/deadscreen"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control2/deadscreen/CenterContainer"]
+margin_left = 247.0
+margin_top = 120.0
+margin_right = 777.0
+margin_bottom = 480.0
+
+[node name="message" type="Label" parent="CanvasLayer/Control2/deadscreen/CenterContainer/VBoxContainer"]
+margin_right = 530.0
+margin_bottom = 106.0
+custom_fonts/font = ExtResource( 7 )
+text = "You dead!"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="killedby" type="Label" parent="CanvasLayer/Control2/deadscreen/CenterContainer/VBoxContainer"]
+margin_top = 110.0
+margin_right = 530.0
+margin_bottom = 236.0
+custom_fonts/font = ExtResource( 4 )
+text = "Your Airship hass been destroy
+
+"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="exit" type="Button" parent="CanvasLayer/Control2/deadscreen/CenterContainer/VBoxContainer"]
+margin_top = 240.0
+margin_right = 530.0
+margin_bottom = 360.0
+rect_min_size = Vector2( 0, 120 )
+custom_fonts/font = ExtResource( 4 )
+text = "Exit"
 
 [node name="Control" type="HBoxContainer" parent="CanvasLayer/Control2"]
 anchor_right = 1.0
@@ -106,8 +164,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="on_exit_click" from="CanvasLayer/Control2/spectate" to="." method="_on_spectate_on_exit_click"]
-[connection signal="on_spectate_click" from="CanvasLayer/Control2/deadscreen" to="." method="_on_deadscreen_on_spectate_click"]
+[connection signal="pressed" from="CanvasLayer/Control2/deadscreen/CenterContainer/VBoxContainer/exit" to="." method="_on_exit_pressed"]
 [connection signal="on_item_press" from="CanvasLayer/Control2/Control/mid/VBoxContainer" to="." method="_on_VBoxContainer_on_item_press"]
 [connection signal="pressed" from="CanvasLayer/Control2/Control/right/aim" to="." method="_on_aim_pressed"]
 [connection signal="toggled" from="CanvasLayer/Control2/Control/right/aim" to="." method="_on_aim_toggled"]

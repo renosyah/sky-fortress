@@ -1,7 +1,5 @@
 extends Ship
 
-const MAX_PART_DAMAGE = 3
-
 onready var _part = $pivot
 onready var _tween = $Tween
 onready var _hp_bar = $hpBar
@@ -35,9 +33,6 @@ remotesync func _take_damage(damage):
 		return
 	
 	update_hp_bar()
-	
-	if damage > 15.0:
-		_damage_random_part()
 	
 ###############################################################
 
@@ -89,16 +84,7 @@ func _on_Tween_tween_completed(object, key):
 		
 	if str(key) == ":translation":
 		.spawn_explosive_on_destroy()
-	
-func _damage_random_part():
-	var damage_part = 0
-	var parts = _part.get_children()
-	for i in parts:
-		if i.visible == false:
-			damage_part += 1
-			
-	if damage_part < MAX_PART_DAMAGE:
-		parts[randi() % parts.size()].visible = false
+		
 	
 func play_sound(path : String):
 	.play_sound(path)

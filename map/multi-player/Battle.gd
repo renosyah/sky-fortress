@@ -153,7 +153,18 @@ func give_command_to_airship_bot(holder_path : NodePath, terrain_path : NodePath
 	var targets = _airborne_targets.duplicate()
 	if targets.empty():
 		return
+		
+	var erase_target = []
+	for i in targets:
+		if not is_instance_valid(i):
+			erase_target.append(i)
 	
+	for i in erase_target:
+		targets.erase(i)
+		
+	if targets.empty():
+		return
+		
 	var bot = bots[randi() % bots.size()]
 	targets.erase(bot)
 	
@@ -164,9 +175,6 @@ func give_command_to_airship_bot(holder_path : NodePath, terrain_path : NodePath
 	bot.waypoint = pos
 	
 	var target = targets[randi() % targets.size()]
-	while not is_instance_valid(target):
-		target = targets[randi() % targets.size()]
-		
 	if randf() < 0.8:
 		bot.shot(rand_range(0, bot.weapons.size()), target.translation, target.get_path(),  target.get_path())
 		

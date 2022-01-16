@@ -13,7 +13,7 @@ onready var _player_name = $CanvasLayer/Control/VBoxContainer/PanelContainer/HBo
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_list_ship.datas = Ship.SHIP_LIST
+	_list_ship.datas = Global.ship_list
 	_list_ship.update_list()
 	
 	_weapon_list.datas = Global.selected_ship.weapons

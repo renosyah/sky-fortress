@@ -200,7 +200,7 @@ rect_min_size = Vector2( 0, 100 )
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 max_length = 20
-placeholder_text = "Type Something..."
+placeholder_text = " Type Something..."
 
 [node name="send" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/chat/VBoxContainer/HBoxContainer"]
 margin_left = 620.0

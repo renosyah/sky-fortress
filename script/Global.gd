@@ -1,8 +1,11 @@
 extends Node
 
+const PERSISTEN_SAVE = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	load_player_data()
+	load_player_ships()
 	load_player_selected_ship()
 	load_last_battle_result()
 	
@@ -18,11 +21,15 @@ func new_player_data() -> Dictionary:
 	}
 	
 func save_player_data(_data):
-	#SaveLoad.save("player.dat", _data)
-	pass
+	if PERSISTEN_SAVE:
+		SaveLoad.save("player.dat", _data)
 	
 func load_player_data():
-	var _player_data = null #SaveLoad.load_save("player.dat")
+	var _player_data = null 
+	
+	if PERSISTEN_SAVE:
+		_player_data = SaveLoad.load_save("player.dat")
+		
 	if not _player_data:
 		_player_data = new_player_data()
 		save_player_data(_player_data)
@@ -30,16 +37,41 @@ func load_player_data():
 	player_data = _player_data
 	
 ################################################################
+# ship list
+var ship_list = []
+	
+func started_ships():
+	return Ship.SHIP_LIST.duplicate(true)
+	
+func load_player_ships():
+	var _ship_list = null
+	
+	if PERSISTEN_SAVE:
+		_ship_list =SaveLoad.load_save("ship_list.dat")
+	
+	if not _ship_list:
+		_ship_list = started_ships()
+		
+	ship_list  = _ship_list
+	
+func save_player_ships(_ship_list):
+	if PERSISTEN_SAVE:
+		SaveLoad.save("ship_list.dat", _ship_list)
+	
+################################################################
 # player ship & equipment
 var selected_ship = {}
-var ship_list = Ship.SHIP_LIST.duplicate(true)
 	
 func save_player_selected_ship(_selected_ship):
-	#SaveLoad.save("ship.dat", _selected_ship)
-	pass
+	if PERSISTEN_SAVE:
+		SaveLoad.save("ship.dat", _selected_ship)
 	
 func load_player_selected_ship():
-	var _selected_ship = null #SaveLoad.load_save("ship.dat")
+	var _selected_ship = null 
+		
+	if PERSISTEN_SAVE:
+		_selected_ship = SaveLoad.load_save("ship.dat")
+		
 	if not _selected_ship:
 		for i in ship_list:
 			i.owner_id = player_data.id
@@ -80,6 +112,7 @@ var client = {
 }
 
 var mp_battle_data = []
+
 ################################################################
 
 

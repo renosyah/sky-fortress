@@ -65,6 +65,9 @@ func _on_battle_button_pressed():
 	rpc("_battle")
 	
 func _on_send_pressed():
+	if _chat_input.text == "":
+		return
+		
 	rpc("_send_chat", _chat_input.text, Global.player_data.name)
 	_chat_input.text = ""
 	

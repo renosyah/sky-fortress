@@ -1,6 +1,6 @@
 extends Button
 
-
+onready var _selected_bg = $ColorRect
 onready var _icon = $TextureRect
 onready var _text = $Label
 
@@ -16,7 +16,6 @@ func display_item():
 		
 	if data.has("icon"):
 		_icon.texture = load(data.icon)
-		
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	
+func selected(_selected):
+	_selected_bg.color = Color.white if _selected else Color.black
