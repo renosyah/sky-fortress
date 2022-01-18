@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scene/weapons/controlled/biplane/biplane.gd" type="Script" id=1]
 [ext_resource path="res://scene/ships/carrier/bridge.png" type="Texture" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://scene/weapons/controlled/biplane/bottom_wing.png" type="Texture" id=4]
 [ext_resource path="res://scene/weapons/controlled/biplane/top_wing.png" type="Texture" id=5]
 [ext_resource path="res://scene/weapons/controlled/biplane/fusselages.png" type="Texture" id=6]
-[ext_resource path="res://assets/mg-firing/mg_firing.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scene/weapons/controlled/biplane/tag.png" type="Texture" id=8]
 [ext_resource path="res://assets/ui/highlight/highlight.tscn" type="PackedScene" id=9]
 
@@ -21,12 +20,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0185437 )
 shape = SubResource( 4 )
 
 [node name="Pivot" type="Spatial" parent="."]
-
-[node name="mg_firing" parent="Pivot" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.021432, -0.112582, -1.00782 )
-
-[node name="mg_firing2" parent="Pivot/mg_firing" instance=ExtResource( 7 )]
-transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 4.65661e-10, 0, -0.010596 )
 
 [node name="prop" parent="Pivot" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00060606, -0.135123, -0.834402 )

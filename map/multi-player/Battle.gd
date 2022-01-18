@@ -1,6 +1,7 @@
 extends Node
 class_name MP_Battle
 
+const team = "player"
 const MAX_HOSTILE = 1
 const HOSTILE_SIDE = "BOT"
 var HOSTILE_SHIPS = {
@@ -9,19 +10,39 @@ var HOSTILE_SHIPS = {
 	"res://scene/ships/bomber/bomber.tscn" : Ship.SHIP_LIST[1],
 }
 
-
 signal player_on_ready(player)
 
+# player node
+var _player : KinematicBody
+
+# player targeting system
+var _aim_point : Vector3
+var _player_aim_guider : Spatial
+var _lock_on_point : Spatial
+
+# for every targetable airborne node
+# but because this MP mode is COOP
+# only players object are targetable by bots
+var _airborne_targets = []
+
+# misc
 var _aim_mode = false
 var _spectate_mode = false
 var _spectate_cicle_pos = 0
 
-var _aim_point :Vector3
-var _lock_on_point : Spatial
-
-# for every targetable airborne node
-var _airborne_targets = []
-
+################################################################
+# network connection watcher
+# for both client and host
+func init_connection_watcher():
+	Network.connect("server_disconnected", self , "_server_disconnected")
+	Network.connect("connection_closed", self , "_connection_closed")
+	
+func _connection_closed():
+	_server_disconnected()
+	
+func _server_disconnected():
+	get_tree().change_scene("res://menu/main-menu/main_menu.tscn")
+	
 ################################################################
 # client request terrain data section
 # and receive terrain data section
@@ -176,9 +197,12 @@ func give_command_to_airship_bot(holder_path : NodePath, terrain_path : NodePath
 	
 	var target = targets[randi() % targets.size()]
 	if randf() < 0.8:
-		bot.shot(rand_range(0, bot.weapons.size()), target.translation, target.get_path(),  target.get_path())
-		
-	
+		bot.shot(
+			rand_range(0, bot.weapons.size()),
+			target.translation,
+			target.get_path(),
+			target.get_path()
+		)
 
 
 

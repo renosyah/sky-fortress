@@ -54,6 +54,10 @@ func _on_Area_body_entered(body):
 	if body.owner_id == owner_id or body.side == side:
 		return
 		
+	if get_tree().network_peer and not is_network_master():
+		spawn_explosive()
+		return
+		
 	if body.has_method("take_damage"):
 		body.take_damage(Weapon.get_damage_mult(damage))
 		

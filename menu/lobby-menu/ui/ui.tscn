@@ -122,7 +122,7 @@ size_flags_vertical = 3
 [node name="TextureRect" type="ColorRect" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/player_slot"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0, 0, 0, 0.733333 )
+color = Color( 0, 0, 0, 0.862745 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -165,7 +165,7 @@ size_flags_vertical = 3
 [node name="TextureRect2" type="ColorRect" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/chat"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0, 0, 0, 0.733333 )
+color = Color( 0, 0, 0, 0.862745 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

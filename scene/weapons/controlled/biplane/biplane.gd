@@ -2,7 +2,6 @@ extends AirPlane
 
 onready var _firing_delay = $FiringDelay
 onready var _fuel = $Fuel
-onready var _mg_firing = $Pivot/mg_firing
 onready var _pivot = $Pivot
 onready var _tag = $tag
 onready var _tween = $Tween
@@ -31,8 +30,6 @@ remotesync func _take_damage(damage):
 remotesync func _falling():
 	._falling()
 	_highlight.visible = false
-	_mg_firing.visible = false
-	_tag.visible = false
 	var _down = Vector3(translation.x, 1.0, translation.y)
 	look_at(_down, Vector3.UP)
 	_tween.interpolate_property(_pivot, "rotation", _pivot.rotation,  Vector3(0,0,120), 10.0)
@@ -64,12 +61,10 @@ func _process(delta):
 		var distance_to_target = translation.distance_to(_target.translation)
 		var distance_to_waypoint = translation.distance_to(_waypoint)
 		
-		_mg_firing.visible = (ranges >= distance_to_target) and not _mission_over
-			
 		if distance_to_waypoint <= 5.0:
 			.update_course()
 			
-		if  _firing_delay.is_stopped() and _mg_firing.visible:
+		if  _firing_delay.is_stopped() and ranges >= distance_to_target:
 			shot_bullet()
 			_firing_delay.start()
 		
@@ -89,6 +84,9 @@ func _process(delta):
 	
 	
 func shot_bullet():
+	if get_tree().network_peer and not is_network_master():
+		return
+		
 	if _target.has_method("take_damage") and randf() < accuracy:
 		_target.take_damage(damage)
 		
