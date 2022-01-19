@@ -135,7 +135,12 @@ func spawn_small_explosive_on_damage():
 	var explosive = preload("res://assets/explosive/explosive.tscn").instance()
 	get_parent().add_child(explosive)
 	explosive.translation = translation
-	explosive.scale = Vector3.ONE * 6
+	explosive.scale = Vector3.ONE * 3
+	
+func spawn_small_explosive_on_hit_enemy(_translation):
+	var explosive = preload("res://assets/explosive/explosive.tscn").instance()
+	get_parent().add_child(explosive)
+	explosive.translation = _translation
 	
 func transform_turning(direction, delta):
 	var new_transform = transform.looking_at(direction, Vector3.UP)

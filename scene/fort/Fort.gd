@@ -81,17 +81,6 @@ func shot(weapon_index : int):
 	if weapons[weapon_index].ammo <= 0:
 		return
 		
-	if weapon.type == Weapon.TYPE_UTILITY:
-		weapons[weapon_index].ammo -= 1
-		hp += weapon.hp
-		max_hp += weapon.max_hp
-		update_hp_bar()
-		
-		emit_signal("on_ready", self)
-		emit_signal("on_weapon_update", self, weapon_index, weapon)
-		return
-		
-		
 	var projectile = load(weapon.ammo_scene).instance()
 	projectile.damage = weapon.damage
 	projectile.speed = weapon.speed

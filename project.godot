@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scene/weapons/controlled/AirPlane.gd"
 }, {
+"base": "AirPlane",
+"class": "Fighter",
+"language": "GDScript",
+"path": "res://scene/weapons/controlled/fighter/Fighter.gd"
+}, {
 "base": "KinematicBody",
 "class": "Fort",
 "language": "GDScript",
@@ -89,6 +94,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scene/ships/Ship.gd"
 }, {
+"base": "AirPlane",
+"class": "TacticalBomber",
+"language": "GDScript",
+"path": "res://scene/weapons/controlled/tactical-bomber/TacticalBomber.gd"
+}, {
 "base": "Node",
 "class": "Weapon",
 "language": "GDScript",
@@ -96,6 +106,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "AirPlane": "",
+"Fighter": "",
 "Fort": "",
 "GDUUID": "",
 "InputEventMultiScreenDrag": "",
@@ -111,6 +122,7 @@ _global_script_class_icons={
 "ServerAdvertiser": "res://addons/LANServerBroadcast/server_advertiser/server_advertiser.png",
 "ServerListener": "res://addons/LANServerBroadcast/server_listener/server_listener.png",
 "Ship": "",
+"TacticalBomber": "",
 "Weapon": ""
 }
 

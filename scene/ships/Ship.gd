@@ -211,18 +211,6 @@ func _launch(weapon_index : int, name : String, _aim_point : Vector3, _guided_po
 	if weapons[weapon_index].ammo <= 0:
 		return
 		
-	if weapon.type == Weapon.TYPE_UTILITY:
-		weapons[weapon_index].ammo -= 1
-		hp += weapon.hp
-		max_hp += weapon.max_hp
-		cruise_speed += weapon.cruise_speed
-		turn_speed += weapon.turn_speed
-		update_hp_bar()
-		
-		emit_signal("on_ready", self)
-		return
-		
-		
 	if not _aim_point == Vector3.ZERO:
 		aim_point = _aim_point
 		

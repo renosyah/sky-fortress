@@ -5,7 +5,6 @@ const TYPE_UNGUIDED = "UNGUIDED"
 const TYPE_GUIDED = "GUIDED"
 const TYPE_LOCK_ON = "LOCKON"
 const TYPE_CONTROLLED = "CONTROLLED"
-const TYPE_UTILITY = "UTILITY"
 
 const DAMAGE_MULTIPLIER = 0.25
 
@@ -36,7 +35,7 @@ const AUTO_CANNON = {
 	damage = 10.0,
 	speed = 15.0,
 	type = TYPE_UNGUIDED,
-	ammo_scene = "res://scene/weapons/un-guided/cannon-ball/cannon_ball.tscn",
+	ammo_scene = "res://scene/weapons/un-guided/cannon/cannon.tscn",
 	min_range = 0.0,
 	max_range = 40.0,
 	ammo = 450,
@@ -48,7 +47,7 @@ const FIGHTER = {
 	name = "Fighter",
 	icon = "res://assets/ui/icon/weapon/fighter.png",
 	cool_down = 4,
-	damage = 1.0,
+	damage = 0.6,
 	speed = 5.2,
 	ammo_restock = 1,
 	ranges = 10.0,
@@ -57,7 +56,7 @@ const FIGHTER = {
 	hp = 5,
 	max_hp = 5,
 	type = TYPE_CONTROLLED,
-	ammo_scene = "res://scene/weapons/controlled/biplane/biplane.tscn",
+	ammo_scene = "res://scene/weapons/controlled/fighter/biplane/biplane.tscn",
 	min_range = 5.0,
 	max_range = 80.0,
 	ammo = 4,
@@ -78,7 +77,7 @@ const BOMBER = {
 	hp = 8,
 	max_hp = 8,
 	type = TYPE_CONTROLLED,
-	ammo_scene = "res://scene/weapons/controlled/biplane-bomber/biplane_bomber.tscn",
+	ammo_scene = "res://scene/weapons/controlled/tactical-bomber/biplane-bomber/biplane_bomber.tscn",
 	min_range = 5.0,
 	max_range = 80.0,
 	ammo = 2,
@@ -156,29 +155,4 @@ const BOMBER_TEMPLATES = [
 	BOMB,
 	AIR_MINE,
 	AUTO_CANNON,
-]
-
-
-
-const UNUSED = [
-	{
-		name = "Repair",
-		hp = 50.0,
-		max_hp = 50.0,
-		cruise_speed = -0.6,
-		turn_speed = -0.3,
-		type = TYPE_UTILITY,
-		ammo = 1,
-		max_ammo = 1
-	},
-	{
-		name = "Overdrive",
-		hp = -25.0,
-		max_hp = -25.0,
-		cruise_speed = 2.0,
-		turn_speed = 1.0,
-		type = TYPE_UTILITY,
-		ammo = 1,
-		max_ammo = 1
-	}
 ]
