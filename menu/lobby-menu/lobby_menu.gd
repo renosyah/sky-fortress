@@ -32,10 +32,7 @@ func _server_player_connected(_player_network_unique_id : int, _player : Diction
 	_server_advertise.serverInfo["port"] = Global.server.port
 	_server_advertise.serverInfo["public"] = true
 	
-	_ui.rpc("_send_chat", "has Joined!", Global.player_data.name)
-	
-	_ui.player_joined.append(Global.selected_ship)
-	_ui.rpc("_update_player_joined", _ui.player_joined)
+	_ui.broadcast_host_player_join()
 	
 ################################################################
 func _connection_closed():
@@ -57,8 +54,7 @@ func init_client():
 	
 func _client_player_connected(_player_network_unique_id : int, player : Dictionary):
 	Global.client.network_unique_id = _player_network_unique_id
-	_ui.rpc("_send_chat", "has Joined!", Global.player_data.name)
-	_ui.rpc_id(Network.PLAYER_HOST_ID, "_request_player_joined", _player_network_unique_id)
+	_ui.broadcast_client_player_join(_player_network_unique_id)
 	
 ################################################################
 func _on_ui_on_exit_click():

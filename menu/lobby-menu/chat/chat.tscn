@@ -1,0 +1,64 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=1]
+[ext_resource path="res://menu/lobby-menu/chat/chat.gd" type="Script" id=2]
+
+[node name="chat" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.862745 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 496.0
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="chat_list" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+margin_right = 1024.0
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 500.0
+margin_right = 1024.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 0, 80 )
+
+[node name="input_chat" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+margin_right = 820.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 100 )
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+max_length = 20
+placeholder_text = " Type Something..."
+
+[node name="send" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 824.0
+margin_right = 1024.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 200, 0 )
+custom_fonts/font = ExtResource( 1 )
+text = " Send "
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/send" to="." method="_on_send_pressed"]

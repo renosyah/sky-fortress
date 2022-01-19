@@ -199,13 +199,6 @@ func _on_event_timer_timeout():
 # timeout to bot command to where move and what to shot
 func _on_bot_command_timer_timeout():
 	give_command_to_airship_bot(_bot_holder.get_path(), _terrain.get_path())
-	
-	
-	
-	
-	
-	
-	
 
 
 

@@ -29,6 +29,7 @@ func _on_host_pressed():
 	
 func _on_join_pressed():
 	_server_browser.visible = true
+	_server_browser.clear_list()
 	_server_browser.start_finding()
 	
 func _on_battle_button_pressed():

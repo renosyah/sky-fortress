@@ -9,6 +9,7 @@ var HOSTILE_SHIPS = {
 	"res://scene/ships/carrier/carrier.tscn" : Ship.SHIP_LIST[0],
 	"res://scene/ships/bomber/bomber.tscn" : Ship.SHIP_LIST[1],
 }
+var _aggresion = 0.6
 
 signal player_on_ready(player)
 
@@ -29,6 +30,7 @@ var _airborne_targets = []
 var _aim_mode = false
 var _spectate_mode = false
 var _spectate_cicle_pos = 0
+
 
 ################################################################
 # network connection watcher
@@ -150,11 +152,10 @@ remotesync func _despawn_hostile_airship(node_path : NodePath):
 func _on_enemy_on_destroyed(_node):
 	rpc("_despawn_hostile_airship", _node.get_path())
 	
-	
 func _on_airship_on_spawning_weapon(_node):
 	if _node.has_method("take_damage"):
 		_airborne_targets.append(_node)
-		
+	
 ################################################################
 # bot command to where move and what to shot
 # this funnction only run in host player
@@ -167,46 +168,50 @@ func give_command_to_airship_bot(holder_path : NodePath, terrain_path : NodePath
 	if not is_instance_valid(terrain):
 		return
 		
+	if terrain.feature_translations.empty():
+		return
+		
+	var pos = terrain.feature_translations[randi() % terrain.feature_translations.size()]
+		
 	var bots = holder.get_children()
 	if bots.empty():
 		return
+		
+	var bot = bots[randi() % bots.size()]
+	if not is_instance_valid(bot):
+		return
+		
+	bot.waypoint = pos
 		
 	var targets = _airborne_targets.duplicate()
 	if targets.empty():
 		return
 		
-	var erase_target = []
-	for i in targets:
-		if not is_instance_valid(i):
-			erase_target.append(i)
-	
-	for i in erase_target:
-		targets.erase(i)
+	targets.erase(bot)
 		
+	erase_empty(targets)
 	if targets.empty():
 		return
 		
-	var bot = bots[randi() % bots.size()]
-	targets.erase(bot)
-	
-	if terrain.feature_translations.empty():
-		return
-	
-	var pos = terrain.feature_translations[randi() % terrain.feature_translations.size()]
-	bot.waypoint = pos
-	
 	var target = targets[randi() % targets.size()]
-	if randf() < 0.8:
+	if randf() < _aggresion:
 		bot.shot(
 			rand_range(0, bot.weapons.size()),
 			target.translation,
 			target.get_path(),
 			target.get_path()
 		)
-
-
-
-
+		
+# erase invalid instance
+# in array
+func erase_empty(arr):
+	var erase_target = []
+	for i in arr:
+		if not is_instance_valid(i):
+			erase_target.append(i)
+		
+	for i in erase_target:
+		arr.erase(i)
 
 
 

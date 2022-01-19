@@ -27,6 +27,8 @@ alignment = 1
 [node name="name" type="Label" parent="Viewport/VBoxContainer"]
 margin_right = 300.0
 margin_bottom = 40.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 5
 custom_fonts/font = ExtResource( 4 )
 align = 1
 

@@ -60,19 +60,28 @@ func _process(delta):
 				knownServers[serverIp] = gameInfo
 				print("New server found: %s - %s:%s" % [gameInfo.name, gameInfo.ip, gameInfo.port])
 				emit_signal("new_server", gameInfo)
-			# Update the last seen time
-			else:
-				var gameInfo = knownServers[serverIp]
-				gameInfo.lastSeen = OS.get_unix_time()
 			
 func clean_up():
 	var now = OS.get_unix_time()
+	var erased_servers = []
 	for serverIp in knownServers:
 		var serverInfo = knownServers[serverIp]
 		if (now - serverInfo.lastSeen) > server_cleanup_threshold:
-			knownServers.erase(serverIp)
-			print('Remove old server: %s' % serverIp)
+			erased_servers.append(serverIp)
 			emit_signal("remove_server", serverIp)
-
+			
+	for i in erased_servers:
+		knownServers.erase(i)
+	
+func force_clean_up():
+	var erased_servers = []
+	for serverIp in knownServers:
+		erased_servers.append(serverIp)
+			
+	for i in erased_servers:
+		knownServers.erase(i)
+	
+	
+	
 func _exit_tree():
 	socketUDP.close()

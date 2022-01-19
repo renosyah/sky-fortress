@@ -42,7 +42,6 @@ func _ready():
 			_player_aim_guider = spatial_target
 			ship.MINIMAP_COLOR = Color.green
 			
-		_airborne_targets.append(ship)
 		_ui.add_minimap_object(ship)
 		spawn_pos.x += 5.0
 		
@@ -178,7 +177,6 @@ func _on_player_on_falling(_node):
 		_player.lock_on_point.highlight(false)
 		
 	_camera.translation = _node.translation
-	_airborne_targets.erase(_node)
 	
 ################################################################
 

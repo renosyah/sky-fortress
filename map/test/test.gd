@@ -13,7 +13,7 @@ var HOSTILE_INSTALATION = {
 signal player_on_ready(player)
 
 const MAX_HOSTILE = 4
-const MAX_INSTALATION = 3
+const MAX_INSTALATION = 8
 
 var airborne_targets = []
 

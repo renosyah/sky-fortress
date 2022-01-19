@@ -20,6 +20,11 @@ func stop_finding():
 	show_loading(false)
 	_server_listener.stop()
 	
+func clear_list():
+	_server_listener.force_clean_up()
+	for i in _item_holder.get_children():
+		_item_holder.remove_child(i)
+	
 func _on_server_listener_new_server(serverInfo):
 	show_loading(false)
 	var item = ITEM.instance()
@@ -45,6 +50,7 @@ func show_loading(_show):
 	
 	
 func _on_exit_pressed():
+	clear_list()
 	visible = false
 	
 	

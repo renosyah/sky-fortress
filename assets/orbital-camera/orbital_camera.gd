@@ -4,6 +4,8 @@ signal on_camera_moving(_translation, _zoom)
 
 onready var _camera = $Camera
 
+export(bool) var is_enable = true
+
 var min_zoom : float = 5.0
 var max_zoom : float = 10.0
 var zoom_sensitivity : float = 10.0
@@ -18,6 +20,9 @@ func _ready():
 	
 
 func _process(delta):
+	if not is_enable:
+		return
+		
 	var velocity = Vector3.ZERO
 	velocity.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	rotation_degrees.y += velocity.x * delta * 100
@@ -26,6 +31,9 @@ func parsing_input(event):
 	_unhandled_input(event)
 	
 func _unhandled_input(event):
+	if not is_enable:
+		return
+		
 	if event.is_action("scroll_down"):
 		if(_camera.translation.z + zoom_speed + 1.0 <= max_zoom):
 			_camera.translation.z += zoom_speed + 1.0
