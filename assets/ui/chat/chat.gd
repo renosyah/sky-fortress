@@ -1,14 +1,17 @@
 extends Control
 
+signal on_message(_message, _from)
+
 onready var _chat_list = $VBoxContainer/ScrollContainer/chat_list
 onready var _chat_input = $VBoxContainer/HBoxContainer/input_chat
 
 ################################################################
 # sync chat
 remotesync func _send_chat(_message, _from):
-	var chat_item = preload("res://menu/lobby-menu/chat/item/item.tscn").instance()
+	var chat_item = preload("res://assets/ui/chat/item/item.tscn").instance()
 	chat_item.text = "("+ _from +") : " + _message
 	_chat_list.add_child(chat_item)
+	emit_signal("on_message", _message, _from)
 	
 ################################################################
 # Called when the node enters the scene tree for the first time.

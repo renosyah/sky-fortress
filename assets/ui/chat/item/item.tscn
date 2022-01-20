@@ -3,10 +3,13 @@
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_16.tres" type="DynamicFont" id=1]
 
 [node name="item" type="Label"]
-margin_right = 720.0
+margin_right = 167.0
 margin_bottom = 28.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 5
 custom_fonts/font = ExtResource( 1 )
 text = "android : hi.. "
+autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }

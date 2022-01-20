@@ -113,7 +113,7 @@ var mode = MODE_HOST
 var server = {
 	ip = '127.0.0.1',
 	port = 31400,
-	max_player = 5,
+	max_player = 6,
 }
 var client = {
 	ip = '',
