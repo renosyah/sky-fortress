@@ -82,6 +82,8 @@ transform = Transform( 1.31134e-07, 0.999999, 4.37114e-08, 3.82136e-15, 4.37113e
 
 [node name="Tween" type="Tween" parent="."]
 
+[node name="Tween2" type="Tween" parent="."]
+
 [node name="hpBar" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 

@@ -2,6 +2,7 @@ extends Ship
 
 onready var _part = $pivot
 onready var _tween = $Tween
+onready var _tween2 = $Tween2
 onready var _hp_bar = $hpBar
 onready var _audio = $AudioStreamPlayer3D
 onready var _highlight = $highlight
@@ -14,8 +15,8 @@ func _set_puppet_translation(_val :Vector3):
 		translation = _puppet_translation
 		return
 		
-	_tween.interpolate_property(self,"translation",translation, _puppet_translation, 0.1)
-	_tween.start()
+	_tween2.interpolate_property(self,"translation",translation, _puppet_translation, 0.1)
+	_tween2.start()
 	
 func _set_puppet_rotation(_val:Vector3):
 	._set_puppet_rotation(_val)
