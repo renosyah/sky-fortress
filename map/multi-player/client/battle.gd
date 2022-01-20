@@ -110,8 +110,11 @@ func _on_cameraPivot_on_body_enter_aim_sight(_body):
 	if _body.owner_id == _player.owner_id or _body.side == _player.side:
 		return
 		
+	if is_instance_valid(_lock_on_point):
+		_lock_on_point.highlight(false)
+		
 	_lock_on_point = _body
-	_body.highlight(true)
+	_lock_on_point.highlight(true)
 	
 ################################################################
 # network tick to send automatic request

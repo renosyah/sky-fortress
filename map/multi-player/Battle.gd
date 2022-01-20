@@ -144,15 +144,18 @@ remotesync func _despawn_hostile_airship(node_path : NodePath):
 	if not is_instance_valid(_node):
 		return
 		
-	_airborne_targets.erase(_node)
 	_node.queue_free()
 	
 ################################################################
 # player and bot signal handle event
 func _on_enemy_on_destroyed(_node):
-	rpc("_despawn_hostile_airship", _node.get_path())
+	if get_tree().is_network_server():
+		rpc("_despawn_hostile_airship", _node.get_path())
 	
 func _on_airship_on_spawning_weapon(_node):
+	if _node.side == HOSTILE_SIDE:
+		return
+		
 	if _node.has_method("take_damage"):
 		_airborne_targets.append(_node)
 	
