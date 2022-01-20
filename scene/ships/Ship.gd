@@ -105,9 +105,6 @@ puppet var _puppet_rotation: Vector3 setget _set_puppet_rotation
 func _set_puppet_rotation(_val:Vector3):
 	_puppet_rotation = _val
 	
-remotesync func _make_ready():
-	_ready()
-	
 remotesync func _take_damage(damage):
 	if destroyed:
 		return
@@ -118,10 +115,6 @@ remotesync func _take_damage(damage):
 		destroy()
 		
 	emit_signal("on_take_damage", self, damage , hp)
-	
-remotesync func _destroy():
-	destroyed = true
-	emit_signal("on_falling", self)
 	
 remotesync func _shot(weapon_index : int, name : String, _aim_point : Vector3, _guided_point : NodePath, _lock_on_point : NodePath):
 	_launch(weapon_index, name, _aim_point, _guided_point, _lock_on_point)
@@ -134,11 +127,7 @@ remotesync func _restock_ammo(weapon_slot, ammo_restock):
 ###############################################################
 	
 func make_ready():
-	if get_tree().network_peer:
-		rpc("_make_ready")
-		return
-		
-	_make_ready()
+	_ready()
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -184,11 +173,8 @@ func take_damage(damage):
 	_take_damage(damage)
 	
 func destroy():
-	if get_tree().network_peer:
-		rpc("_destroy")
-		return
-		
-	_destroy()
+	destroyed = true
+	emit_signal("on_falling", self)
 	
 func shot(weapon_index : int, _aim_point : Vector3 = Vector3.ZERO, _guided_point : NodePath = NodePath(""), _lock_on_point : NodePath = NodePath("")):
 	var _weapon_name = "weapon-" + str(GDUUID.v4())
@@ -357,9 +343,8 @@ func spawn_explosive_on_destroy():
 	explosive.scale = Vector3.ONE * 10
 	
 func _on_finish_explode():
-	#visible = false
 	emit_signal("on_destroyed", self)
-
+	
 func check_weapon_status():
 	for weapon in weapons:
 		weapon.can_fire = false

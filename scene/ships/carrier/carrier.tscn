@@ -90,5 +90,3 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 
 [node name="highlight" parent="." instance=ExtResource( 8 )]
 transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0 )
-
-[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]

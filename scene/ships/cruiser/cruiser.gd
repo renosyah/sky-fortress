@@ -22,10 +22,7 @@ func _set_puppet_rotation(_val:Vector3):
 	if destroyed:
 		rotation = _puppet_rotation
 		return
-
-remotesync func _make_ready():
-	._make_ready()
-	
+		
 remotesync func _take_damage(damage):
 	._take_damage(damage)
 	
@@ -72,6 +69,7 @@ func destroy():
 	.destroy()
 	_hp_bar.visible = false
 	_highlight.visible = false
+	_tween.connect("tween_completed", self ,"_on_Tween_tween_completed")
 	_tween.interpolate_property(self, "translation", translation, Vector3(translation.x, 1.0, translation.y), 5.0)
 	_tween.start()
 	
