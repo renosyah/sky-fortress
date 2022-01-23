@@ -41,13 +41,13 @@ func load_player_data():
 var ship_list = []
 	
 func started_ships():
-	return Ship.SHIP_LIST.duplicate(true)
+	return Ships.SHIP_LIST.duplicate(true)
 	
 func load_player_ships():
 	var _ship_list = null
 	
 	if PERSISTEN_SAVE:
-		_ship_list =SaveLoad.load_save("ship_list.dat")
+		_ship_list = SaveLoad.load_save("ship_list.dat")
 	
 	if not _ship_list:
 		_ship_list = started_ships()

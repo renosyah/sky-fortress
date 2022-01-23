@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scene/weapons/controlled/fighter/biplane/biplane.gd" type="Script" id=1]
-[ext_resource path="res://scene/ships/carrier/bridge.png" type="Texture" id=2]
+[ext_resource path="res://skin/ships/beam/beam.png" type="Texture" id=2]
 [ext_resource path="res://scene/weapons/controlled/fighter/biplane/prop.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scene/weapons/controlled/fighter/biplane/bottom_wing.png" type="Texture" id=4]
 [ext_resource path="res://scene/weapons/controlled/fighter/biplane/top_wing.png" type="Texture" id=5]

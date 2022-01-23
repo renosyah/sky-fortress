@@ -1,52 +1,6 @@
 extends KinematicBody
 class_name Ship
 
-const SHIP_LIST = [
-	{
-		id = "s-1",
-		name = "Carrier",
-		icon = "res://scene/ships/carrier/icon.png",
-		scene = "res://scene/ships/carrier/carrier.tscn", 
-		owner_id = "",
-		player_name = "",
-		side = "",
-		max_hp = 150,
-		hp = 150,
-		cruise_speed = 2.0,
-		turn_speed = 0.5,
-		weapons = Weapon.CARRIER_TEMPLATES
-	},
-	{
-		id = "s-2",
-		name = "Bomber",
-		icon = "res://scene/ships/bomber/icon.png",
-		scene = "res://scene/ships/bomber/bomber.tscn", 
-		owner_id = "",
-		player_name = "",
-		side = "",
-		max_hp = 250,
-		hp = 250,
-		cruise_speed = 3.0,
-		turn_speed = 1.0,
-		weapons = Weapon.BOMBER_TEMPLATES
-	},
-	{
-		id = "s-3",
-		name = "Cruiser",
-		icon = "res://scene/ships/cruiser/icon.png",
-		scene = "res://scene/ships/cruiser/cruiser.tscn", 
-		owner_id = "",
-		player_name = "",
-		side = "",
-		max_hp = 100,
-		hp = 100,
-		cruise_speed = 4.0,
-		turn_speed = 1.5,
-		weapons = Weapon.CRUISER_TEMPLATES
-	}
-	
-]
-
 const DEFAULT_ALTITUDE = 10.0
 const MINIMAP_MARKER = "troop"
 var MINIMAP_COLOR = Color.white
@@ -152,6 +106,8 @@ func set_data(_ship_data):
 	weapons.clear()
 	for i in _ship_data.weapons:
 		weapons.append(i.duplicate())
+		
+	set_skin(_ship_data.skin)
 	
 func set_hp_bar_color(_color : Color):
 	tag_color = _color
@@ -164,7 +120,10 @@ func update_hp_bar():
 	
 func set_hp_bar_name(_name):
 	pass
-
+	
+func set_skin(_camo : String = ""):
+	pass
+	
 func take_damage(damage):
 	if get_tree().network_peer:
 		rpc("_take_damage",damage)
@@ -216,7 +175,7 @@ func _launch(weapon_index : int, name : String, _aim_point : Vector3, _guided_po
 	projectile.side = side
 	projectile.tag_color = tag_color
 	
-	if weapon.type == Weapon.TYPE_UNGUIDED and aim_point:
+	if weapon.type == Weapons.TYPE_UNGUIDED and aim_point:
 		var _aim_at = aim_point
 		if is_instance_valid(lock_on_point):
 			_aim_at = lock_on_point.translation
@@ -229,11 +188,11 @@ func _launch(weapon_index : int, name : String, _aim_point : Vector3, _guided_po
 			
 		add_child(projectile)
 		projectile.translation = translation
-		projectile.lauching_at(_aim_at)
+		projectile.lauching_at(_aim_at, distance_to_target)
 		
 		play_sound("res://assets/sounds/cannon.wav")
 		
-	if weapon.type == Weapon.TYPE_GUIDED and is_instance_valid(guided_point):
+	if weapon.type == Weapons.TYPE_GUIDED and is_instance_valid(guided_point):
 		var distance_to_target = translation.distance_to(guided_point.translation)
 		if distance_to_target > weapon.max_range or distance_to_target < weapon.min_range:
 			return
@@ -247,7 +206,7 @@ func _launch(weapon_index : int, name : String, _aim_point : Vector3, _guided_po
 		
 		emit_signal("on_spawning_weapon", projectile)
 		
-	if weapon.type == Weapon.TYPE_LOCK_ON and is_instance_valid(lock_on_point):
+	if weapon.type == Weapons.TYPE_LOCK_ON and is_instance_valid(lock_on_point):
 		var distance_to_target = translation.distance_to(lock_on_point.translation)
 		if distance_to_target > weapon.max_range or distance_to_target < weapon.min_range:
 			return
@@ -261,7 +220,7 @@ func _launch(weapon_index : int, name : String, _aim_point : Vector3, _guided_po
 		
 		emit_signal("on_spawning_weapon", projectile)
 		
-	if weapon.type == Weapon.TYPE_CONTROLLED and is_instance_valid(lock_on_point):
+	if weapon.type == Weapons.TYPE_CONTROLLED and is_instance_valid(lock_on_point):
 		var distance_to_target = translation.distance_to(lock_on_point.translation)
 		if distance_to_target > weapon.max_range or distance_to_target < weapon.min_range:
 			return
@@ -349,7 +308,7 @@ func check_weapon_status():
 	for weapon in weapons:
 		weapon.can_fire = false
 		
-		if weapon.type == Weapon.TYPE_UNGUIDED and aim_point:
+		if weapon.type == Weapons.TYPE_UNGUIDED and aim_point:
 			var _aim_at = aim_point
 			if is_instance_valid(lock_on_point):
 				_aim_at = lock_on_point.translation
@@ -357,15 +316,15 @@ func check_weapon_status():
 			var distance_to_target = translation.distance_to(_aim_at)
 			weapon.can_fire = distance_to_target < weapon.max_range and distance_to_target > weapon.min_range
 			
-		elif weapon.type == Weapon.TYPE_GUIDED and is_instance_valid(guided_point):
+		elif weapon.type == Weapons.TYPE_GUIDED and is_instance_valid(guided_point):
 			var distance_to_target = translation.distance_to(guided_point.translation)
 			weapon.can_fire = distance_to_target < weapon.max_range and distance_to_target > weapon.min_range
 			
-		elif weapon.type == Weapon.TYPE_LOCK_ON and is_instance_valid(lock_on_point):
+		elif weapon.type == Weapons.TYPE_LOCK_ON and is_instance_valid(lock_on_point):
 			var distance_to_target = translation.distance_to(lock_on_point.translation)
 			weapon.can_fire =  distance_to_target < weapon.max_range and distance_to_target > weapon.min_range
 			
-		elif weapon.type == Weapon.TYPE_CONTROLLED and is_instance_valid(lock_on_point):
+		elif weapon.type == Weapons.TYPE_CONTROLLED and is_instance_valid(lock_on_point):
 			var distance_to_target = translation.distance_to(lock_on_point.translation)
 			weapon.can_fire = distance_to_target < weapon.max_range and distance_to_target > weapon.min_range
 			

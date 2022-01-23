@@ -1,13 +1,13 @@
 extends Node
 
 var HOSTILE_SHIPS = {
-	"res://scene/ships/cruiser/cruiser.tscn" : Ship.SHIP_LIST[2],
-	"res://scene/ships/carrier/carrier.tscn" : Ship.SHIP_LIST[0],
-	"res://scene/ships/bomber/bomber.tscn" : Ship.SHIP_LIST[1],
+	"res://scene/ships/cruiser/cruiser.tscn" : Ships.SHIP_LIST[2],
+	"res://scene/ships/carrier/carrier.tscn" : Ships.SHIP_LIST[0],
+	"res://scene/ships/bomber/bomber.tscn" : Ships.SHIP_LIST[1],
 }
 var HOSTILE_INSTALATION = {
-	"res://scene/fort/aa-instalation/aa_instalation.tscn" : Weapon.AA_FORT_TEMPLATE,
-	"res://scene/fort/airstrip/airstrip.tscn" : Weapon.CARRIER_TEMPLATES
+	"res://scene/fort/aa-instalation/aa_instalation.tscn" : Weapons.AA_FORT_TEMPLATE,
+	"res://scene/fort/airstrip/airstrip.tscn" : Weapons.CARRIER_TEMPLATES
 }
 
 signal player_on_ready(player)

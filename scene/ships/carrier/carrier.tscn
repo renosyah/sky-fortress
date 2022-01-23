@@ -1,14 +1,14 @@
 [gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://scene/ships/carrier/prop.tscn" type="PackedScene" id=1]
+[ext_resource path="res://skin/ships/misc/tower.png" type="Texture" id=1]
 [ext_resource path="res://scene/ships/carrier/carrier.gd" type="Script" id=2]
-[ext_resource path="res://scene/ships/carrier/bridge.png" type="Texture" id=3]
-[ext_resource path="res://scene/ships/carrier/flying_deck.png" type="Texture" id=4]
-[ext_resource path="res://scene/ships/carrier/engine.png" type="Texture" id=5]
-[ext_resource path="res://scene/ships/carrier/baloon.png" type="Texture" id=6]
+[ext_resource path="res://skin/ships/beam/beam.png" type="Texture" id=3]
+[ext_resource path="res://skin/ships/misc/flying_deck.png" type="Texture" id=4]
+[ext_resource path="res://skin/ships/misc/deck.png" type="Texture" id=5]
+[ext_resource path="res://skin/ships/misc/engine.png" type="Texture" id=6]
 [ext_resource path="res://assets/ui/bar-3d/hp_bar_3d.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/ui/highlight/highlight.tscn" type="PackedScene" id=8]
-[ext_resource path="res://scene/ships/carrier/tower.png" type="Texture" id=9]
+[ext_resource path="res://assets/other/prop/prop.tscn" type="PackedScene" id=9]
 
 [sub_resource type="BoxShape" id=3]
 extents = Vector3( 0.392489, 0.614795, 1.91847 )
@@ -24,44 +24,99 @@ shape = SubResource( 3 )
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
 
 [node name="body_1" type="Sprite3D" parent="pivot"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.16286e-09, -0.101889, 0.486744 )
+transform = Transform( 3, 0, -7.65759e-10, 0, 1.5, 0, 2.29727e-09, 0, 1, 0.536128, -0.478704, -0.479876 )
 alpha_cut = 2
-texture = ExtResource( 6 )
+texture = ExtResource( 3 )
 
 [node name="body_2" type="Sprite3D" parent="pivot"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.19589e-09, -0.0712712, -0.4875 )
+transform = Transform( 3, 0, -7.65759e-10, 0, 1.5, 0, 2.29727e-09, 0, 1, 0.536128, -0.478704, 0.512323 )
 alpha_cut = 2
-texture = ExtResource( 6 )
+texture = ExtResource( 3 )
+
+[node name="body_3" type="Sprite3D" parent="pivot"]
+transform = Transform( 3, 0, -7.65759e-10, 0, 1.5, 0, 2.29727e-09, 0, 1, -0.794837, -0.474651, -0.479876 )
+alpha_cut = 2
+texture = ExtResource( 3 )
+
+[node name="body_4" type="Sprite3D" parent="pivot"]
+transform = Transform( 3, 0, -7.65759e-10, 0, 1.5, 0, 2.29727e-09, 0, 1, -0.794837, -0.474651, 0.503062 )
+alpha_cut = 2
+texture = ExtResource( 3 )
+
+[node name="bridge_1" type="Sprite3D" parent="pivot"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.76786, 0.123712, 0.502232 )
+alpha_cut = 2
+texture = ExtResource( 3 )
+
+[node name="bridge_2" type="Sprite3D" parent="pivot"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.76786, 0.123712, -0.499493 )
+alpha_cut = 2
+texture = ExtResource( 3 )
+
+[node name="bridge_3" type="Sprite3D" parent="pivot"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.96271, 0.123712, 0.502232 )
+alpha_cut = 2
+texture = ExtResource( 3 )
+
+[node name="bridge_4" type="Sprite3D" parent="pivot"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.96271, 0.123712, -0.499493 )
+alpha_cut = 2
+texture = ExtResource( 3 )
 
 [node name="bridge_5" type="Sprite3D" parent="pivot"]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.76786, 0, 0.502232 )
+transform = Transform( -3.09086e-08, -3.09086e-08, 1, -0.707107, 0.707107, 0, -0.707107, -0.707107, -4.37114e-08, -1.76786, -0.116942, 0.67049 )
 alpha_cut = 2
 texture = ExtResource( 3 )
 
 [node name="bridge_6" type="Sprite3D" parent="pivot"]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.76786, 0, -0.499493 )
+transform = Transform( -3.09086e-08, 3.09086e-08, 1, 0.707107, 0.707107, 0, -0.707107, 0.707107, -4.37114e-08, -1.76786, -0.104068, -0.721098 )
 alpha_cut = 2
 texture = ExtResource( 3 )
 
 [node name="bridge_7" type="Sprite3D" parent="pivot"]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.96271, 0, 0.502232 )
+transform = Transform( -3.09086e-08, -3.09086e-08, 1, -0.707107, 0.707107, 0, -0.707107, -0.707107, -4.37114e-08, 1.96271, -0.121055, 0.73026 )
 alpha_cut = 2
 texture = ExtResource( 3 )
 
 [node name="bridge_8" type="Sprite3D" parent="pivot"]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.96271, 0, -0.499493 )
+transform = Transform( -3.09086e-08, 3.09086e-08, 1, 0.707107, 0.707107, 0, -0.707107, 0.707107, -4.37114e-08, 1.96271, -0.110696, -0.73214 )
+alpha_cut = 2
+texture = ExtResource( 3 )
+
+[node name="bridge_9" type="Sprite3D" parent="pivot"]
+transform = Transform( -4.37114e-08, -1, 0, 0.602635, -2.6342e-08, 0, 0, 0, 1, -1.08308, -0.0416983, -0.475534 )
+alpha_cut = 2
+texture = ExtResource( 3 )
+
+[node name="bridge_10" type="Sprite3D" parent="pivot"]
+transform = Transform( -4.37114e-08, -1, 0, 0.602635, -2.6342e-08, 0, 0, 0, 1, 0.928409, -0.0416983, -0.475534 )
+alpha_cut = 2
+texture = ExtResource( 3 )
+
+[node name="bridge_11" type="Sprite3D" parent="pivot"]
+transform = Transform( -4.37114e-08, -1, 0, 0.602635, -2.6342e-08, 0, 0, 0, 1, 0.928409, -0.0416983, 0.503247 )
+alpha_cut = 2
+texture = ExtResource( 3 )
+
+[node name="bridge_12" type="Sprite3D" parent="pivot"]
+transform = Transform( -4.37114e-08, -1, 0, 0.602635, -2.6342e-08, 0, 0, 0, 1, -1.08308, -0.0416983, 0.480628 )
 alpha_cut = 2
 texture = ExtResource( 3 )
 
 [node name="tower" type="Sprite3D" parent="pivot"]
-transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 1, -0.00882123, 0.548244, -0.438631 )
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 1, 0.317678, -0.0328442, -0.438631 )
 alpha_cut = 2
-texture = ExtResource( 9 )
+texture = ExtResource( 1 )
 
-[node name="engine" type="Sprite3D" parent="pivot"]
-transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 1, -0.791006, 0.463697, -0.438631 )
+[node name="engine_1" type="Sprite3D" parent="pivot"]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 1, -0.464507, -0.117391, -0.438631 )
 alpha_cut = 2
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
+
+[node name="engine_2" type="Sprite3D" parent="pivot"]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 1, -0.464507, -0.117391, 0.466931 )
+alpha_cut = 2
+texture = ExtResource( 6 )
 
 [node name="flying_deck" type="Sprite3D" parent="pivot"]
 transform = Transform( 1, 4.37028e-08, 4.28582e-08, -4.3702e-08, 0.0194936, 0.99981, 4.2859e-08, -0.99981, 0.0194936, -0.132568, 0.257197, -0.00203074 )
@@ -69,17 +124,23 @@ flip_h = true
 alpha_cut = 2
 texture = ExtResource( 4 )
 
-[node name="prop_1" parent="pivot" instance=ExtResource( 1 )]
-transform = Transform( -4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, -1.77952, 0.12507, -1.01502 )
+[node name="deck" type="Sprite3D" parent="pivot"]
+transform = Transform( 0.882702, 4.37028e-08, 3.77311e-08, -4.3702e-08, 0.0194936, 0.99981, 3.77318e-08, -0.99981, 0.0194936, -0.132568, -0.330937, -0.00203074 )
+flip_h = true
+alpha_cut = 2
+texture = ExtResource( 5 )
 
-[node name="prop_2" parent="pivot" instance=ExtResource( 1 )]
-transform = Transform( -4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, 1.97209, 0.12507, -1.01502 )
+[node name="prop_1" parent="pivot" instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.72501, 0.320886, 1.03803 )
 
-[node name="prop_3" parent="pivot" instance=ExtResource( 1 )]
-transform = Transform( -4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, 1.97209, 0.12507, 1.04295 )
+[node name="prop_2" parent="pivot" instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.72501, 0.320886, -1.02343 )
 
-[node name="prop_4" parent="pivot" instance=ExtResource( 1 )]
-transform = Transform( -4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, -1.73781, 0.12507, 1.04295 )
+[node name="prop_3" parent="pivot" instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.98299, 0.320886, -1.02343 )
+
+[node name="prop_4" parent="pivot" instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.98299, 0.320886, 0.946198 )
 
 [node name="Tween" type="Tween" parent="."]
 

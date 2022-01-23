@@ -16,6 +16,7 @@ func display_selected_ship(ship_data):
 	var ship = load(ship_data.scene).instance()
 	_ship_holder.add_child(ship)
 	ship.destroyed = true
+	ship.set_data(ship_data)
 	
 func _on_ui_on_list_panel_on_item_press(ship_data):
 	Global.selected_ship = ship_data.duplicate()

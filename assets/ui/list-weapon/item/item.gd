@@ -8,10 +8,13 @@ onready var _ammo = $button/PanelContainer/VBoxContainer/Label2
 onready var _cooldown = $cooldown
 onready var _progress = $button/TextureProgress
 onready var _enable = $button/TextureRect2
+onready var _button = $button
 
 var index = 0
 var data = {}
 var clickable = true
+
+var _holded = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -40,8 +43,13 @@ func _process(delta):
 		_ammo.text = str(data.ammo)
 		_enable.visible = data.ammo == 0 or not data.can_fire
 		
-	if _cooldown.is_stopped():
+	if _cooldown.is_stopped() and not _holded:
 		return
+		
+	if _cooldown.is_stopped() and _holded:
+		_cooldown.wait_time = data.cool_down
+		_cooldown.start()
+		emit_signal("pressed",index, data)
 		
 	_progress.max_value = data.cool_down
 	_progress.value = _cooldown.time_left
@@ -64,6 +72,22 @@ func _on_button_pressed():
 	_cooldown.start()
 	
 	emit_signal("pressed",index, data)
-	
 
+
+func _on_button_button_down():
+	if not clickable:
+		return
+		
+	if not data.can_fire:
+		return
+		
+	if data.ammo <= 0:
+		return
+		
+	_holded = true
+	
+	
+func _on_button_button_up():
+	_holded = false
+	
 

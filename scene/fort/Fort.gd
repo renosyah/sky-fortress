@@ -88,7 +88,7 @@ func shot(weapon_index : int):
 	projectile.side = side
 	projectile.tag_color = tag_color
 	
-	if weapon.type == Weapon.TYPE_UNGUIDED and aim_point:
+	if weapon.type == Weapons.TYPE_UNGUIDED and aim_point:
 		var _aim_at = aim_point
 		if is_instance_valid(lock_on_point):
 			_aim_at = lock_on_point.translation
@@ -105,7 +105,7 @@ func shot(weapon_index : int):
 		
 		play_sound("res://assets/sounds/cannon.wav")
 		
-	if weapon.type == Weapon.TYPE_GUIDED and is_instance_valid(guided_point):
+	if weapon.type == Weapons.TYPE_GUIDED and is_instance_valid(guided_point):
 		var distance_to_target = translation.distance_to(guided_point.translation)
 		if distance_to_target > weapon.max_range or distance_to_target < weapon.min_range:
 			return
@@ -119,7 +119,7 @@ func shot(weapon_index : int):
 		
 		emit_signal("on_spawning_weapon", projectile)
 		
-	if weapon.type == Weapon.TYPE_LOCK_ON and is_instance_valid(lock_on_point):
+	if weapon.type == Weapons.TYPE_LOCK_ON and is_instance_valid(lock_on_point):
 		var distance_to_target = translation.distance_to(lock_on_point.translation)
 		if distance_to_target > weapon.max_range or distance_to_target < weapon.min_range:
 			return
@@ -133,7 +133,7 @@ func shot(weapon_index : int):
 		
 		emit_signal("on_spawning_weapon", projectile)
 		
-	if weapon.type == Weapon.TYPE_CONTROLLED and is_instance_valid(lock_on_point):
+	if weapon.type == Weapons.TYPE_CONTROLLED and is_instance_valid(lock_on_point):
 		var distance_to_target = translation.distance_to(lock_on_point.translation)
 		if distance_to_target > weapon.max_range or distance_to_target < weapon.min_range:
 			return

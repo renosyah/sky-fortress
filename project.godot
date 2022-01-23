@@ -94,6 +94,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scene/ships/Ship.gd"
 }, {
+"base": "Node",
+"class": "Ships",
+"language": "GDScript",
+"path": "res://script/Ships.gd"
+}, {
 "base": "AirPlane",
 "class": "TacticalBomber",
 "language": "GDScript",
@@ -103,6 +108,11 @@ _global_script_classes=[ {
 "class": "Weapon",
 "language": "GDScript",
 "path": "res://scene/weapons/weapon.gd"
+}, {
+"base": "Node",
+"class": "Weapons",
+"language": "GDScript",
+"path": "res://script/Weapons.gd"
 } ]
 _global_script_class_icons={
 "AirPlane": "",
@@ -122,8 +132,10 @@ _global_script_class_icons={
 "ServerAdvertiser": "res://addons/LANServerBroadcast/server_advertiser/server_advertiser.png",
 "ServerListener": "res://addons/LANServerBroadcast/server_listener/server_listener.png",
 "Ship": "",
+"Ships": "",
 "TacticalBomber": "",
-"Weapon": ""
+"Weapon": "",
+"Weapons": ""
 }
 
 [application]

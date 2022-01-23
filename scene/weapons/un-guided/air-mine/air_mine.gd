@@ -63,7 +63,7 @@ func _on_Timer_timeout():
 		
 	spawn_explosive()
 	
-func lauching_at(_to: Vector3):
+func lauching_at(to: Vector3, dis : float):
 	_velocity = Vector3.ONE * rand_range(-2.0,2.0)
 	_velocity.y = translation.y
 	_velocity = translation.direction_to(_velocity)
@@ -83,7 +83,7 @@ func _on_air_mine_body_entered(body):
 		return
 		
 	if body.has_method("take_damage"):
-		body.take_damage(Weapon.get_damage_mult(damage))
+		body.take_damage(Weapons.get_damage_mult(damage))
 		
 	if get_tree().network_peer and is_network_master():
 		rpc("spawn_explosive")

@@ -12,6 +12,7 @@ var spread = 0.2
 
 var _velocity : Vector3
 var _travel_distance : float = 0.0
+var _max_distance : float = 0.0
 
 
 # Called when the node enters the scene tree for the first time.
@@ -23,14 +24,15 @@ func _process(delta):
 	translation += _velocity * _distance
 	_travel_distance += _distance
 	
-	if _travel_distance > MAX_DISTANCE:
+	if _travel_distance > _max_distance:
 		set_process(false)
 		spawn_explosive()
 	
-func lauching_at(to: Vector3):
+func lauching_at(to: Vector3, dis : float = MAX_DISTANCE):
 	_velocity = translation.direction_to(to)
 	_velocity.z += rand_range(-spread, spread)
 	_velocity.x += rand_range(-spread, spread)
+	_max_distance = rand_range(dis - 1.0, dis + 1.0)
 	look_at(to,Vector3.UP)
 	
 	
@@ -49,7 +51,7 @@ func _on_cannonBall_body_entered(body):
 		return
 		
 	if body.has_method("take_damage"):
-		body.take_damage(Weapon.get_damage_mult(damage))
+		body.take_damage(Weapons.get_damage_mult(damage))
 		
 	spawn_explosive()
 	

@@ -19,6 +19,6 @@ func _process(delta):
 		set_process(false)
 		queue_free()
 	
-func lauching_at(to: Vector3):
+func lauching_at(to: Vector3, dis : float = MAX_DISTANCE):
 	_velocity = translation.direction_to(to)
 	look_at(to, Vector3.UP)

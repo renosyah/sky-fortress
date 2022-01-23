@@ -63,7 +63,9 @@ func fill_player_slot():
 		item.display_item()
 		
 func _on_exit_pressed():
-	rpc_id(Network.PLAYER_HOST_ID ,"_request_erase_player_joined", Global.selected_ship)
+	if not get_tree().is_network_server():
+		rpc_id(Network.PLAYER_HOST_ID ,"_request_erase_player_joined", Global.selected_ship)
+		
 	_chat.player_left()
 	_exit_timer.start()
 	
