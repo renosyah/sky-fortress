@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://scene/weapons/controlled/fighter/biplane/prop.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/other/airplane_prop/prop.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scene/weapons/controlled/tactical-bomber/biplane-bomber/biplane_bomber.gd" type="Script" id=2]
-[ext_resource path="res://scene/weapons/controlled/tactical-bomber/biplane-bomber/fusselages.png" type="Texture" id=3]
-[ext_resource path="res://scene/weapons/controlled/tactical-bomber/biplane-bomber/bridge.png" type="Texture" id=4]
-[ext_resource path="res://scene/weapons/controlled/tactical-bomber/biplane-bomber/bottom_wing.png" type="Texture" id=5]
-[ext_resource path="res://scene/weapons/controlled/tactical-bomber/biplane-bomber/top_wing.png" type="Texture" id=6]
+[ext_resource path="res://skin/airplane/fusselages/biplane_bomber_fusselages.png" type="Texture" id=3]
+[ext_resource path="res://skin/airplane/wings/biplane_bomber_bottom_wing.png" type="Texture" id=4]
+[ext_resource path="res://skin/airplane/wings/biplane_bomber_top_wing.png" type="Texture" id=5]
+[ext_resource path="res://skin/airplane/beam/beam.png" type="Texture" id=6]
 [ext_resource path="res://scene/weapons/controlled/fighter/biplane/tag.png" type="Texture" id=7]
 [ext_resource path="res://assets/ui/highlight/highlight.tscn" type="PackedScene" id=8]
 
@@ -32,27 +32,27 @@ texture = ExtResource( 3 )
 [node name="body2" type="Sprite3D" parent="Pivot"]
 transform = Transform( -4.37114e-08, 0, 1, -0.413889, 0.00210936, -1.80917e-08, -0.00144515, -0.283562, -6.31697e-11, 0.470206, -0.0503014, -0.466362 )
 alpha_cut = 2
-texture = ExtResource( 4 )
+texture = ExtResource( 6 )
 
 [node name="body3" type="Sprite3D" parent="Pivot"]
 transform = Transform( -4.37114e-08, 0, 1, -0.413889, 0.00210936, -1.80917e-08, -0.00144515, -0.283562, -6.31697e-11, -0.532496, -0.0503014, -0.466362 )
 alpha_cut = 2
-texture = ExtResource( 4 )
+texture = ExtResource( 6 )
 
 [node name="bottom_wing" type="Sprite3D" parent="Pivot"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1.14012, -4.98362e-08, 0.0124048, -0.255494, -0.353332 )
 alpha_cut = 2
-texture = ExtResource( 5 )
+texture = ExtResource( 4 )
 
 [node name="tail" type="Sprite3D" parent="Pivot"]
 transform = Transform( 0.644664, 0, 0, 0, -4.37114e-08, 1, 0, -0.738961, -3.2301e-08, 0.0124048, -0.0454765, 0.808071 )
 alpha_cut = 2
-texture = ExtResource( 4 )
+texture = ExtResource( 6 )
 
 [node name="top_wing" type="Sprite3D" parent="Pivot"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1.14012, -4.98362e-08, 0.0124048, 0.160423, -0.519554 )
 alpha_cut = 2
-texture = ExtResource( 6 )
+texture = ExtResource( 5 )
 
 [node name="FiringDelay" type="Timer" parent="."]
 wait_time = 0.8
@@ -69,7 +69,10 @@ texture = ExtResource( 7 )
 
 [node name="Tween" type="Tween" parent="."]
 
+[node name="Tween2" type="Tween" parent="."]
+
 [node name="highlight" parent="." instance=ExtResource( 8 )]
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
 
 [connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]
+[connection signal="tween_completed" from="Tween2" to="." method="_on_Tween_tween_completed"]

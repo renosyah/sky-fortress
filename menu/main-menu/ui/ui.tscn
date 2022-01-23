@@ -185,25 +185,26 @@ valign = 1
 [node name="Control" type="Control" parent="CanvasLayer/Control/VBoxContainer"]
 margin_top = 148.0
 margin_right = 1024.0
-margin_bottom = 319.0
+margin_bottom = 293.0
 mouse_filter = 2
 size_flags_vertical = 3
 
 [node name="weapon_list" parent="CanvasLayer/Control/VBoxContainer" instance=ExtResource( 6 )]
-margin_top = 323.0
-margin_bottom = 482.0
+margin_top = 297.0
+margin_bottom = 456.0
 
 [node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/Control/VBoxContainer"]
 self_modulate = Color( 1, 1, 1, 0.694118 )
-margin_top = 486.0
+margin_top = 460.0
 margin_right = 1024.0
 margin_bottom = 600.0
+rect_min_size = Vector2( 0, 140 )
 
 [node name="list_panel" parent="CanvasLayer/Control/VBoxContainer/PanelContainer2" instance=ExtResource( 5 )]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 1017.0
-margin_bottom = 107.0
+margin_bottom = 133.0
 
 [node name="server_browser" parent="CanvasLayer/Control" instance=ExtResource( 9 )]
 visible = false

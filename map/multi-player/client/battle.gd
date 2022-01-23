@@ -36,6 +36,7 @@ func _ready():
 		ship.set_hp_bar_name(i.player_name)
 		ship.set_hp_bar_color(Color.blue)
 		ship.MINIMAP_COLOR = Color.blue
+		ship.update_hp_bar()
 		
 		if i.owner_id == Global.player_data.id:
 			_player = ship

@@ -2,10 +2,10 @@
 
 [ext_resource path="res://scene/weapons/controlled/fighter/biplane/biplane.gd" type="Script" id=1]
 [ext_resource path="res://skin/ships/beam/beam.png" type="Texture" id=2]
-[ext_resource path="res://scene/weapons/controlled/fighter/biplane/prop.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scene/weapons/controlled/fighter/biplane/bottom_wing.png" type="Texture" id=4]
-[ext_resource path="res://scene/weapons/controlled/fighter/biplane/top_wing.png" type="Texture" id=5]
-[ext_resource path="res://scene/weapons/controlled/fighter/biplane/fusselages.png" type="Texture" id=6]
+[ext_resource path="res://assets/other/airplane_prop/prop.tscn" type="PackedScene" id=3]
+[ext_resource path="res://skin/airplane/wings/biplane_top_wing.png" type="Texture" id=4]
+[ext_resource path="res://skin/airplane/fusselages/biplane_fusselages.png" type="Texture" id=5]
+[ext_resource path="res://skin/airplane/wings/biplane_bottom_wing.png" type="Texture" id=6]
 [ext_resource path="res://scene/weapons/controlled/fighter/biplane/tag.png" type="Texture" id=8]
 [ext_resource path="res://assets/ui/highlight/highlight.tscn" type="PackedScene" id=9]
 
@@ -27,7 +27,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00060606, -0.135123, -0.8344
 [node name="body" type="Sprite3D" parent="Pivot"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
 alpha_cut = 2
-texture = ExtResource( 6 )
+texture = ExtResource( 5 )
 
 [node name="body2" type="Sprite3D" parent="Pivot"]
 transform = Transform( -4.37114e-08, 0, 1, -0.413889, 0.00210936, -1.80917e-08, -0.00144515, -0.283562, -6.31697e-11, 0.470206, -0.0503014, -0.468981 )
@@ -42,7 +42,7 @@ texture = ExtResource( 2 )
 [node name="bottom_wing" type="Sprite3D" parent="Pivot"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.0124048, -0.255494, -0.366166 )
 alpha_cut = 2
-texture = ExtResource( 4 )
+texture = ExtResource( 6 )
 
 [node name="tail" type="Sprite3D" parent="Pivot"]
 transform = Transform( 0.644664, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.0124048, -0.0122173, 0.678103 )
@@ -52,7 +52,7 @@ texture = ExtResource( 2 )
 [node name="top_wing" type="Sprite3D" parent="Pivot"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.0124048, 0.146199, -0.511959 )
 alpha_cut = 2
-texture = ExtResource( 5 )
+texture = ExtResource( 4 )
 
 [node name="UpdateCourse" type="Timer" parent="."]
 wait_time = 2.0
@@ -72,6 +72,8 @@ billboard = 1
 texture = ExtResource( 8 )
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="Tween2" type="Tween" parent="."]
 
 [node name="highlight" parent="." instance=ExtResource( 9 )]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
