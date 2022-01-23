@@ -3,9 +3,9 @@ extends Control
 signal on_list_panel_on_item_press(ship_data)
 signal on_name_input(_name)
 
-onready var _ship_label = $CanvasLayer/Control/VBoxContainer/Label
+onready var _ship_label = $CanvasLayer/Control/VBoxContainer/HBoxContainer/VBoxContainer/Label
 onready var _list_ship = $CanvasLayer/Control/VBoxContainer/PanelContainer2/list_panel
-onready var _weapon_list = $CanvasLayer/Control/VBoxContainer/weapon_list
+onready var _weapon_list = $CanvasLayer/Control/VBoxContainer/HBoxContainer/VBoxContainer/weapon_list
 onready var _server_browser = $CanvasLayer/Control/server_browser
 
 onready var _input_name_window = $CanvasLayer/Control/input_name

@@ -59,7 +59,7 @@ const FIGHTER = {
 	type = TYPE_CONTROLLED,
 	ammo_scene = "res://scene/weapons/controlled/fighter/biplane/biplane.tscn",
 	min_range = 5.0,
-	max_range = 80.0,
+	max_range = 90.0,
 	ammo = 4,
 	max_ammo = 4,
 	can_fire = false
@@ -79,8 +79,29 @@ const BOMBER = {
 	max_hp = 8,
 	type = TYPE_CONTROLLED,
 	ammo_scene = "res://scene/weapons/controlled/tactical-bomber/biplane-bomber/biplane_bomber.tscn",
-	min_range = 5.0,
-	max_range = 80.0,
+	min_range = 12.0,
+	max_range = 120.0,
+	ammo = 2,
+	max_ammo = 2,
+	can_fire = false
+}
+const INTERCEPTOR = {
+	id = "",
+	name = "Interceptor",
+	icon = "res://assets/ui/icon/weapon/interceptor.png",
+	cool_down = 3.1,
+	damage = 35.0,
+	speed = 4.6,
+	ammo_restock = 1,
+	ranges = 10.0,
+	fuel = 45.0,
+	accuracy = 0.4,
+	hp = 6,
+	max_hp = 6,
+	type = TYPE_CONTROLLED,
+	ammo_scene = "res://scene/weapons/controlled/interceptor/biplane-interceptor/biplane_interceptor.tscn",
+	min_range = 10.0,
+	max_range = 130.0,
 	ammo = 2,
 	max_ammo = 2,
 	can_fire = false
@@ -137,8 +158,8 @@ const CRUISER_TEMPLATES = [
 ]
 const CARRIER_TEMPLATES = [
 	FIGHTER,
+	INTERCEPTOR,
 	BOMBER,
-	HEAT_SEAKING_TORPEDO,
 	AUTO_CANNON
 ]
 const AA_FORT_TEMPLATE = [

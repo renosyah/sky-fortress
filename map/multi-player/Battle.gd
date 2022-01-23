@@ -9,7 +9,7 @@ var HOSTILE_SHIPS = {
 	"res://scene/ships/carrier/carrier.tscn" : Ships.SHIP_LIST[0],
 	"res://scene/ships/bomber/bomber.tscn" : Ships.SHIP_LIST[1],
 }
-var _aggresion = 0.6
+var _aggresion = 0.8
 
 signal player_on_ready(player)
 
@@ -162,7 +162,7 @@ func _on_airship_on_spawning_weapon(_node):
 ################################################################
 # bot command to where move and what to shot
 # this funnction only run in host player
-func give_command_to_airship_bot(holder_path : NodePath, terrain_path : NodePath):
+func give_command_to_move_to_airship_bot(holder_path : NodePath, terrain_path : NodePath):
 	var holder = get_node_or_null(holder_path)
 	if not is_instance_valid(holder):
 		return
@@ -175,7 +175,7 @@ func give_command_to_airship_bot(holder_path : NodePath, terrain_path : NodePath
 		return
 		
 	var pos = terrain.feature_translations[randi() % terrain.feature_translations.size()]
-		
+	
 	var bots = holder.get_children()
 	if bots.empty():
 		return
@@ -185,6 +185,20 @@ func give_command_to_airship_bot(holder_path : NodePath, terrain_path : NodePath
 		return
 		
 	bot.waypoint = pos
+		
+	
+func give_command_to_shot_to_airship_bot(holder_path : NodePath):
+	var holder = get_node_or_null(holder_path)
+	if not is_instance_valid(holder):
+		return
+		
+	var bots = holder.get_children()
+	if bots.empty():
+		return
+		
+	var bot = bots[randi() % bots.size()]
+	if not is_instance_valid(bot):
+		return
 		
 	var targets = _airborne_targets.duplicate()
 	if targets.empty():
@@ -204,7 +218,7 @@ func give_command_to_airship_bot(holder_path : NodePath, terrain_path : NodePath
 			target.get_path(),
 			target.get_path()
 		)
-		
+	
 # erase invalid instance
 # in array
 func erase_empty(arr):

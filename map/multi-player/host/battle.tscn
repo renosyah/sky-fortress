@@ -52,6 +52,10 @@ autostart = true
 wait_time = 5.0
 autostart = true
 
+[node name="bot_shotting_timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
 [node name="ui" parent="." instance=ExtResource( 6 )]
 mouse_filter = 2
 
@@ -62,6 +66,7 @@ mouse_filter = 2
 [connection signal="timeout" from="network_tick" to="." method="_on_network_tick_timeout"]
 [connection signal="timeout" from="event_timer" to="." method="_on_event_timer_timeout"]
 [connection signal="timeout" from="bot_command_timer" to="." method="_on_bot_command_timer_timeout"]
+[connection signal="timeout" from="bot_shotting_timer" to="." method="_on_bot_shotting_timer_timeout"]
 [connection signal="on_aim_mode" from="ui" to="." method="_on_ui_on_aim_mode"]
 [connection signal="on_exit_click" from="ui" to="." method="_on_ui_on_exit_click"]
 [connection signal="on_next_click" from="ui" to="." method="_on_ui_on_next_click"]

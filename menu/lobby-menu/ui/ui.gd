@@ -30,7 +30,7 @@ remotesync func _update_player_joined(data : Array):
 	fill_player_slot()
 	
 remotesync func _battle():
-	Global.mp_battle_data = player_joined
+	Global.mp_players_data = player_joined
 	
 	if Global.mode == Global.MODE_HOST:
 		get_tree().change_scene("res://map/multi-player/host/battle.tscn")

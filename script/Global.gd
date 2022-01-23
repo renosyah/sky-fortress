@@ -121,7 +121,8 @@ var client = {
 	network_unique_id = 0,
 }
 
-var mp_battle_data = []
+var mp_battle_data = {}
+var mp_players_data = []
 
 ################################################################
 

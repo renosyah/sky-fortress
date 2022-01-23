@@ -16,7 +16,7 @@ func _ready():
 	init_connection_watcher()
 	
 	var spawn_pos = Vector3(0, 10, 0)
-	for i in Global.mp_battle_data:
+	for i in Global.mp_players_data:
 		var spatial_target = Spatial.new()
 		_targeting_guide_holder.add_child(spatial_target)
 		spatial_target.name = "PLAYER-TARGET-" + i.owner_id
@@ -203,7 +203,11 @@ func _on_event_timer_timeout():
 ################################################################
 # timeout to bot command to where move and what to shot
 func _on_bot_command_timer_timeout():
-	give_command_to_airship_bot(_bot_holder.get_path(), _terrain.get_path())
+	give_command_to_move_to_airship_bot(_bot_holder.get_path(), _terrain.get_path())
+
+func _on_bot_shotting_timer_timeout():
+	give_command_to_shot_to_airship_bot(_bot_holder.get_path())
+
 
 
 

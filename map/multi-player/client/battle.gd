@@ -16,7 +16,7 @@ func _ready():
 	init_connection_watcher()
 		
 	var spawn_pos = Vector3(0, 10, 0)
-	for i in Global.mp_battle_data:
+	for i in Global.mp_players_data:
 		var spatial_target = Spatial.new()
 		_targeting_guide_holder.add_child(spatial_target)
 		spatial_target.name = "PLAYER-TARGET-" + i.owner_id
