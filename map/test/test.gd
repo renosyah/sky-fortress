@@ -42,7 +42,7 @@ func _ready():
 	_player.connect("on_spawning_weapon" ,self,"_on_player_on_spawning_weapon")
 	_player.connect("on_take_damage",_ui,"_on_player_on_take_damage")
 	
-	_player.translation = Vector3(0, 2, 0)
+	_player.translation = Vector3(0, 10.0, 0)
 	_player.show_hp_bar(false)
 	_player.set_hp_bar_color(Color.green)
 	_player.make_ready()

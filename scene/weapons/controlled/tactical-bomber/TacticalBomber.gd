@@ -48,6 +48,7 @@ remotesync func _deliver_payload():
 	projectile.owner_id = owner_id
 	projectile.side = side
 	projectile.tag_color = tag_color
+	projectile.set_network_master(get_network_master())
 	get_parent().add_child(projectile)
 	projectile.translation = translation
 	projectile.lauching_at(_target.translation)

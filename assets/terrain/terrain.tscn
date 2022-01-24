@@ -19,7 +19,6 @@
 [sub_resource type="ShaderMaterial" id=6]
 
 [sub_resource type="SpatialMaterial" id=4]
-albedo_color = Color( 0.960784, 0.960784, 0.960784, 1 )
 
 [sub_resource type="CubeMesh" id=2]
 material = SubResource( 4 )

@@ -24,22 +24,22 @@ shape = SubResource( 3 )
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
 
 [node name="body_1" type="Sprite3D" parent="pivot"]
-transform = Transform( 3, 0, -7.65759e-10, 0, 1.5, 0, 2.29727e-09, 0, 1, 0.536128, -0.478704, -0.344552 )
+transform = Transform( 3, 0, -7.65759e-10, 0, 0.812122, 0, 2.29727e-09, 0, 1, 0.536128, -0.433498, -0.356038 )
 alpha_cut = 2
 texture = ExtResource( 3 )
 
 [node name="body_2" type="Sprite3D" parent="pivot"]
-transform = Transform( 3, 0, -7.65759e-10, 0, 1.5, 0, 2.29727e-09, 0, 1, 0.536128, -0.500242, 0.330565 )
+transform = Transform( 3, 0, -7.65759e-10, 0, 0.812122, 0, 2.29727e-09, 0, 1, 0.536128, -0.445159, 0.347739 )
 alpha_cut = 2
 texture = ExtResource( 3 )
 
 [node name="body_3" type="Sprite3D" parent="pivot"]
-transform = Transform( 3, 0, -7.65759e-10, 0, 1.5, 0, 2.29727e-09, 0, 1, -0.794837, -0.474651, -0.344552 )
+transform = Transform( 3, 0, -7.65759e-10, 0, 0.812122, 0, 2.29727e-09, 0, 1, -0.794837, -0.431304, -0.344552 )
 alpha_cut = 2
 texture = ExtResource( 3 )
 
 [node name="body_4" type="Sprite3D" parent="pivot"]
-transform = Transform( 3, 0, -7.65759e-10, 0, 1.5, 0, 2.29727e-09, 0, 1, -0.794837, -0.496189, 0.321304 )
+transform = Transform( 3, 0, -7.65759e-10, 0, 0.812122, 0, 2.29727e-09, 0, 1, -0.794837, -0.442965, 0.321304 )
 alpha_cut = 2
 texture = ExtResource( 3 )
 
@@ -104,7 +104,7 @@ alpha_cut = 2
 texture = ExtResource( 3 )
 
 [node name="tower" type="Sprite3D" parent="pivot"]
-transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 1, 0.317678, -0.0328442, -0.319217 )
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 1, 0.317678, -0.0458917, -0.319217 )
 alpha_cut = 2
 texture = ExtResource( 1 )
 

@@ -53,7 +53,7 @@ func _on_input_name_on_continue(_name, html_color):
 	Global.player_data.name = _name
 	Global.player_data.color = Color(html_color)
 	Global.save_player_data(Global.player_data)
-	_player_name.text = _name
+	_player_name.text = " " + _name + " "
 	_input_name_window.visible = false
 	
 func _on_change_player_name_pressed():

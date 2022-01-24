@@ -13,8 +13,10 @@ signal on_destroyed(_node)
 
 # targeting
 var _shot_delay_timer : Timer = null
+var _switch_target_timer : Timer = null
 var firing_delay = 0.1
 var targets = []
+var _target = null
 
 var aim_point : Vector3
 var guided_point : Spatial
@@ -67,7 +69,13 @@ func _ready():
 		_shot_delay_timer.autostart = true
 		add_child(_shot_delay_timer)
 		
-	
+	if not _switch_target_timer:
+		_switch_target_timer = Timer.new()
+		_switch_target_timer.wait_time = 5.0
+		_switch_target_timer.connect("timeout", self , "_on_switch_target_timer_timeout")
+		_switch_target_timer.autostart = true
+		add_child(_switch_target_timer)
+		
 	destroyed = false
 	visible = true
 	set_process(false)
@@ -247,8 +255,7 @@ func spawn_explosive_on_destroy():
 func _on_finish_explode():
 	emit_signal("on_destroyed", self)
 	
-	
-func _on_shot_delay_timer_timeout():
+func _on_switch_target_timer_timeout():
 	if get_tree().network_peer and not is_network_master():
 		return
 		
@@ -260,12 +267,20 @@ func _on_shot_delay_timer_timeout():
 	if targets.empty():
 		return
 		
-	var target = targets[randi() % targets.size()]
+	_target = targets[randi() % targets.size()]
+		
+		
+func _on_shot_delay_timer_timeout():
+	if get_tree().network_peer and not is_network_master():
+		return
+		
+	if not is_instance_valid(_target):
+		return
 		
 	shot(rand_range(0, weapons.size()),
-		target.translation,
-		target.get_path(),
-		target.get_path()
+		_target.translation,
+		_target.get_path(),
+		_target.get_path()
 	)
 	
 	

@@ -49,14 +49,13 @@ remotesync func _deliver_payload():
 	projectile.owner_id = owner_id
 	projectile.side = side
 	projectile.tag_color = tag_color
+	projectile.set_network_master(get_network_master())
 	get_parent().add_child(projectile)
 	projectile.translation = translation
 	projectile.lauching_at(_target)
 	
 ###############################################################
-
-
-
+	
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	._ready()
@@ -86,7 +85,7 @@ func master_movement(delta):
 			.update_course()
 			ready_attack = randf() < accuracy
 			
-		if distance_to_target <= 10.0 and not delivered and ready_attack:
+		if distance_to_target <= 15.0 and not delivered and ready_attack:
 			deliver_payload()
 			delivered = true
 			return

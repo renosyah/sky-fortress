@@ -39,7 +39,7 @@ __meta__ = {
 }
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/VBoxContainer"]
-margin_right = 1024.0
+margin_right = 1366.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 0, 80 )
 mouse_filter = 2
@@ -47,7 +47,7 @@ mouse_filter = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 1017.0
+margin_right = 1359.0
 margin_bottom = 73.0
 
 [node name="name_button" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer"]
@@ -76,8 +76,8 @@ __meta__ = {
 }
 
 [node name="host_button2" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer"]
-margin_left = 287.0
-margin_right = 387.0
+margin_left = 458.0
+margin_right = 558.0
 margin_bottom = 66.0
 
 [node name="host" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/host_button2"]
@@ -102,14 +102,14 @@ __meta__ = {
 }
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer"]
-margin_left = 391.0
-margin_right = 401.0
+margin_left = 562.0
+margin_right = 572.0
 margin_bottom = 66.0
 rect_min_size = Vector2( 10, 0 )
 
 [node name="battle_button" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer"]
-margin_left = 405.0
-margin_right = 605.0
+margin_left = 576.0
+margin_right = 776.0
 margin_bottom = 66.0
 
 [node name="battle_button" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/battle_button"]
@@ -134,14 +134,14 @@ __meta__ = {
 }
 
 [node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer"]
-margin_left = 609.0
-margin_right = 619.0
+margin_left = 780.0
+margin_right = 790.0
 margin_bottom = 66.0
 rect_min_size = Vector2( 10, 0 )
 
 [node name="join_button" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer"]
-margin_left = 623.0
-margin_right = 723.0
+margin_left = 794.0
+margin_right = 894.0
 margin_bottom = 66.0
 
 [node name="join" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/join_button"]
@@ -166,34 +166,34 @@ __meta__ = {
 }
 
 [node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer"]
-margin_left = 727.0
-margin_right = 1010.0
+margin_left = 898.0
+margin_right = 1352.0
 margin_bottom = 66.0
 rect_min_size = Vector2( 10, 0 )
 size_flags_horizontal = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer"]
 margin_top = 84.0
-margin_right = 1024.0
-margin_bottom = 456.0
+margin_right = 1366.0
+margin_bottom = 656.0
 mouse_filter = 2
 size_flags_vertical = 3
 
 [node name="Control" type="Control" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
-margin_right = 338.0
-margin_bottom = 372.0
+margin_right = 452.0
+margin_bottom = 572.0
 mouse_filter = 2
 size_flags_horizontal = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
-margin_left = 342.0
-margin_right = 681.0
-margin_bottom = 372.0
+margin_left = 456.0
+margin_right = 909.0
+margin_bottom = 572.0
 mouse_filter = 2
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/VBoxContainer"]
-margin_right = 339.0
+margin_right = 453.0
 margin_bottom = 60.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 7 )
@@ -203,34 +203,34 @@ valign = 1
 
 [node name="Control" type="Control" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/VBoxContainer"]
 margin_top = 64.0
-margin_right = 339.0
-margin_bottom = 209.0
+margin_right = 453.0
+margin_bottom = 409.0
 mouse_filter = 2
 size_flags_vertical = 3
 
 [node name="weapon_list" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource( 6 )]
-margin_top = 213.0
-margin_right = 339.0
-margin_bottom = 372.0
+margin_top = 413.0
+margin_right = 453.0
+margin_bottom = 572.0
 
 [node name="Control2" type="Control" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
-margin_left = 685.0
-margin_right = 1024.0
-margin_bottom = 372.0
+margin_left = 913.0
+margin_right = 1366.0
+margin_bottom = 572.0
 mouse_filter = 2
 size_flags_horizontal = 3
 
 [node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/Control/VBoxContainer"]
 self_modulate = Color( 1, 1, 1, 0.694118 )
-margin_top = 460.0
-margin_right = 1024.0
-margin_bottom = 600.0
+margin_top = 660.0
+margin_right = 1366.0
+margin_bottom = 800.0
 rect_min_size = Vector2( 0, 140 )
 
 [node name="list_panel" parent="CanvasLayer/Control/VBoxContainer/PanelContainer2" instance=ExtResource( 5 )]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 1017.0
+margin_right = 1359.0
 margin_bottom = 133.0
 
 [node name="server_browser" parent="CanvasLayer/Control" instance=ExtResource( 9 )]
