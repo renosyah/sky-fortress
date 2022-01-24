@@ -6,14 +6,14 @@ var HOSTILE_SHIPS = {
 	"res://scene/ships/bomber/bomber.tscn" : Ships.SHIP_LIST[1],
 }
 var HOSTILE_INSTALATION = {
-	"res://scene/fort/aa-instalation/aa_instalation.tscn" : Weapons.AA_FORT_TEMPLATE,
-	"res://scene/fort/airstrip/airstrip.tscn" : Weapons.CARRIER_TEMPLATES
+	"res://scene/fort/aa-instalation/aa_instalation.tscn" : Forts.FORT_LIST[0],
+	"res://scene/fort/airstrip/airstrip.tscn" : Forts.FORT_LIST[1]
 }
 
 signal player_on_ready(player)
 
-const MAX_HOSTILE = 4
-const MAX_INSTALATION = 8
+const MAX_HOSTILE = 2
+const MAX_INSTALATION = 3
 
 var airborne_targets = []
 
@@ -42,7 +42,7 @@ func _ready():
 	_player.connect("on_spawning_weapon" ,self,"_on_player_on_spawning_weapon")
 	_player.connect("on_take_damage",_ui,"_on_player_on_take_damage")
 	
-	_player.translation = Vector3(0, 10, 0)
+	_player.translation = Vector3(0, 2, 0)
 	_player.show_hp_bar(false)
 	_player.set_hp_bar_color(Color.green)
 	_player.make_ready()
@@ -70,20 +70,15 @@ func spawn_hostile_fort(_pos):
 	var fort_data = HOSTILE_INSTALATION.keys()[randi() % HOSTILE_INSTALATION.keys().size()]
 	var fort = load(fort_data).instance()
 	var color = Color.orange #Color(randf(),randf(),randf(), 1)
+	fort.set_data(HOSTILE_INSTALATION[fort_data])
 	
 	$instalation_holder.add_child(fort)
 	fort.translation = _pos
 	fort.translation.y = 1.0
-	
-	fort.weapons.clear()
-	for i in HOSTILE_INSTALATION[fort_data]:
-		fort.weapons.append(i.duplicate())
-	
 	fort.MINIMAP_COLOR = color
 	fort.owner_id = str(GDUUID.v4())
 	fort.side = str(GDUUID.v4()) + "-side"
-	fort.hp = 500.0
-	fort.max_hp = 500.0
+	fort.targets = airborne_targets
 	fort.show_hp_bar(true)
 	fort.set_hp_bar_color(color)
 	fort.connect("on_destroyed", self, "_on_enemy_on_destroyed")
@@ -148,7 +143,6 @@ func _on_ui_on_shot_press(_index):
 	
 # testing bots
 func _on_enemy_decision_timer_timeout():
-	fort_bot()
 	airborne_bot()
 	
 func airborne_bot():
@@ -180,27 +174,6 @@ func airborne_bot():
 		bot.shot(rand_range(0,bot.weapons.size()))
 		
 	
-	
-	
-	
-func fort_bot():
-	var forts = $instalation_holder.get_children()
-	if forts.empty():
-		return
-		
-	if  airborne_targets.empty():
-		return
-		
-	var target = airborne_targets[randi() % airborne_targets.size()]
-	while not is_instance_valid(target):
-		target = airborne_targets[randi() % airborne_targets.size()]
-		
-	var fort = forts[randi() % forts.size()]
-	
-	fort.aim_point = target.translation
-	fort.guided_point = target
-	fort.lock_on_point = target
-	fort.shot(rand_range(0,fort.weapons.size()))
 	
 	
 func _on_enemy_spawning_timer_timeout():

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/ui/server-browser/item/item.gd" type="Script" id=1]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_16.tres" type="DynamicFont" id=2]
 [ext_resource path="res://assets/ui/button/bg.png" type="Texture" id=3]
 [ext_resource path="res://assets/ui/button/bg_press.png" type="Texture" id=4]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=5]
 
 [node name="item" type="Control"]
 margin_right = 1024.0
@@ -33,26 +34,27 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="Panel/HBoxContainer"]
-margin_top = 29.0
-margin_right = 145.0
-margin_bottom = 57.0
-custom_fonts/font = ExtResource( 2 )
+margin_top = 23.0
+margin_right = 196.0
+margin_bottom = 63.0
+custom_fonts/font = ExtResource( 5 )
 text = "Name guild"
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel/HBoxContainer"]
-margin_left = 149.0
-margin_right = 865.0
+margin_left = 200.0
+margin_right = 582.0
 margin_bottom = 87.0
 size_flags_horizontal = 3
 
 [node name="host_button" type="MarginContainer" parent="Panel/HBoxContainer"]
-margin_left = 869.0
+margin_left = 586.0
 margin_right = 969.0
 margin_bottom = 87.0
+size_flags_horizontal = 3
 
 [node name="btn" type="TextureButton" parent="Panel/HBoxContainer/host_button"]
 modulate = Color( 0, 0.592157, 0.0352941, 1 )
-margin_right = 100.0
+margin_right = 383.0
 margin_bottom = 87.0
 rect_min_size = Vector2( 100, 50 )
 texture_normal = ExtResource( 3 )
@@ -61,7 +63,7 @@ expand = true
 
 [node name="Label" type="Label" parent="Panel/HBoxContainer/host_button"]
 margin_top = 29.0
-margin_right = 100.0
+margin_right = 383.0
 margin_bottom = 57.0
 custom_fonts/font = ExtResource( 2 )
 text = "Join"

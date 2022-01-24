@@ -25,6 +25,11 @@ _global_script_classes=[ {
 "path": "res://scene/fort/Fort.gd"
 }, {
 "base": "Node",
+"class": "Forts",
+"language": "GDScript",
+"path": "res://script/Forts.gd"
+}, {
+"base": "Node",
 "class": "GDUUID",
 "language": "GDScript",
 "path": "res://addons/godot-uuid/uuid.gd"
@@ -123,6 +128,7 @@ _global_script_class_icons={
 "AirPlane": "",
 "Fighter": "",
 "Fort": "",
+"Forts": "",
 "GDUUID": "",
 "InputEventMultiScreenDrag": "",
 "InputEventScreenPinch": "",
@@ -154,6 +160,11 @@ config/icon="res://icon.png"
 
 Global="*res://script/Global.gd"
 Network="*res://addons/network/Network.gd"
+
+[display]
+
+window/size/width=1366
+window/size/height=800
 
 [input]
 

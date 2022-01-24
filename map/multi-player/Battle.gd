@@ -9,6 +9,10 @@ var HOSTILE_SHIPS = {
 	"res://scene/ships/carrier/carrier.tscn" : Ships.SHIP_LIST[0],
 	"res://scene/ships/bomber/bomber.tscn" : Ships.SHIP_LIST[1],
 }
+var HOSTILE_INSTALATION = {
+	"res://scene/fort/aa-instalation/aa_instalation.tscn" : Forts.FORT_LIST[0],
+	"res://scene/fort/airstrip/airstrip.tscn" : Forts.FORT_LIST[1]
+}
 var _aggresion = 0.8
 
 signal player_on_ready(player)
@@ -106,7 +110,7 @@ remotesync func _lock_on(node_path : NodePath, node_path_target : NodePath):
 	_node.lock_on_point = _node_target
 	
 ################################################################
-# hostile airship manager
+# hostile airship and fort manager
 remotesync func _spawn_hostile_airship(player_network_unique_id:int, name:String, ship_data_key:String, holder_path:NodePath, ui_path:NodePath, _spawn_pos:Vector3):
 	var holder = get_node_or_null(holder_path)
 	if not is_instance_valid(holder):
@@ -138,6 +142,39 @@ remotesync func _spawn_hostile_airship(player_network_unique_id:int, name:String
 	ship.connect("on_destroyed", self, "_on_enemy_on_destroyed")
 	
 	ui.add_minimap_object(ship)
+	
+remotesync func _spawn_hostile_fort(player_network_unique_id:int, name:String, fort_data_key:String, holder_path:NodePath, ui_path:NodePath, _spawn_pos:Vector3):
+	var holder = get_node_or_null(holder_path)
+	if not is_instance_valid(holder):
+		return
+		
+	var ui = get_node_or_null(ui_path)
+	if not is_instance_valid(ui):
+		return
+		
+	var bots_count = holder.get_child_count()
+	if bots_count >= MAX_HOSTILE:
+		return
+		
+	var fort = load(fort_data_key).instance()
+	var color = Color.red #Color(randf(),randf(),randf(), 1)
+	
+	fort.owner_id = HOSTILE_SIDE
+	fort.side = HOSTILE_SIDE
+	fort.name = name
+	fort.set_data(HOSTILE_INSTALATION[fort_data_key])
+	fort.set_network_master(player_network_unique_id)
+	fort.MINIMAP_COLOR = color
+	fort.targets = _airborne_targets
+	holder.add_child(fort)
+	
+	fort.translation = _spawn_pos
+	fort.translation.y = 1.0
+	fort.show_hp_bar(true)
+	fort.set_hp_bar_color(color)
+	fort.connect("on_destroyed", self, "_on_enemy_on_destroyed")
+	
+	ui.add_minimap_object(fort)
 	
 remotesync func _despawn_hostile_airship(node_path : NodePath):
 	var _node = get_node_or_null(node_path)

@@ -1,6 +1,7 @@
 extends MP_Battle
 
 onready var _bot_holder = $bot_airship_holder
+onready var _fort_holder = $bot_fort_holder
 
 onready var _camera = $cameraPivot
 onready var _terrain = $terrain
@@ -198,7 +199,13 @@ func _on_event_timer_timeout():
 	var spawn_pos = _terrain.cloud_spawn_points[randi() % _terrain.cloud_spawn_points.size()]
 	var ship_data_key = HOSTILE_SHIPS.keys()[randi() % HOSTILE_SHIPS.keys().size()]
 	
+	var fort_name =  "FORT-BOT-" + str(GDUUID.v4())
+	var spawn_pos_fort = _terrain.unused_translations[randi() % _terrain.unused_translations.size()]
+	var fort_data_key = HOSTILE_INSTALATION.keys()[randi() % HOSTILE_INSTALATION.keys().size()]
+	
 	rpc("_spawn_hostile_airship", Network.PLAYER_HOST_ID, ship_name, ship_data_key, _bot_holder.get_path(),_ui.get_path(), spawn_pos)
+	
+	rpc("_spawn_hostile_fort", Network.PLAYER_HOST_ID, fort_name, fort_data_key, _fort_holder.get_path(),_ui.get_path(), spawn_pos_fort.node_translation)
 	
 ################################################################
 # timeout to bot command to where move and what to shot

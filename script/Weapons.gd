@@ -43,6 +43,21 @@ const AUTO_CANNON = {
 	max_ammo = 450,
 	can_fire = false
 }
+const FORT_AUTO_CANNON = {
+	id = "",
+	name = "40MM",
+	icon = "res://assets/ui/icon/weapon/40mm.png",
+	cool_down = 0.3,
+	damage = 10.0,
+	speed = 15.0,
+	type = TYPE_UNGUIDED,
+	ammo_scene = "res://scene/weapons/un-guided/cannon/cannon.tscn",
+	min_range = 0.0,
+	max_range = 40.0,
+	ammo = 9500,
+	max_ammo = 9500,
+	can_fire = false
+}
 const FIGHTER = {
 	id = "",
 	name = "Fighter",
@@ -54,14 +69,35 @@ const FIGHTER = {
 	ranges = 10.0,
 	fuel = 45.0,
 	accuracy = 0.4,
-	hp = 80,
-	max_hp = 80,
+	hp = 20,
+	max_hp = 20,
 	type = TYPE_CONTROLLED,
 	ammo_scene = "res://scene/weapons/controlled/fighter/biplane/biplane.tscn",
 	min_range = 5.0,
 	max_range = 90.0,
 	ammo = 4,
 	max_ammo = 4,
+	can_fire = false
+}
+const AIRSTRIP_FIGHTER = {
+	id = "",
+	name = "Fighter",
+	icon = "res://assets/ui/icon/weapon/fighter.png",
+	cool_down = 4,
+	damage = 0.6,
+	speed = 5.2,
+	ammo_restock = 1,
+	ranges = 10.0,
+	fuel = 45.0,
+	accuracy = 0.4,
+	hp = 25,
+	max_hp = 25,
+	type = TYPE_CONTROLLED,
+	ammo_scene = "res://scene/weapons/controlled/fighter/biplane/biplane.tscn",
+	min_range = 5.0,
+	max_range = 90.0,
+	ammo = 2,
+	max_ammo = 2,
 	can_fire = false
 }
 const BOMBER = {
@@ -75,8 +111,8 @@ const BOMBER = {
 	ranges = 10.0,
 	fuel = 45.0,
 	accuracy = 0.4,
-	hp = 95,
-	max_hp = 95,
+	hp = 15,
+	max_hp = 15,
 	type = TYPE_CONTROLLED,
 	ammo_scene = "res://scene/weapons/controlled/tactical-bomber/biplane-bomber/biplane_bomber.tscn",
 	min_range = 12.0,
@@ -89,15 +125,15 @@ const INTERCEPTOR = {
 	id = "",
 	name = "Interceptor",
 	icon = "res://assets/ui/icon/weapon/interceptor.png",
-	cool_down = 3.1,
+	cool_down = 4.3,
 	damage = 35.0,
 	speed = 4.6,
 	ammo_restock = 1,
 	ranges = 10.0,
 	fuel = 45.0,
 	accuracy = 0.4,
-	hp = 110,
-	max_hp = 110,
+	hp = 20,
+	max_hp = 20,
 	type = TYPE_CONTROLLED,
 	ammo_scene = "res://scene/weapons/controlled/interceptor/biplane-interceptor/biplane_interceptor.tscn",
 	min_range = 10.0,
@@ -163,7 +199,10 @@ const CARRIER_TEMPLATES = [
 	AUTO_CANNON
 ]
 const AA_FORT_TEMPLATE = [
-	AUTO_CANNON,
+	FORT_AUTO_CANNON,
+]
+const AIRSTRIP_FORT_TEMPLATE = [
+	AIRSTRIP_FIGHTER
 ]
 const BOMBER_TEMPLATES = [
 	GUIDED_TORPEDO,

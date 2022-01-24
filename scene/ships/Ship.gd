@@ -282,6 +282,9 @@ func _process(delta):
 		
 		if distance_to_target > 1.0:
 			velocity = Vector3(direction.x, 0.0 , direction.z) * cruise_speed
+			if translation.y < altitude:
+				velocity.y += 1.0
+				
 			transform_turning((Vector3(waypoint.x , translation.y, waypoint.z)), delta)
 			emit_signal("on_move",self, translation)
 			

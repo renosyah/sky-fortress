@@ -12,6 +12,10 @@ signal on_spawning_weapon(_node)
 signal on_destroyed(_node)
 
 # targeting
+var _shot_delay_timer : Timer = null
+var firing_delay = 0.1
+var targets = []
+
 var aim_point : Vector3
 var guided_point : Spatial
 var lock_on_point : Spatial
@@ -28,19 +32,59 @@ var tag_color = Color.white
 var owner_id = ""
 var side = ""
 
+###############################################################
+# multiplayer sync
+remotesync func _take_damage(damage):
+	if destroyed:
+		return
+		
+	hp = round(hp - damage)
+	
+	if hp < 0.0:
+		destroy()
+		
+	emit_signal("on_take_damage", self, damage , hp)
+	
+remotesync func _shot(weapon_index : int, name : String, _aim_point : Vector3, _guided_point : NodePath, _lock_on_point : NodePath):
+	_launch(weapon_index, name, _aim_point, _guided_point, _lock_on_point)
+	
+remotesync func _restock_ammo(weapon_slot, ammo_restock):
+	if weapons[weapon_slot].ammo < weapons[weapon_slot].max_ammo:
+		weapons[weapon_slot].ammo += ammo_restock
+	play_sound("res://assets/sounds/click.wav")
+	
+###############################################################
+
 func make_ready():
 	_ready()
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if not _shot_delay_timer:
+		_shot_delay_timer = Timer.new()
+		_shot_delay_timer.wait_time = firing_delay
+		_shot_delay_timer.connect("timeout", self , "_on_shot_delay_timer_timeout")
+		_shot_delay_timer.autostart = true
+		add_child(_shot_delay_timer)
+		
+	
 	destroyed = false
 	visible = true
-	
-	for i in weapons.size():
-		emit_signal("on_weapon_update", self, i, weapons[i])
+	set_process(false)
 	
 	emit_signal("on_ready", self)
 	
+	
+func set_data(_fort_data):
+	max_hp = _fort_data.max_hp
+	hp = _fort_data.hp
+	firing_delay = _fort_data.firing_delay
+	
+	weapons.clear()
+	for i in _fort_data.weapons:
+		weapons.append(i.duplicate())
+		
+	set_skin(_fort_data.skin)
 	
 func set_hp_bar_color(_color : Color):
 	tag_color = _color
@@ -51,23 +95,34 @@ func show_hp_bar(_show : bool):
 func update_hp_bar():
 	pass
 	
+func set_hp_bar_name(_name):
+	pass
+	
+func set_skin(_camo : String = ""):
+	pass
+	
 func take_damage(damage):
-	if destroyed:
+	if get_tree().network_peer:
+		rpc("_take_damage",damage)
 		return
-	
-	hp = round(hp - damage)
-	
-	if hp < 0.0:
-		destroy()
 		
-	emit_signal("on_take_damage", self, damage , hp)
+	_take_damage(damage)
 	
 func destroy():
 	destroyed = true
 	spawn_explosive_on_destroy()
 	
 	
-func shot(weapon_index : int):
+func shot(weapon_index : int, _aim_point : Vector3 = Vector3.ZERO, _guided_point : NodePath = NodePath(""), _lock_on_point : NodePath = NodePath("")):
+	var _weapon_name = "weapon-" + str(GDUUID.v4())
+	
+	if get_tree().network_peer:
+		rpc("_shot", weapon_index, _weapon_name,  _aim_point, _guided_point, _lock_on_point)
+		return
+		
+	_shot(weapon_index, _weapon_name, _aim_point, _guided_point, _lock_on_point)
+	
+func _launch(weapon_index : int, name : String, _aim_point : Vector3, _guided_point : NodePath, _lock_on_point : NodePath):
 	if destroyed:
 		return
 		
@@ -75,13 +130,23 @@ func shot(weapon_index : int):
 		return
 		
 	var weapon = weapons[weapon_index]
-	
-	emit_signal("on_weapon_update", self, weapon_index, weapon)
-	
+		
 	if weapons[weapon_index].ammo <= 0:
 		return
 		
+	if not _aim_point == Vector3.ZERO:
+		aim_point = _aim_point
+		
+	if not _guided_point.is_empty():
+		guided_point = get_node(_guided_point)
+		
+	if not _lock_on_point.is_empty():
+		lock_on_point = get_node(_lock_on_point)
+		
+		
 	var projectile = load(weapon.ammo_scene).instance()
+	projectile.set_network_master(get_network_master())
+	projectile.name = name
 	projectile.damage = weapon.damage
 	projectile.speed = weapon.speed
 	projectile.owner_id = owner_id
@@ -101,7 +166,7 @@ func shot(weapon_index : int):
 			
 		add_child(projectile)
 		projectile.translation = translation
-		projectile.lauching_at(_aim_at)
+		projectile.lauching_at(_aim_at, distance_to_target)
 		
 		play_sound("res://assets/sounds/cannon.wav")
 		
@@ -157,15 +222,13 @@ func shot(weapon_index : int):
 		
 		emit_signal("on_spawning_weapon", projectile)
 	
-	emit_signal("on_weapon_update", self, weapon_index, weapon)
+func restock_ammo(weapon_slot : int, ammo_restock : float):
+	if get_tree().network_peer:
+		rpc("_restock_ammo",weapon_slot, ammo_restock)
+		return
+		
+	_restock_ammo(weapon_slot, ammo_restock)
 	
-	
-func restock_ammo(weapon_slot, ammo_restock):
-	if weapons[weapon_slot].ammo < weapons[weapon_slot].max_ammo:
-		weapons[weapon_slot].ammo += ammo_restock
-	play_sound("res://assets/sounds/click.wav")
-	
-	emit_signal("on_weapon_update", self, weapon_slot, weapons[weapon_slot])
 	
 func play_sound(path : String):
 	pass
@@ -182,8 +245,44 @@ func spawn_explosive_on_destroy():
 	explosive.scale = Vector3.ONE * 10
 	
 func _on_finish_explode():
-	visible = false
 	emit_signal("on_destroyed", self)
+	
+	
+func _on_shot_delay_timer_timeout():
+	if get_tree().network_peer and not is_network_master():
+		return
+		
+	if targets.empty():
+		return
+		
+	erase_empty(targets)
+		
+	if targets.empty():
+		return
+		
+	var target = targets[randi() % targets.size()]
+		
+	shot(rand_range(0, weapons.size()),
+		target.translation,
+		target.get_path(),
+		target.get_path()
+	)
+	
+	
+func erase_empty(arr):
+	var erase_target = []
+	for i in arr:
+		if not is_instance_valid(i):
+			erase_target.append(i)
+		
+	for i in erase_target:
+		arr.erase(i)
+
+
+
+
+
+
 
 
 

@@ -60,7 +60,7 @@ func _on_Timer_timeout():
 	
 	
 func spawn_explosive():
-	var explosive = preload("res://assets/explosive/explosive.tscn").instance()
+	var explosive = preload("res://assets/explosive_flak/explosive_flak.tscn").instance()
 	get_parent().add_child(explosive)
 	explosive.translation = translation
 	explosive.scale = Vector3.ONE * 3
