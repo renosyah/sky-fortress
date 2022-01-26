@@ -5,6 +5,7 @@ const DEFAULT_ALTITUDE = 0.0
 const MINIMAP_MARKER = "troop"
 var MINIMAP_COLOR = Color.white
 
+signal on_click(_node)
 signal on_ready(_node)
 signal on_take_damage(_node, damage, hp)
 signal on_weapon_update(_node, _weapon_index, _weapon)

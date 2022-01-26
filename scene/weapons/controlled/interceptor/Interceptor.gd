@@ -7,6 +7,7 @@ onready var _tag = $tag
 onready var _tween = $Tween
 onready var _tween2 = $Tween2
 onready var _highlight = $highlight
+onready var _input_detection = $inputDetection
 
 var delivered = false
 var ready_attack = false
@@ -59,9 +60,10 @@ remotesync func _deliver_payload():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	._ready()
-	_tag.modulate = tag_color
 	_highlight.highlight(false)
-	
+	connect("input_event", self, "_on_input_event")
+	_input_detection.connect("any_gesture", self, "_on_inputDetection_any_gesture")
+	_tag.modulate = tag_color
 	
 func highlight(_show : bool):
 	_highlight.highlight(_show)
@@ -130,7 +132,17 @@ func deliver_payload():
 		
 	_deliver_payload()
 	
-
+func _on_input_event(camera, event, position, normal, shape_idx):
+	if event is InputEventMouseButton and event.is_action_pressed("left_click"):
+		emit_signal("on_click", self)
+		
+	_input_detection.check_input(event)
+	
+	
+func _on_inputDetection_any_gesture(sig ,event):
+	if event is InputEventSingleScreenTap:
+		emit_signal("on_click", self)
+	
 
 
 

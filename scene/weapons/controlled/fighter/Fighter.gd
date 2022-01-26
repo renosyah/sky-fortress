@@ -8,6 +8,7 @@ onready var _tag = $tag
 onready var _tween = $Tween
 onready var _tween2 = $Tween2
 onready var _highlight = $highlight
+onready var _input_detection = $inputDetection
 
 ###############################################################
 # multiplayer sync
@@ -45,7 +46,10 @@ remotesync func _falling():
 func _ready():
 	._ready()
 	_highlight.highlight(false)
+	connect("input_event", self, "_on_input_event")
+	_input_detection.connect("any_gesture", self, "_on_inputDetection_any_gesture")
 	_tag.modulate = tag_color
+	
 	
 func highlight(_show : bool):
 	if destroyed:
@@ -132,6 +136,18 @@ func _on_Tween_tween_completed(object, key):
 		
 	if str(key) == ":translation":
 		.spawn_explosive_on_destroy()
+	
+	
+func _on_input_event(camera, event, position, normal, shape_idx):
+	if event is InputEventMouseButton and event.is_action_pressed("left_click"):
+		emit_signal("on_click", self)
+		
+	_input_detection.check_input(event)
+	
+	
+func _on_inputDetection_any_gesture(sig ,event):
+	if event is InputEventSingleScreenTap:
+		emit_signal("on_click", self)
 	
 
 

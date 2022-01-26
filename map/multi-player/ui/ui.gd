@@ -23,7 +23,8 @@ var _aim_mode = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_weapons_bar.visible = false
+	#_weapons_bar.visible = false
+	pass
 	
 func set_camera(object : Spatial):
 	_minimap.set_camera(object)
@@ -36,7 +37,7 @@ func remove_minimap_object(object : Spatial):
 	
 func _on_aim_pressed():
 	_aim_mode = not _aim_mode
-	_weapons_bar.visible = _aim_mode
+	#_weapons_bar.visible = _aim_mode
 	emit_signal("on_aim_mode" ,_aim_mode)
 	
 func _on_VBoxContainer_on_item_press(index, data):

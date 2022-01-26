@@ -37,8 +37,8 @@ __meta__ = {
 }
 
 [node name="left" type="VBoxContainer" parent="CanvasLayer/Control2/Control"]
-margin_right = 258.0
-margin_bottom = 600.0
+margin_right = 429.0
+margin_bottom = 800.0
 mouse_filter = 2
 size_flags_horizontal = 3
 
@@ -47,8 +47,8 @@ size_flags_horizontal = 0
 
 [node name="chat_log" type="VBoxContainer" parent="CanvasLayer/Control2/Control/left"]
 margin_top = 204.0
-margin_right = 258.0
-margin_bottom = 506.0
+margin_right = 429.0
+margin_bottom = 706.0
 rect_min_size = Vector2( 200, 300 )
 mouse_filter = 2
 size_flags_vertical = 3
@@ -57,9 +57,9 @@ __meta__ = {
 }
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control2/Control/left"]
-margin_top = 510.0
+margin_top = 710.0
 margin_right = 160.0
-margin_bottom = 600.0
+margin_bottom = 800.0
 rect_min_size = Vector2( 160, 90 )
 mouse_filter = 2
 size_flags_horizontal = 0
@@ -76,9 +76,9 @@ __meta__ = {
 }
 
 [node name="mid" type="Control" parent="CanvasLayer/Control2/Control"]
-margin_left = 262.0
-margin_right = 762.0
-margin_bottom = 600.0
+margin_left = 433.0
+margin_right = 933.0
+margin_bottom = 800.0
 rect_min_size = Vector2( 500, 0 )
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -100,15 +100,15 @@ margin_left = -250.0
 margin_right = 250.0
 
 [node name="right" type="VBoxContainer" parent="CanvasLayer/Control2/Control"]
-margin_left = 766.0
-margin_right = 1024.0
-margin_bottom = 600.0
+margin_left = 937.0
+margin_right = 1366.0
+margin_bottom = 800.0
 mouse_filter = 2
 size_flags_horizontal = 3
 
 [node name="CenterContainer2" type="CenterContainer" parent="CanvasLayer/Control2/Control/right"]
-margin_left = 98.0
-margin_right = 258.0
+margin_left = 269.0
+margin_right = 429.0
 margin_bottom = 90.0
 rect_min_size = Vector2( 160, 90 )
 mouse_filter = 2
@@ -127,16 +127,16 @@ __meta__ = {
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/Control/right"]
 margin_top = 94.0
-margin_right = 258.0
-margin_bottom = 506.0
+margin_right = 429.0
+margin_bottom = 706.0
 mouse_filter = 2
 size_flags_vertical = 3
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control2/Control/right"]
-margin_left = 98.0
-margin_top = 510.0
-margin_right = 258.0
-margin_bottom = 600.0
+margin_left = 269.0
+margin_top = 710.0
+margin_right = 429.0
+margin_bottom = 800.0
 rect_min_size = Vector2( 160, 90 )
 mouse_filter = 2
 size_flags_horizontal = 8

@@ -6,6 +6,7 @@ onready var _tween2 = $Tween2
 onready var _hp_bar = $hpBar
 onready var _audio = $AudioStreamPlayer3D
 onready var _highlight = $highlight
+onready var _input_detection = $inputDetection
 
 ###############################################################
 # multiplayer sync
@@ -43,6 +44,8 @@ func _ready():
 		i.visible = true
 		
 	_highlight.highlight(false)
+	connect("input_event", self , "_on_input_event")
+	_input_detection.connect("any_gesture", self, "_on_inputDetection_any_gesture")
 	update_hp_bar()
 	show_hp_bar(false)
 	
@@ -109,4 +112,15 @@ func update_hp_bar():
 	.update_hp_bar()
 	_hp_bar.update_bar(hp,max_hp)
 	
-
+	
+func _on_input_event(camera, event, position, normal, shape_idx):
+	if event is InputEventMouseButton and event.is_action_pressed("left_click"):
+		emit_signal("on_click", self)
+		
+	_input_detection.check_input(event)
+	
+	
+func _on_inputDetection_any_gesture(sig ,event):
+	if event is InputEventSingleScreenTap:
+		emit_signal("on_click", self)
+	

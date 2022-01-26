@@ -1,6 +1,8 @@
 extends KinematicBody
 class_name AirPlane
 
+signal on_click(_node)
+
 const DEFAULT_ALTITUDE = 10.0
 const MINIMAP_MARKER = "weapon"
 var MINIMAP_COLOR = Color.white

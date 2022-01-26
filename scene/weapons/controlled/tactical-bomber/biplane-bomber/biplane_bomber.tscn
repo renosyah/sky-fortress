@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/other/airplane_prop/prop.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scene/weapons/controlled/tactical-bomber/biplane-bomber/biplane_bomber.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://skin/airplane/beam/beam.png" type="Texture" id=6]
 [ext_resource path="res://scene/weapons/controlled/fighter/biplane/tag.png" type="Texture" id=7]
 [ext_resource path="res://assets/ui/highlight/highlight.tscn" type="PackedScene" id=8]
+[ext_resource path="res://addons/Godot-Touch-Input-Manager/InputManager.gd" type="Script" id=9]
 
 [sub_resource type="SphereShape" id=4]
 radius = 0.75931
@@ -73,6 +74,9 @@ texture = ExtResource( 7 )
 
 [node name="highlight" parent="." instance=ExtResource( 8 )]
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
+
+[node name="inputDetection" type="Node" parent="."]
+script = ExtResource( 9 )
 
 [connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]
 [connection signal="tween_completed" from="Tween2" to="." method="_on_Tween_tween_completed"]

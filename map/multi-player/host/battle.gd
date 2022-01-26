@@ -14,57 +14,15 @@ onready var _player_holder = $player_holder
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	init_connection_watcher()
-	
-	var spawn_pos = Vector3(0, 10, 0)
-	for i in Global.mp_players_data:
-		var spatial_target = Spatial.new()
-		_targeting_guide_holder.add_child(spatial_target)
-		spatial_target.name = "PLAYER-TARGET-" + i.owner_id
-		spatial_target.translation = spawn_pos
-		
-		var ship = load(i.scene).instance()
-		_player_holder.add_child(ship)
-		ship.owner_id = i.owner_id
-		ship.side = team
-		ship.name = "PLAYER-" + i.owner_id
-		ship.set_network_master(Network.PLAYER_HOST_ID)
-		ship.translation = spawn_pos
-		ship.aim_point = spatial_target.translation
-		ship.guided_point = spatial_target
-		ship.set_data(i)
-		ship.show_hp_bar(true)
-		ship.set_hp_bar_name(i.player_name)
-		ship.set_hp_bar_color(Color.blue)
-		ship.MINIMAP_COLOR = Color.blue
-		ship.update_hp_bar()
-		
-		if ship.owner_id == Global.player_data.id:
-			_player = ship
-			_player_aim_guider = spatial_target
-			ship.MINIMAP_COLOR = Color.green
-			
-		_airborne_targets.append(ship)
-		_ui.add_minimap_object(ship)
-		spawn_pos.x += 5.0
-		
-	_player.show_hp_bar(false)
-	_player.set_hp_bar_color(Color.green)
-	_player.set_hp_bar_name(Global.player_data.name)
-	
-	_player.connect("on_move", self, "_on_player_on_move")
-	_player.connect("on_destroyed",_ui,"_on_player_on_destroyed")
-	_player.connect("on_falling",self,"_on_player_on_falling")
-	_player.connect("on_falling",_ui,"_on_player_on_falling")
-	_player.connect("on_spawning_weapon" ,self,"_on_airship_on_spawning_weapon")
-	_player.connect("on_take_damage",_ui,"_on_player_on_take_damage")
+	.init_connection_watcher()
+	.spawn_players(_player_holder.get_path(), _targeting_guide_holder.get_path(), _ui.get_path())
 	
 	_ui.set_camera(_camera)
-	
-	emit_signal("player_on_ready", _player)
-	
+	_airborne_targets.append_array(_player_holder.get_children())
 	_network_tick.start()
 	_terrain.generate()
+	
+	emit_signal("player_on_ready", _player)
 	
 ################################################################
 # server grpc functions
@@ -80,8 +38,7 @@ remote func _request_terrain_data(from_id : int):
 	)
 	
 ################################################################
-# server player movement
-# and aim system
+# player movement and aim system
 func _on_terrain_on_ground_clicked(_translation):
 	if not is_instance_valid(_player):
 		return
@@ -98,42 +55,15 @@ func _on_player_on_move(_node, _translation):
 		_camera.translation = _translation
 	
 func _on_cameraPivot_on_camera_moving(_translation, _zoom):
-	_aim_point = _translation
+	._on_camera_moving(_translation, _zoom)
 	
 func _on_cameraPivot_on_body_enter_aim_sight(_body):
-	if not is_instance_valid(_player):
-		return
-		
-	if _player.destroyed:
-		return
-		
-	if _body == _player:
-		return
-		
-	if _body.owner_id == _player.owner_id or _body.side == _player.side:
-		return
-		
-	if is_instance_valid(_lock_on_point):
-		_lock_on_point.highlight(false)
-		
-	_lock_on_point = _body
-	_lock_on_point.highlight(true)
+	._on_body_enter_aim_sight(_body)
 	
 ################################################################
 # network tick to send automatic request
 func _on_network_tick_timeout():
-	if not is_instance_valid(_player_aim_guider):
-		return
-		
-	if not is_instance_valid(_player):
-		return
-		
-	if _aim_point:
-		rpc_unreliable("_aim",_player.get_path(), _aim_point)
-		rpc_unreliable("_guide_aim", _player_aim_guider.get_path(), _aim_point)
-	
-	if is_instance_valid(_lock_on_point):
-		rpc_unreliable("_lock_on",_player.get_path(),_lock_on_point.get_path())
+	.sync_targeting_system()
 	
 ################################################################
 # on ui action
@@ -183,6 +113,7 @@ func _on_player_on_falling(_node):
 		_player.lock_on_point.highlight(false)
 		
 	_camera.translation = _node.translation
+	_spectate_mode = true
 	_airborne_targets.erase(_node)
 	
 ################################################################
