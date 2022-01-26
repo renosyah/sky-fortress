@@ -29,23 +29,23 @@ __meta__ = {
 }
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
-margin_right = 1024.0
-margin_bottom = 496.0
+margin_right = 1366.0
+margin_bottom = 696.0
 size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="chat_list" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
-margin_right = 1024.0
+margin_right = 1366.0
 size_flags_horizontal = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 500.0
-margin_right = 1024.0
-margin_bottom = 600.0
+margin_top = 700.0
+margin_right = 1366.0
+margin_bottom = 800.0
 rect_min_size = Vector2( 0, 80 )
 
 [node name="input_chat" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
-margin_right = 820.0
+margin_right = 1162.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 0, 100 )
 size_flags_horizontal = 3
@@ -54,8 +54,8 @@ max_length = 20
 placeholder_text = " Type Something..."
 
 [node name="send" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 824.0
-margin_right = 1024.0
+margin_left = 1166.0
+margin_right = 1366.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 200, 0 )
 custom_fonts/font = ExtResource( 1 )

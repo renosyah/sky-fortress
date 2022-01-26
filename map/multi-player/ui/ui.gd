@@ -6,6 +6,7 @@ signal on_shot_press(_index)
 signal on_aim_mode(_aim_mode)
 signal on_exit_click()
 signal on_next_click()
+signal on_prev_click()
 
 onready var _minimap = $CanvasLayer/Control2/Control/left/MiniMap
 onready var _spectatescreen = $CanvasLayer/Control2/spectate
@@ -75,7 +76,10 @@ func _on_exit_pressed():
 
 func _on_spectate_on_next_click():
 	emit_signal("on_next_click")
-
+	
+func _on_spectate_on_prev_click():
+	emit_signal("on_prev_click")
+	
 func _on_chat_button_pressed():
 	_chat_window.visible = true
 
@@ -92,3 +96,6 @@ func _on_chat_on_message(_message, _from):
 
 func _on_close_chat_pressed():
 	_chat_window.visible = false
+
+
+

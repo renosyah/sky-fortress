@@ -9,7 +9,7 @@ onready var _weapon_list = $CanvasLayer/Control/VBoxContainer/HBoxContainer/VBox
 onready var _server_browser = $CanvasLayer/Control/server_browser
 
 onready var _input_name_window = $CanvasLayer/Control/input_name
-onready var _player_name = $CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/name_button/Label
+onready var _player_name = $CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/MarginContainer4/name_button/Label
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

@@ -34,40 +34,48 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="PanelContainer" type="Panel" parent="CanvasLayer/Control/VBoxContainer"]
 margin_right = 1366.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 0, 80 )
 mouse_filter = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1359.0
-margin_bottom = 73.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="name_button" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer"]
+[node name="MarginContainer4" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer"]
+margin_right = 461.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+
+[node name="name_button" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/MarginContainer4"]
 margin_right = 100.0
-margin_bottom = 66.0
-size_flags_horizontal = 2
+margin_bottom = 80.0
+size_flags_horizontal = 0
 
-[node name="change_player_name" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/name_button"]
+[node name="change_player_name" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/MarginContainer4/name_button"]
 modulate = Color( 0.462745, 0.462745, 0.462745, 1 )
 margin_right = 100.0
-margin_bottom = 66.0
+margin_bottom = 80.0
 rect_min_size = Vector2( 100, 50 )
 texture_normal = ExtResource( 1 )
 texture_pressed = ExtResource( 3 )
 expand = true
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/name_button"]
-margin_top = 19.0
+[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/MarginContainer4/name_button"]
+margin_top = 26.0
 margin_right = 100.0
-margin_bottom = 47.0
+margin_bottom = 54.0
 custom_fonts/font = ExtResource( 8 )
 align = 1
 valign = 1
@@ -75,24 +83,34 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="host_button2" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer"]
-margin_left = 458.0
-margin_right = 558.0
-margin_bottom = 66.0
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer"]
+margin_left = 465.0
+margin_right = 901.0
+margin_bottom = 80.0
 
-[node name="host" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/host_button2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer"]
+margin_top = 5.0
+margin_right = 436.0
+margin_bottom = 75.0
+rect_min_size = Vector2( 0, 70 )
+
+[node name="host_button2" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/HBoxContainer"]
+margin_right = 100.0
+margin_bottom = 70.0
+
+[node name="host" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/HBoxContainer/host_button2"]
 modulate = Color( 0, 0.592157, 0.0352941, 1 )
 margin_right = 100.0
-margin_bottom = 66.0
+margin_bottom = 70.0
 rect_min_size = Vector2( 100, 50 )
 texture_normal = ExtResource( 1 )
 texture_pressed = ExtResource( 3 )
 expand = true
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/host_button2"]
-margin_top = 19.0
+[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/HBoxContainer/host_button2"]
+margin_top = 21.0
 margin_right = 100.0
-margin_bottom = 47.0
+margin_bottom = 49.0
 custom_fonts/font = ExtResource( 8 )
 text = "Host"
 align = 1
@@ -101,30 +119,30 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer"]
-margin_left = 562.0
-margin_right = 572.0
-margin_bottom = 66.0
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/HBoxContainer"]
+margin_left = 104.0
+margin_right = 114.0
+margin_bottom = 70.0
 rect_min_size = Vector2( 10, 0 )
 
-[node name="battle_button" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer"]
-margin_left = 576.0
-margin_right = 776.0
-margin_bottom = 66.0
+[node name="battle_button" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/HBoxContainer"]
+margin_left = 118.0
+margin_right = 318.0
+margin_bottom = 70.0
 
-[node name="battle_button" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/battle_button"]
+[node name="battle_button" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/HBoxContainer/battle_button"]
 modulate = Color( 0.619608, 0.180392, 0.180392, 1 )
 margin_right = 200.0
-margin_bottom = 66.0
+margin_bottom = 70.0
 rect_min_size = Vector2( 200, 50 )
 texture_normal = ExtResource( 1 )
 texture_pressed = ExtResource( 3 )
 expand = true
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/battle_button"]
-margin_top = 13.0
+[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/HBoxContainer/battle_button"]
+margin_top = 15.0
 margin_right = 200.0
-margin_bottom = 53.0
+margin_bottom = 55.0
 custom_fonts/font = ExtResource( 2 )
 text = "Battle"
 align = 1
@@ -133,30 +151,30 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer"]
-margin_left = 780.0
-margin_right = 790.0
-margin_bottom = 66.0
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/HBoxContainer"]
+margin_left = 322.0
+margin_right = 332.0
+margin_bottom = 70.0
 rect_min_size = Vector2( 10, 0 )
 
-[node name="join_button" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer"]
-margin_left = 794.0
-margin_right = 894.0
-margin_bottom = 66.0
+[node name="join_button" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/HBoxContainer"]
+margin_left = 336.0
+margin_right = 436.0
+margin_bottom = 70.0
 
-[node name="join" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/join_button"]
+[node name="join" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/HBoxContainer/join_button"]
 modulate = Color( 0, 0.239216, 0.572549, 1 )
 margin_right = 100.0
-margin_bottom = 66.0
+margin_bottom = 70.0
 rect_min_size = Vector2( 100, 50 )
 texture_normal = ExtResource( 1 )
 texture_pressed = ExtResource( 3 )
 expand = true
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/join_button"]
-margin_top = 19.0
+[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/HBoxContainer/join_button"]
+margin_top = 21.0
 margin_right = 100.0
-margin_bottom = 47.0
+margin_bottom = 49.0
 custom_fonts/font = ExtResource( 8 )
 text = "Join"
 align = 1
@@ -166,10 +184,9 @@ __meta__ = {
 }
 
 [node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer"]
-margin_left = 898.0
-margin_right = 1352.0
-margin_bottom = 66.0
-rect_min_size = Vector2( 10, 0 )
+margin_left = 905.0
+margin_right = 1366.0
+margin_bottom = 80.0
 size_flags_horizontal = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer"]
@@ -239,10 +256,10 @@ visible = false
 [node name="input_name" parent="CanvasLayer/Control" instance=ExtResource( 10 )]
 visible = false
 
-[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/name_button/change_player_name" to="." method="_on_change_player_name_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/host_button2/host" to="." method="_on_host_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/battle_button/battle_button" to="." method="_on_battle_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/join_button/join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/MarginContainer4/name_button/change_player_name" to="." method="_on_change_player_name_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/HBoxContainer/host_button2/host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/HBoxContainer/battle_button/battle_button" to="." method="_on_battle_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/HBoxContainer/join_button/join" to="." method="_on_join_pressed"]
 [connection signal="on_item_press" from="CanvasLayer/Control/VBoxContainer/PanelContainer2/list_panel" to="." method="_on_list_panel_on_item_press"]
 [connection signal="on_join" from="CanvasLayer/Control/server_browser" to="." method="_on_server_browser_on_join"]
 [connection signal="on_continue" from="CanvasLayer/Control/input_name" to="." method="_on_input_name_on_continue"]

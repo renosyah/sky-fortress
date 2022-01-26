@@ -18,7 +18,6 @@ func _ready():
 	.spawn_players(_player_holder.get_path(), _targeting_guide_holder.get_path(), _ui.get_path())
 	
 	_ui.set_camera(_camera)
-	_airborne_targets.append_array(_player_holder.get_children())
 	_network_tick.start()
 	_terrain.generate()
 	
@@ -79,28 +78,10 @@ func _on_ui_on_shot_press(_index):
 		_player.shot(_index)
 		
 func _on_ui_on_next_click():
-	_spectate_mode = true
-		
-	var _alive_players = []
-	for i in _player_holder.get_children():
-		if not i.destroyed:
-			_alive_players.append(i)
-		
-	if _alive_players.empty():
-		return
-		
-	for p in _player_holder.get_children():
-		for _signal in p.get_signal_connection_list("on_move"):
-			p.disconnect("on_move", self, _signal.method)
-		
-	_spectate_cicle_pos += 1
-	if _spectate_cicle_pos >= _alive_players.size():
-		_spectate_cicle_pos = 0
-		
-	var p = _alive_players[_spectate_cicle_pos]
-	p.connect("on_move", self, "_on_player_on_move")
+	spectate_cycle(true)
 	
-	_camera.translation = p.translation
+func _on_ui_on_prev_click():
+	spectate_cycle(false)
 	
 func _on_ui_on_exit_click():
 	_network_tick.stop()
@@ -115,6 +96,33 @@ func _on_player_on_falling(_node):
 	_camera.translation = _node.translation
 	_spectate_mode = true
 	_airborne_targets.erase(_node)
+	
+################################################################
+# spectate cicle
+func spectate_cycle(_is_next : bool):
+	_spectate_mode = true
+		
+	var _alive_players = []
+	for i in _player_holder.get_children():
+		if not i.destroyed:
+			_alive_players.append(i)
+		
+	if _alive_players.empty():
+		return
+		
+	for p in _player_holder.get_children():
+		for _signal in p.get_signal_connection_list("on_move"):
+			p.disconnect("on_move", self, _signal.method)
+		
+	_spectate_cicle_pos += (1 if _is_next else -1)
+	var cicle_size = _alive_players.size()
+	if _spectate_cicle_pos >=  cicle_size or _spectate_cicle_pos < cicle_size:
+		_spectate_cicle_pos = 0
+		
+	var p = _alive_players[_spectate_cicle_pos]
+	p.connect("on_move", self, "_on_player_on_move")
+	
+	_camera.translation = p.translation
 	
 ################################################################
 # event countdown on host player

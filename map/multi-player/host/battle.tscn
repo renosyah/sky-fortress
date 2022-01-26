@@ -70,4 +70,5 @@ mouse_filter = 2
 [connection signal="on_aim_mode" from="ui" to="." method="_on_ui_on_aim_mode"]
 [connection signal="on_exit_click" from="ui" to="." method="_on_ui_on_exit_click"]
 [connection signal="on_next_click" from="ui" to="." method="_on_ui_on_next_click"]
+[connection signal="on_prev_click" from="ui" to="." method="_on_ui_on_prev_click"]
 [connection signal="on_shot_press" from="ui" to="." method="_on_ui_on_shot_press"]

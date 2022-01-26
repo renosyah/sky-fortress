@@ -20,27 +20,25 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
-margin_right = 1024.0
+[node name="PanelContainer" type="Panel" parent="VBoxContainer"]
+margin_right = 1366.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 0, 80 )
 mouse_filter = 2
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/PanelContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1017.0
-margin_bottom = 73.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="message" type="Label" parent="VBoxContainer/PanelContainer/CenterContainer"]
-margin_left = 429.0
-margin_top = 13.0
-margin_right = 581.0
-margin_bottom = 53.0
+margin_left = 607.0
+margin_top = 20.0
+margin_right = 759.0
+margin_bottom = 60.0
 custom_fonts/font = ExtResource( 2 )
 text = "Spectate"
 align = 1
@@ -49,31 +47,60 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Control" type="Control" parent="VBoxContainer"]
+[node name="Control2" type="Control" parent="VBoxContainer"]
 margin_top = 84.0
-margin_right = 1024.0
-margin_bottom = 600.0
+margin_right = 1366.0
+margin_bottom = 596.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Control"]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+[node name="Control" type="Control" parent="VBoxContainer"]
+margin_top = 600.0
+margin_right = 1366.0
+margin_bottom = 800.0
+rect_min_size = Vector2( 0, 200 )
+mouse_filter = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/Control"]
+anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -151.0
-margin_top = -121.0
-margin_right = 151.0
-margin_bottom = -41.0
+mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="exit" type="Button" parent="VBoxContainer/Control/HBoxContainer"]
-margin_right = 144.0
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Control/CenterContainer"]
+margin_left = 370.0
+margin_top = 60.0
+margin_right = 996.0
+margin_bottom = 140.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="next2" type="Button" parent="VBoxContainer/Control/CenterContainer/HBoxContainer"]
+margin_right = 200.0
 margin_bottom = 80.0
-rect_min_size = Vector2( 0, 80 )
+rect_min_size = Vector2( 200, 80 )
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "Prev"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/Control/CenterContainer/HBoxContainer"]
+margin_left = 204.0
+margin_right = 209.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 5, 0 )
+
+[node name="exit" type="Button" parent="VBoxContainer/Control/CenterContainer/HBoxContainer"]
+margin_left = 213.0
+margin_right = 413.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 200, 80 )
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
 text = "Exit"
@@ -81,17 +108,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Control/HBoxContainer"]
-margin_left = 148.0
-margin_right = 153.0
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Control/CenterContainer/HBoxContainer"]
+margin_left = 417.0
+margin_right = 422.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 5, 0 )
 
-[node name="next" type="Button" parent="VBoxContainer/Control/HBoxContainer"]
-margin_left = 157.0
-margin_right = 302.0
+[node name="next" type="Button" parent="VBoxContainer/Control/CenterContainer/HBoxContainer"]
+margin_left = 426.0
+margin_right = 626.0
 margin_bottom = 80.0
-rect_min_size = Vector2( 0, 80 )
+rect_min_size = Vector2( 200, 80 )
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
 text = "Next"
@@ -99,5 +126,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="pressed" from="VBoxContainer/Control/HBoxContainer/exit" to="." method="_on_exit_pressed"]
-[connection signal="pressed" from="VBoxContainer/Control/HBoxContainer/next" to="." method="_on_next_pressed"]
+[connection signal="pressed" from="VBoxContainer/Control/CenterContainer/HBoxContainer/next2" to="." method="_on_next2_pressed"]
+[connection signal="pressed" from="VBoxContainer/Control/CenterContainer/HBoxContainer/exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="VBoxContainer/Control/CenterContainer/HBoxContainer/next" to="." method="_on_next_pressed"]

@@ -23,8 +23,13 @@ func _ready():
 	._ready()
 	
 	_highlight.highlight(false)
-	connect("input_event", self , "_on_input_event")
-	_input_detection.connect("any_gesture", self, "_on_inputDetection_any_gesture")
+	
+	if not is_connected("input_event", self , "_on_input_event"):
+		connect("input_event", self , "_on_input_event")
+		
+	if not _input_detection.is_connected("any_gesture", self, "_on_inputDetection_any_gesture"):
+		_input_detection.connect("any_gesture", self, "_on_inputDetection_any_gesture")
+		
 	update_hp_bar()
 	
 func highlight(_show : bool):

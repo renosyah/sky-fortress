@@ -11,7 +11,7 @@
 [ext_resource path="res://addons/Godot-Touch-Input-Manager/InputManager.gd" type="Script" id=9]
 
 [sub_resource type="SphereShape" id=4]
-radius = 0.75931
+radius = 1.25399
 
 [node name="biplane" type="KinematicBody"]
 script = ExtResource( 2 )

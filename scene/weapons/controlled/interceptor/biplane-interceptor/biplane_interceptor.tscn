@@ -12,7 +12,7 @@
 [ext_resource path="res://addons/Godot-Touch-Input-Manager/InputManager.gd" type="Script" id=10]
 
 [sub_resource type="SphereShape" id=4]
-radius = 0.75931
+radius = 1.39896
 
 [node name="interceptor" type="KinematicBody"]
 script = ExtResource( 1 )

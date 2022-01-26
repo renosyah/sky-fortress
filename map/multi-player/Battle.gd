@@ -169,6 +169,9 @@ func spawn_players(_player_holder_path : NodePath, _targeting_guide_holder_path 
 	_player.connect("on_spawning_weapon" ,self,"_on_airship_on_spawning_weapon")
 	_player.connect("on_take_damage",_ui,"_on_player_on_take_damage")
 	
+	if get_tree().is_network_server():
+		_airborne_targets.append_array(_player_holder.get_children())
+	
 ################################################################
 # hostile airship and fort manager
 remotesync func _spawn_hostile_airship(player_network_unique_id:int, name:String, ship_data_key:String, holder_path:NodePath, ui_path:NodePath, _spawn_pos:Vector3):

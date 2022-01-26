@@ -166,36 +166,34 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control2/chating"]
-margin_right = 1024.0
+[node name="PanelContainer" type="Panel" parent="CanvasLayer/Control2/chating"]
+margin_right = 1366.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 0, 80 )
 mouse_filter = 2
 size_flags_horizontal = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control2/chating/PanelContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1017.0
-margin_bottom = 73.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="btn" type="MarginContainer" parent="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer"]
 margin_right = 100.0
-margin_bottom = 66.0
+margin_bottom = 80.0
 rect_min_size = Vector2( 100, 0 )
 
 [node name="close_chat" type="Button" parent="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer/btn"]
 margin_right = 100.0
-margin_bottom = 66.0
+margin_bottom = 80.0
 rect_min_size = Vector2( 100, 50 )
 
 [node name="Label" type="Label" parent="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer/btn"]
-margin_top = 19.0
+margin_top = 26.0
 margin_right = 100.0
-margin_bottom = 47.0
+margin_bottom = 54.0
 custom_fonts/font = ExtResource( 7 )
 text = "Back"
 align = 1
@@ -206,30 +204,30 @@ __meta__ = {
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer"]
 margin_left = 104.0
-margin_right = 906.0
-margin_bottom = 66.0
+margin_right = 1262.0
+margin_bottom = 80.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer/CenterContainer"]
-margin_left = 309.0
-margin_top = 13.0
-margin_right = 492.0
-margin_bottom = 53.0
+margin_left = 487.0
+margin_top = 20.0
+margin_right = 670.0
+margin_bottom = 60.0
 custom_fonts/font = ExtResource( 8 )
 text = "Team Chat"
 
 [node name="btn2" type="MarginContainer" parent="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer"]
-margin_left = 910.0
-margin_right = 1010.0
-margin_bottom = 66.0
+margin_left = 1266.0
+margin_right = 1366.0
+margin_bottom = 80.0
 rect_min_size = Vector2( 100, 0 )
 
 [node name="chat" parent="CanvasLayer/Control2/chating" instance=ExtResource( 6 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 84.0
-margin_right = 1024.0
-margin_bottom = 600.0
+margin_top = 78.0
+margin_right = 1366.0
+margin_bottom = 800.0
 
 [node name="Tween" type="Tween" parent="CanvasLayer"]
 
@@ -239,6 +237,7 @@ margin_bottom = 600.0
 [connection signal="pressed" from="CanvasLayer/Control2/Control/right/CenterContainer/aim" to="." method="_on_aim_pressed"]
 [connection signal="on_exit_click" from="CanvasLayer/Control2/spectate" to="." method="_on_spectate_on_exit_click"]
 [connection signal="on_next_click" from="CanvasLayer/Control2/spectate" to="." method="_on_spectate_on_next_click"]
+[connection signal="on_prev_click" from="CanvasLayer/Control2/spectate" to="." method="_on_spectate_on_prev_click"]
 [connection signal="on_spectate_click" from="CanvasLayer/Control2/deadscreen" to="." method="_on_deadscreen_on_spectate_click"]
 [connection signal="pressed" from="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer/btn/close_chat" to="." method="_on_close_chat_pressed"]
 [connection signal="on_message" from="CanvasLayer/Control2/chating/chat" to="." method="_on_chat_on_message"]

@@ -17,7 +17,8 @@ func _process(delta):
 	
 	if _travel_distance > MAX_DISTANCE:
 		set_process(false)
-		queue_free()
+		visible = false
+		# queue_free()
 	
 func lauching_at(to: Vector3, dis : float = MAX_DISTANCE):
 	_velocity = translation.direction_to(to)
