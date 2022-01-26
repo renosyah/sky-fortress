@@ -114,10 +114,15 @@ func spectate_cycle(_is_next : bool):
 		for _signal in p.get_signal_connection_list("on_move"):
 			p.disconnect("on_move", self, _signal.method)
 		
-	_spectate_cicle_pos += (1 if _is_next else -1)
-	var cicle_size = _alive_players.size()
-	if _spectate_cicle_pos >=  cicle_size or _spectate_cicle_pos < cicle_size:
-		_spectate_cicle_pos = 0
+	var cicle_size = _alive_players.size() - 1
+	if _is_next:
+		_spectate_cicle_pos += 1
+		if _spectate_cicle_pos > cicle_size:
+			_spectate_cicle_pos = 0
+	else:
+		_spectate_cicle_pos -= 1
+		if _spectate_cicle_pos < 0:
+			_spectate_cicle_pos = cicle_size
 		
 	var p = _alive_players[_spectate_cicle_pos]
 	p.connect("on_move", self, "_on_player_on_move")
