@@ -35,7 +35,9 @@ var max_hp = 100.0
 # tag
 var tag_color = Color.white
 var owner_id = ""
+var owner_name = ""
 var side = ""
+
 
 ###############################################################
 # multiplayer sync
@@ -120,7 +122,7 @@ func update_hp_bar():
 	pass
 	
 func set_hp_bar_name(_name):
-	pass
+	owner_name = _name
 	
 func set_skin(_camo : String = ""):
 	pass

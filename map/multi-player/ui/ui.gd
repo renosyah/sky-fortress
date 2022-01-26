@@ -36,6 +36,9 @@ func add_minimap_object(object : Spatial):
 func remove_minimap_object(object : Spatial):
 	_minimap.remove_object(object)
 	
+func set_spectating_name(nm : String):
+	_spectatescreen.set_spectating_name(nm)
+	
 func _on_aim_pressed():
 	_aim_mode = not _aim_mode
 	#_weapons_bar.visible = _aim_mode

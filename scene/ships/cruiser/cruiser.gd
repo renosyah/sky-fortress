@@ -86,8 +86,12 @@ func set_skin(_camo : String = ""):
 	$pivot/bridge_6.texture = load("res://skin/ships/beam/"+ _camo + "/" +"beam.png")
 	$pivot/bridge_7.texture = load("res://skin/ships/beam/"+ _camo + "/" +"beam.png")
 	$pivot/bridge_8.texture = load("res://skin/ships/beam/"+ _camo + "/" +"beam.png")
-	
-	
+	$pivot/bridge_9.texture = load("res://skin/ships/beam/"+ _camo + "/" +"beam.png")
+	$pivot/bridge_10.texture = load("res://skin/ships/beam/"+ _camo + "/" +"beam.png")
+	$pivot/bridge_11.texture = load("res://skin/ships/beam/"+ _camo + "/" +"beam.png")
+	$pivot/bridge_12.texture = load("res://skin/ships/beam/"+ _camo + "/" +"beam.png")
+	$pivot/bridge_13.texture = load("res://skin/ships/beam/"+ _camo + "/" +"beam.png")
+	$pivot/bridge_14.texture = load("res://skin/ships/beam/"+ _camo + "/" +"beam.png")
 	
 func destroy():
 	.destroy()

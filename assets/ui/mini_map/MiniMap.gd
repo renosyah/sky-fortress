@@ -3,9 +3,6 @@ class_name MiniMap
 
 signal on_minimap_click()
 
-const NORMAL = "NORMAL_MINIMAP"
-const EXPAND = "EXPAND_MINIMAP"
-
 const DIMESION_MULTIPLIER = 50.0
 
 var camera : Spatial  # If this is null, the map will not function.
@@ -26,7 +23,6 @@ onready var icons = {
 	"weapon" : weapon_marker
 }
 
-var mode = NORMAL
 var map_objects = []
 var grid_scale  # Calculated world to map scale.
 var markers = {}  # Dictionary of object: marker.
@@ -67,29 +63,22 @@ func _process(_delta):
 				markers[item].get_child(0).visible = false
 				
 				if item.MINIMAP_MARKER == "troop":
-					markers[item].scale = Vector2(2, 2) / Vector2(zoom, zoom) 
-					if mode == EXPAND:
-						markers[item].scale = Vector2(2, 2)
-						markers[item].get_child(0).visible = true
+					markers[item].scale = Vector2(1, 1) #/ Vector2(zoom, zoom) 
+					markers[item].get_child(0).visible = true
 						
 				elif item.MINIMAP_MARKER == "weapon":
-					markers[item].scale = Vector2(1, 1) / Vector2(zoom, zoom) 
-					if mode == EXPAND:
-						markers[item].scale = Vector2(1, 1)
-						markers[item].get_child(0).visible = true
+					markers[item].scale = Vector2(0.5, 0.5) #/ Vector2(zoom, zoom) 
+					markers[item].get_child(0).visible = true
 						
 				markers[item].modulate.a = 1.0
 				markers[item].show()
 				
 			else:
-				markers[item].scale = Vector2(1, 1) / Vector2(zoom, zoom) 
-				if mode == EXPAND:
-					markers[item].scale = Vector2(1, 1)
-					
-				markers[item].modulate.a = 0.5
+				markers[item].scale = Vector2(0.8, 0.8) #/ Vector2(zoom, zoom) 
+				markers[item].modulate.a = 0.8
 				markers[item].get_child(0).visible = false
 				
-				if item.MINIMAP_MARKER == "troop":
+				if item.MINIMAP_MARKER == "weapon":
 					markers[item].hide()
 				#markers[item].hide()
 			
@@ -130,11 +119,6 @@ func _on_MiniMap_gui_input(event):
 		minimap_click()
 		
 	input_detection.check_input(event)
-	
-	if mode == EXPAND:
-		camera.parsing_input(event)
-		
-	#get_viewport().unhandled_input(event)
 
 func _on_input_touch_is_validated(_sig ,event):
 	if event is InputEventSingleScreenTap:

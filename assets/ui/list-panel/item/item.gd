@@ -1,8 +1,11 @@
-extends Button
+extends Control
+
+signal pressed
 
 onready var _selected_bg = $ColorRect
 onready var _icon = $TextureRect
-onready var _text = $Label
+onready var _text = $PanelContainer/CenterContainer/Label
+onready var _input_detection = $inputDetection
 
 var data = {}
 
@@ -19,3 +22,14 @@ func display_item():
 	
 func selected(_selected):
 	_selected_bg.color = Color.white if _selected else Color.black
+	
+func _on_item_gui_input(event):
+	if event is InputEventMouseButton and event.is_action_pressed("left_click"):
+		emit_signal("pressed")
+		
+	_input_detection.check_input(event)
+	
+func _on_inputDetection_any_gesture(sig ,event):
+	if event is InputEventSingleScreenTap:
+		emit_signal("pressed")
+	

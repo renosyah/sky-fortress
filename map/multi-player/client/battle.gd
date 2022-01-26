@@ -88,11 +88,13 @@ func _on_ui_on_exit_click():
 ################################################################
 # player signal handle event
 func _on_player_on_falling(_node):
+	._on_player_on_falling(_node)
+	
 	if is_instance_valid(_player.lock_on_point):
 		_player.lock_on_point.highlight(false)
 		
-	_spectate_mode = true
 	_camera.translation = _node.translation
+	_spectate_mode = true
 	
 ################################################################
 # spectate cicle
@@ -122,9 +124,11 @@ func spectate_cycle(_is_next : bool):
 			_spectate_cicle_pos = cicle_size
 		
 	var p = _alive_players[_spectate_cicle_pos]
+
 	p.connect("on_move", self, "_on_player_on_move")
 	
 	_camera.translation = p.translation
+	_ui.set_spectating_name(p.owner_name)
 	
 ################################################################
 

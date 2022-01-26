@@ -274,6 +274,10 @@ func _on_airship_on_spawning_weapon(_node):
 		
 	if _node.has_method("take_damage"):
 		_airborne_targets.append(_node)
+		
+func _on_player_on_falling(_node):
+	if get_tree().is_network_server():
+		_airborne_targets.erase(_node)
 	
 ################################################################
 # player aim system
