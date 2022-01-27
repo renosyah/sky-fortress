@@ -85,6 +85,9 @@ func _on_player_on_take_damage(player, damage, hp):
 	_hp_bar.update_bar(hp,player.max_hp)
 	
 func _on_player_on_destroyed(player):
+	if _resultscreen.visible:
+		return
+		
 	_ui_control.visible = false
 	_deadscreen.visible = true
 	
