@@ -1,6 +1,6 @@
 extends Sprite3D
 
-const MAX_DISTANCE = 15.0
+const MAX_DISTANCE = 10.0
 
 onready var _message = $Viewport/VBoxContainer/message
 onready var _viewport = $Viewport

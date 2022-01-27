@@ -1,20 +1,18 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scene/weapons/guided/guided-missile/guided_missile.gd" type="Script" id=1]
 [ext_resource path="res://scene/weapons/guided/guided-missile/missile.png" type="Texture" id=2]
 [ext_resource path="res://assets/other/prop/prop.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scene/weapons/lock-on/lock-on-missile/sail.png" type="Texture" id=4]
 
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 0.086946, 0.0607051, 0.384967 )
 
 [sub_resource type="SphereShape" id=1]
-radius = 0.123958
+radius = 0.208971
 
 [node name="guided_missile" type="KinematicBody"]
 script = ExtResource( 1 )
-
-[node name="prop" parent="." instance=ExtResource( 3 )]
-transform = Transform( 0.4, 0, 0, 0, 0.4, 0, 0, 0, 1, 0, 0, 0.508226 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.129521 )
@@ -22,14 +20,33 @@ shape = SubResource( 2 )
 disabled = true
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
+transform = Transform( -7.43094e-08, 0, 1.7, 0, 1.7, 0, -1.7, 0, -7.43094e-08, 0, 0, 0 )
 alpha_cut = 2
 texture = ExtResource( 2 )
 
 [node name="Sprite3D2" type="Sprite3D" parent="."]
-transform = Transform( 1.31134e-07, 1, 4.37114e-08, 3.82137e-15, 4.37114e-08, -1, -1, 1.31134e-07, 1.91069e-15, 0, 0, 0 )
+transform = Transform( 1.28346e-07, 1.7, -7.43094e-08, 0, -7.43094e-08, -1.7, -1.7, 1.28346e-07, -5.6102e-15, 0, 0, 0 )
 alpha_cut = 2
 texture = ExtResource( 2 )
+
+[node name="Spatial" type="Spatial" parent="."]
+
+[node name="wing_1" type="Sprite3D" parent="Spatial"]
+transform = Transform( 0.695121, -0.0259143, -1.73901, -0.501435, 0.0186936, -1.25446, 0.0149017, 0.399722, -3.09086e-08, 0.101741, -0.083349, -0.468707 )
+alpha_cut = 2
+texture = ExtResource( 4 )
+
+[node name="wing_2" type="Sprite3D" parent="Spatial"]
+transform = Transform( 0.694902, -0.0312395, 1.73901, 0.501277, -0.022535, -1.25446, 0.0179639, 0.399596, -3.09086e-08, -0.102847, -0.10491, -0.468707 )
+flip_h = true
+alpha_cut = 2
+texture = ExtResource( 4 )
+
+[node name="wing_3" type="Sprite3D" parent="Spatial"]
+transform = Transform( -1.93113e-09, -4.2957e-08, -2.45933, -0.708913, 0.0318691, -3.3208e-15, 0.0179638, 0.399596, -4.37114e-08, -0.00375953, 0.102232, -0.468707 )
+flip_h = true
+alpha_cut = 2
+texture = ExtResource( 4 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 15.0
@@ -41,6 +58,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.421812 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
 shape = SubResource( 1 )
+
+[node name="prop" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0.826771 )
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]

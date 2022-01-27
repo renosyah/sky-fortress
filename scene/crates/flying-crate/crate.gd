@@ -4,7 +4,7 @@ class_name FlyingCrate
 const MINIMAP_MARKER = "weapon"
 var MINIMAP_COLOR = Color.orange
 
-signal on_pickup(_node)
+signal on_pickup(_node, _by)
 
 onready var _tag = $tag
 onready var _tween = $Tween
@@ -35,7 +35,7 @@ func _set_puppet_translation(_val :Vector3):
 	_tween.interpolate_property(self,"translation",translation, _puppet_translation, 0.1)
 	_tween.start()
 	
-remotesync func despawn():
+remotesync func _despawn():
 	queue_free()
 	
 ###############################################################
@@ -57,11 +57,14 @@ func _process(delta):
 		
 	translation += _velocity * speed * delta
 	
-func _on_Timer_timeout():
+func despawn():
 	if get_tree().network_peer:
-		rpc("despawn")
+		rpc("_despawn")
 		return
 		
+	_despawn()
+	
+func _on_Timer_timeout():
 	despawn()
 	
 func lauching_at(to: Vector3, dis : float):
@@ -85,10 +88,10 @@ func _on_crate_body_entered(body):
 	if not body.has_method("restore_hp"):
 		return
 		
-	emit_signal("on_pickup", body)
+	emit_signal("on_pickup",self, body)
 		
 	if get_tree().network_peer and is_network_master():
-		rpc("despawn")
+		rpc("_despawn")
 		return
 		
 	despawn()

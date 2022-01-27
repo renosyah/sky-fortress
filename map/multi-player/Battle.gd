@@ -6,6 +6,8 @@ const HOSTILE_SIDE = "BOT"
 const PLAYER_SIDE = "player"
 
 var _aggresion = 0.8
+var _min_crate = 1
+var _max_crate = 4
 
 signal player_on_ready(player)
 
@@ -100,6 +102,7 @@ remotesync func _lock_on(node_path : NodePath, node_path_target : NodePath):
 		return
 		
 	_node.lock_on_point = _node_target
+	
 ################################################################
 # on object added to game
 func add_minimap_object(_node_path : NodePath):
@@ -248,41 +251,43 @@ remotesync func _despawn_hostile_airship(node_path : NodePath):
 		return
 		
 	if get_tree().is_network_server():
-		rpc("_spawn_supply_crate", Network.PLAYER_HOST_ID, "SUPPLY-" + str(GDUUID.v4()) , _node.translation)
+		var qty = rand_range(_min_crate,_max_crate)
+		rpc("_spawn_supply_crate", Network.PLAYER_HOST_ID, "SUPPLY-" + str(GDUUID.v4()) ,qty, _node.translation)
 		
 	_node.queue_free()
 ################################################################
 # supply crate spawn and manager 
-remotesync func _spawn_supply_crate(player_network_unique_id:int, name:String, translation : Vector3):
-	var crate = preload("res://scene/crates/flying-crate/crate.tscn").instance()
-	crate.tag_color = Color.orange
-	crate.translation = translation
-	crate.translation.y = Ship.DEFAULT_ALTITUDE
-	crate.owner_id = HOSTILE_SIDE
-	crate.side = HOSTILE_SIDE
-	crate.name = name
-	crate.set_network_master(player_network_unique_id)
-	add_child(crate)
-	crate.lauching_at(Vector3.ZERO, 0.0)
-	crate.connect("on_pickup", self, "_on_supply_crate_picked_up")
+remotesync func _spawn_supply_crate(player_network_unique_id:int, name:String,max_crate : int, translation : Vector3):
+	for i in max_crate:
+		var crate = preload("res://scene/crates/flying-crate/crate.tscn").instance()
+		crate.tag_color = Color.orange
+		crate.translation = Vector3(rand_range(-5.0, 5.0), 0.0, rand_range(-5.0, 5.0)) + translation
+		crate.translation.y = Ship.DEFAULT_ALTITUDE
+		crate.owner_id = HOSTILE_SIDE
+		crate.side = HOSTILE_SIDE
+		crate.name = name +"-"+ str(i)
+		crate.set_network_master(player_network_unique_id)
+		add_child(crate)
+		crate.lauching_at(Vector3.ZERO, 0.0)
+		crate.connect("on_pickup", self, "_on_supply_crate_picked_up")
+		
+		add_minimap_object(crate.get_path())
 	
-	add_minimap_object(crate.get_path())
-	
-func _on_supply_crate_picked_up(_node):
+func _on_supply_crate_picked_up(_node, _by):
 	if not get_tree().is_network_server():
 		return
 		
 	var message = ""
 	if randf() < 0.5:
-		var slot = rand_range(0, _node.weapons.size())
-		var ammo = int(rand_range(1, _node.weapons[slot].max_ammo))
-		message = "+" + str(ammo) + " " + _node.weapons[slot].name
-		_node.restock_ammo(slot,ammo)
+		var slot = rand_range(0, _by.weapons.size())
+		var ammo = int(rand_range(1, _by.weapons[slot].max_ammo))
+		message = "+" + str(ammo) + " " + _by.weapons[slot].name
+		_by.restock_ammo(slot,ammo)
 		
 	else:
-		var hp = round(rand_range(0, _node.max_hp))
+		var hp = round(rand_range(0, _by.max_hp))
 		message = "+" + str(hp) + " Hitpoint"
-		_node.restore_hp(hp)
+		_by.restore_hp(hp)
 		
 	rpc("_spawn_floating_message",message, _node.translation)
 	
