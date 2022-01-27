@@ -85,6 +85,11 @@ _global_script_classes=[ {
 "path": "res://assets/ui/mini_map/MiniMap.gd"
 }, {
 "base": "Node",
+"class": "Missions",
+"language": "GDScript",
+"path": "res://script/Missions.gd"
+}, {
+"base": "Node",
 "class": "RandomNameGenerator",
 "language": "GDScript",
 "path": "res://addons/random-name/random_names.gd"
@@ -145,6 +150,7 @@ _global_script_class_icons={
 "Interceptor": "",
 "MP_Battle": "",
 "MiniMap": "",
+"Missions": "",
 "RandomNameGenerator": "",
 "SaveLoad": "",
 "ServerAdvertiser": "res://addons/LANServerBroadcast/server_advertiser/server_advertiser.png",

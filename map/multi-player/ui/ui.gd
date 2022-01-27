@@ -18,6 +18,11 @@ onready var _weapons_bar = $CanvasLayer/Control2/Control/mid/VBoxContainer
 onready var _chat_window = $CanvasLayer/Control2/chating
 onready var _chat_log = $CanvasLayer/Control2/Control/left/chat_log
 
+onready var _resultscreen = $CanvasLayer/Control2/resultscreen
+onready var _mission_tab = $CanvasLayer/Control2/Control/mid/mission
+onready var _mission_label = $CanvasLayer/Control2/Control/mid/mission/level
+onready var _mission_message = $CanvasLayer/Control2/Control/mid/mission/message
+
 onready var _tween = $CanvasLayer/Tween
 
 var _aim_mode = false
@@ -38,6 +43,28 @@ func remove_minimap_object(object : Spatial):
 	
 func set_spectating_name(nm : String):
 	_spectatescreen.set_spectating_name(nm)
+	
+remotesync func _display_mission_objective(level, message : String):
+	_mission_label.text = level
+	_mission_message.text = message
+	_mission_tab.modulate.a = 1.0
+	_tween.interpolate_property(_mission_tab, "modulate:a", 1.0, 0.0, 5.0)
+	_tween.start()
+	
+func display_mission_objective(level, message : String):
+	rpc("_display_mission_objective", level, message)
+	
+	
+remotesync func _display_mission_result(is_win : bool, total_airship_destroyed, total_fort_destroyed : int):
+	_resultscreen.visible = true
+	_ui_control.visible = false
+	_spectatescreen.visible = false
+	_deadscreen.visible = false
+	_resultscreen.display_mission_result(is_win, total_airship_destroyed, total_fort_destroyed)
+	
+func display_mission_result(is_win : bool, total_airship_destroyed, total_fort_destroyed : int):
+	rpc("_display_mission_result",is_win, total_airship_destroyed, total_fort_destroyed)
+	
 	
 func _on_aim_pressed():
 	_aim_mode = not _aim_mode
@@ -99,6 +126,6 @@ func _on_chat_on_message(_message, _from):
 
 func _on_close_chat_pressed():
 	_chat_window.visible = false
-
-
-
+	
+func _on_resultscreen_on_exit():
+	emit_signal("on_exit_click")

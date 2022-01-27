@@ -3,6 +3,8 @@ extends MP_Battle
 onready var _bot_holder = $bot_airship_holder
 onready var _fort_holder = $bot_fort_holder
 
+onready var _event_timer = $event_timer
+
 onready var _camera = $cameraPivot
 onready var _terrain = $terrain
 onready var _cursor = $cursor
@@ -12,8 +14,20 @@ onready var _ui = $ui
 onready var _targeting_guide_holder = $targeting_guide_holder
 onready var _player_holder = $player_holder
 
+var pos_mission = 0
+var missions = []
+var mission = {}
+var is_over = false
+
+var total_airship_destroyed = 0
+var total_fort_destroyed = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
+	# testing mission
+	missions = Missions.generate_missions(5)
+	
 	.init_connection_watcher()
 	.spawn_players(_player_holder.get_path(), _targeting_guide_holder.get_path(), _ui.get_path())
 	
@@ -101,7 +115,6 @@ func remove_minimap_object(_node_path : NodePath):
 		
 	_ui.remove_minimap_object(_node)
 	
-	
 func _on_ui_on_exit_click():
 	_network_tick.stop()
 	Network.disconnect_from_server()
@@ -151,6 +164,95 @@ func spectate_cycle(_is_next : bool):
 	_ui.set_spectating_name(p.owner_name)
 	
 ################################################################
+# mission manager
+func check_player():
+	if is_over:
+		return
+	
+	var _alive_players = []
+	for i in _player_holder.get_children():
+		if not i.destroyed:
+			_alive_players.append(i)
+		
+	if _alive_players.empty():
+		# mission fail all players dead
+		is_over = true
+		_event_timer.stop()
+		_ui.display_mission_result(
+			false,
+			total_airship_destroyed,
+			total_fort_destroyed
+		)
+		
+	
+func check_mission():
+	if is_over:
+		return
+		
+	if mission.empty():
+		change_mission()
+		return
+	
+	if mission.hostile_left <= 0:
+		change_mission()
+	
+func change_mission():
+	if missions.empty():
+		return
+		
+	if pos_mission > missions.size() - 1:
+		# mission completed all mission aquired
+		is_over = true
+		_event_timer.stop()
+		rpc("_remove_all_hostile" , [_bot_holder.get_path(), _fort_holder.get_path()])
+		_ui.display_mission_result(
+			true,
+			total_airship_destroyed,
+			total_fort_destroyed
+		)
+		return
+		
+	mission = missions[pos_mission]
+	_max_hostile_ship = mission.maximum_ship
+	_max_hostile_fort = mission.maximum_fort
+	_aggresion = mission.aggresion
+	_min_crate = mission.min_crate
+	_max_crate = mission.max_crate
+	
+	_ui.display_mission_objective("Level " + str(mission.level), mission.mission)
+	pos_mission += 1
+	
+	
+func _on_enemy_fort_on_destroyed(_node):
+	._on_enemy_fort_on_destroyed(_node)
+	
+	if get_tree().is_network_server():
+		if mission.empty():
+			return
+			
+		mission.hostile_left -= 1
+		total_fort_destroyed += 1
+		_ui.display_mission_objective(
+			"Enemy Fort Destroy",
+			str(mission.hostile_left) + " Remaining!" if mission.hostile_left > 0 else "Objective Completed!"
+		)
+	
+func _on_enemy_ship_on_destroyed(_node):
+	._on_enemy_ship_on_destroyed(_node)
+	
+	if get_tree().is_network_server():
+		if mission.empty():
+			return
+			
+		mission.hostile_left -= 1
+		total_airship_destroyed += 1
+		
+		_ui.display_mission_objective(
+			"Enemy Airship Destroy",
+			str(mission.hostile_left) + " Remaining!" if mission.hostile_left > 0 else "Objective Completed!"
+		)
+		
+################################################################
 # event countdown on host player
 # spawning hostile bot
 func _on_event_timer_timeout():
@@ -160,17 +262,22 @@ func _on_event_timer_timeout():
 	if _terrain.cloud_spawn_points.empty():
 		return
 		
-	var ship_name =  "BOT-" + str(GDUUID.v4())
-	var spawn_pos = _terrain.cloud_spawn_points[randi() % _terrain.cloud_spawn_points.size()]
-	var ship_data = Ships.SHIP_LIST[randi() % Ships.SHIP_LIST.size()]
+	var bots_count = _bot_holder.get_child_count()
+	if bots_count < _max_hostile_ship:
+		var ship_name =  "BOT-" + str(GDUUID.v4())
+		var spawn_pos = _terrain.cloud_spawn_points[randi() % _terrain.cloud_spawn_points.size()]
+		var ship_data = Ships.SHIP_LIST[randi() % Ships.SHIP_LIST.size()]
+		rpc("_spawn_hostile_airship", Network.PLAYER_HOST_ID, ship_name, ship_data, _bot_holder.get_path(),_ui.get_path(), spawn_pos)
 	
-	var fort_name =  "FORT-BOT-" + str(GDUUID.v4())
-	var spawn_pos_fort = _terrain.unused_translations[randi() % _terrain.unused_translations.size()]
-	var fort_data = Forts.FORT_LIST[randi() % Forts.FORT_LIST.size()]
-	
-	rpc("_spawn_hostile_airship", Network.PLAYER_HOST_ID, ship_name, ship_data, _bot_holder.get_path(),_ui.get_path(), spawn_pos)
-	
-	rpc("_spawn_hostile_fort", Network.PLAYER_HOST_ID, fort_name, fort_data, _fort_holder.get_path(),_ui.get_path(), spawn_pos_fort.node_translation)
+	var fort_count = _fort_holder.get_child_count()
+	if fort_count < _max_hostile_fort:
+		var fort_name =  "FORT-BOT-" + str(GDUUID.v4())
+		var spawn_pos_fort = _terrain.unused_translations[randi() % _terrain.unused_translations.size()]
+		var fort_data = Forts.FORT_LIST[randi() % Forts.FORT_LIST.size()]
+		rpc("_spawn_hostile_fort", Network.PLAYER_HOST_ID, fort_name, fort_data, _fort_holder.get_path(),_ui.get_path(), spawn_pos_fort.node_translation)
+		
+	check_mission()
+	check_player()
 	
 ################################################################
 # timeout to bot command to where move and what to shot

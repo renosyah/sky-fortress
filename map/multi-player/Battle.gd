@@ -1,13 +1,8 @@
 extends Node
 class_name MP_Battle
 
-const MAX_HOSTILE = 1
 const HOSTILE_SIDE = "BOT"
 const PLAYER_SIDE = "player"
-
-var _aggresion = 0.8
-var _min_crate = 1
-var _max_crate = 4
 
 signal player_on_ready(player)
 
@@ -28,6 +23,13 @@ var _airborne_targets = []
 var _aim_mode = false
 var _spectate_mode = false
 var _spectate_cicle_pos = 0
+
+# mission
+var _max_hostile_ship = 0
+var _max_hostile_fort = 0
+var _aggresion = 0.0
+var _min_crate = 0
+var _max_crate = 0
 
 
 ################################################################
@@ -185,10 +187,6 @@ remotesync func _spawn_hostile_airship(player_network_unique_id:int, name:String
 	if not is_instance_valid(ui):
 		return
 		
-	var bots_count = holder.get_child_count()
-	if bots_count >= MAX_HOSTILE:
-		return
-		
 	var ship = load(ship_data.scene).instance()
 	var color = Color.red
 	
@@ -206,7 +204,7 @@ remotesync func _spawn_hostile_airship(player_network_unique_id:int, name:String
 	ship.set_hp_bar_color(color)
 	ship.connect("on_click", self ,"_on_enemy_click")
 	ship.connect("on_spawning_weapon", self, "_on_enemy_on_spawning_weapon")
-	ship.connect("on_destroyed", self, "_on_enemy_on_destroyed")
+	ship.connect("on_destroyed", self, "_on_enemy_ship_on_destroyed")
 	
 	add_minimap_object(ship.get_path())
 	
@@ -217,10 +215,6 @@ remotesync func _spawn_hostile_fort(player_network_unique_id:int, name:String, f
 		
 	var ui = get_node_or_null(ui_path)
 	if not is_instance_valid(ui):
-		return
-		
-	var bots_count = holder.get_child_count()
-	if bots_count >= MAX_HOSTILE:
 		return
 		
 	var fort = load(fort_data.scene).instance()
@@ -241,7 +235,7 @@ remotesync func _spawn_hostile_fort(player_network_unique_id:int, name:String, f
 	fort.set_hp_bar_color(color)
 	fort.connect("on_click", self ,"_on_enemy_click")
 	fort.connect("on_spawning_weapon", self, "_on_enemy_on_spawning_weapon")
-	fort.connect("on_destroyed", self, "_on_enemy_on_destroyed")
+	fort.connect("on_destroyed", self, "_on_enemy_fort_on_destroyed")
 	
 	add_minimap_object(fort.get_path())
 	
@@ -255,6 +249,16 @@ remotesync func _despawn_hostile_airship(node_path : NodePath):
 		rpc("_spawn_supply_crate", Network.PLAYER_HOST_ID, "SUPPLY-" + str(GDUUID.v4()) ,qty, _node.translation)
 		
 	_node.queue_free()
+	
+remotesync func _remove_all_hostile(holder_paths: Array):
+	for holder_path in holder_paths:
+		var holder = get_node_or_null(holder_path)
+		if not is_instance_valid(holder):
+			return
+			
+		for i in holder.get_children():
+			i.queue_free()
+	
 ################################################################
 # supply crate spawn and manager 
 remotesync func _spawn_supply_crate(player_network_unique_id:int, name:String,max_crate : int, translation : Vector3):
@@ -312,6 +316,12 @@ func _on_enemy_on_spawning_weapon(_node):
 		
 	add_minimap_object(_node.get_path())
 	_node.connect("on_click", self ,"_on_enemy_click")
+	
+func _on_enemy_fort_on_destroyed(_node):
+	_on_enemy_on_destroyed(_node)
+	
+func _on_enemy_ship_on_destroyed(_node):
+	_on_enemy_on_destroyed(_node)
 	
 func _on_enemy_on_destroyed(_node):
 	if get_tree().is_network_server():
