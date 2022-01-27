@@ -5,15 +5,6 @@ const MAX_HOSTILE = 1
 const HOSTILE_SIDE = "BOT"
 const PLAYER_SIDE = "player"
 
-var HOSTILE_SHIPS = {
-	"res://scene/ships/cruiser/cruiser.tscn" : Ships.SHIP_LIST[2],
-	"res://scene/ships/carrier/carrier.tscn" : Ships.SHIP_LIST[0],
-	"res://scene/ships/bomber/bomber.tscn" : Ships.SHIP_LIST[1],
-}
-var HOSTILE_INSTALATION = {
-	"res://scene/fort/aa-instalation/aa_instalation.tscn" : Forts.FORT_LIST[0],
-	"res://scene/fort/airstrip/airstrip.tscn" : Forts.FORT_LIST[1]
-}
 var _aggresion = 0.8
 
 signal player_on_ready(player)
@@ -109,7 +100,11 @@ remotesync func _lock_on(node_path : NodePath, node_path_target : NodePath):
 		return
 		
 	_node.lock_on_point = _node_target
-	
+################################################################
+# on object added to game
+func add_minimap_object(_node_path : NodePath):
+	pass
+
 ################################################################
 # player airship spawner manager
 func spawn_players(_player_holder_path : NodePath, _targeting_guide_holder_path : NodePath, _ui_path : NodePath):
@@ -142,6 +137,11 @@ func spawn_players(_player_holder_path : NodePath, _targeting_guide_holder_path 
 		ship.aim_point = spatial_target.translation
 		ship.guided_point = spatial_target
 		ship.set_data(i)
+		
+		# buff
+		ship.hp += 1000
+		ship.max_hp += 1000
+		
 		ship.show_hp_bar(true)
 		ship.set_hp_bar_name(i.player_name)
 		ship.set_hp_bar_color(Color.blue)
@@ -153,7 +153,7 @@ func spawn_players(_player_holder_path : NodePath, _targeting_guide_holder_path 
 			_player_aim_guider = spatial_target
 			ship.MINIMAP_COLOR = Color.green
 			
-		_ui.add_minimap_object(ship)
+		add_minimap_object(ship.get_path())
 		spawn_pos.x += 5.0
 		
 	if not is_instance_valid(_player):
@@ -174,7 +174,7 @@ func spawn_players(_player_holder_path : NodePath, _targeting_guide_holder_path 
 	
 ################################################################
 # hostile airship and fort manager
-remotesync func _spawn_hostile_airship(player_network_unique_id:int, name:String, ship_data_key:String, holder_path:NodePath, ui_path:NodePath, _spawn_pos:Vector3):
+remotesync func _spawn_hostile_airship(player_network_unique_id:int, name:String, ship_data :Dictionary, holder_path:NodePath, ui_path:NodePath, _spawn_pos:Vector3):
 	var holder = get_node_or_null(holder_path)
 	if not is_instance_valid(holder):
 		return
@@ -187,13 +187,13 @@ remotesync func _spawn_hostile_airship(player_network_unique_id:int, name:String
 	if bots_count >= MAX_HOSTILE:
 		return
 		
-	var ship = load(ship_data_key).instance()
+	var ship = load(ship_data.scene).instance()
 	var color = Color.red
 	
 	ship.owner_id = HOSTILE_SIDE
 	ship.side = HOSTILE_SIDE
 	ship.name = name
-	ship.set_data(HOSTILE_SHIPS[ship_data_key])
+	ship.set_data(ship_data)
 	ship.set_network_master(player_network_unique_id)
 	ship.MINIMAP_COLOR = color
 	holder.add_child(ship)
@@ -206,9 +206,9 @@ remotesync func _spawn_hostile_airship(player_network_unique_id:int, name:String
 	ship.connect("on_spawning_weapon", self, "_on_enemy_on_spawning_weapon")
 	ship.connect("on_destroyed", self, "_on_enemy_on_destroyed")
 	
-	ui.add_minimap_object(ship)
+	add_minimap_object(ship.get_path())
 	
-remotesync func _spawn_hostile_fort(player_network_unique_id:int, name:String, fort_data_key:String, holder_path:NodePath, ui_path:NodePath, _spawn_pos:Vector3):
+remotesync func _spawn_hostile_fort(player_network_unique_id:int, name:String, fort_data:Dictionary, holder_path:NodePath, ui_path:NodePath, _spawn_pos:Vector3):
 	var holder = get_node_or_null(holder_path)
 	if not is_instance_valid(holder):
 		return
@@ -221,13 +221,13 @@ remotesync func _spawn_hostile_fort(player_network_unique_id:int, name:String, f
 	if bots_count >= MAX_HOSTILE:
 		return
 		
-	var fort = load(fort_data_key).instance()
+	var fort = load(fort_data.scene).instance()
 	var color = Color.red #Color(randf(),randf(),randf(), 1)
 	
 	fort.owner_id = HOSTILE_SIDE
 	fort.side = HOSTILE_SIDE
 	fort.name = name
-	fort.set_data(HOSTILE_INSTALATION[fort_data_key])
+	fort.set_data(fort_data)
 	fort.set_network_master(player_network_unique_id)
 	fort.MINIMAP_COLOR = color
 	fort.targets = _airborne_targets
@@ -241,14 +241,58 @@ remotesync func _spawn_hostile_fort(player_network_unique_id:int, name:String, f
 	fort.connect("on_spawning_weapon", self, "_on_enemy_on_spawning_weapon")
 	fort.connect("on_destroyed", self, "_on_enemy_on_destroyed")
 	
-	ui.add_minimap_object(fort)
+	add_minimap_object(fort.get_path())
 	
 remotesync func _despawn_hostile_airship(node_path : NodePath):
 	var _node = get_node_or_null(node_path)
 	if not is_instance_valid(_node):
 		return
 		
+	if get_tree().is_network_server():
+		rpc("_spawn_supply_crate", Network.PLAYER_HOST_ID, "SUPPLY-" + str(GDUUID.v4()) , _node.translation)
+		
 	_node.queue_free()
+################################################################
+# supply crate spawn and manager 
+remotesync func _spawn_supply_crate(player_network_unique_id:int, name:String, translation : Vector3):
+	var crate = preload("res://scene/crates/flying-crate/crate.tscn").instance()
+	crate.tag_color = Color.orange
+	crate.translation = translation
+	crate.translation.y = Ship.DEFAULT_ALTITUDE
+	crate.owner_id = HOSTILE_SIDE
+	crate.side = HOSTILE_SIDE
+	crate.name = name
+	crate.set_network_master(player_network_unique_id)
+	add_child(crate)
+	crate.lauching_at(Vector3.ZERO, 0.0)
+	crate.connect("on_pickup", self, "_on_supply_crate_picked_up")
+	
+	add_minimap_object(crate.get_path())
+	
+func _on_supply_crate_picked_up(_node):
+	if not get_tree().is_network_server():
+		return
+		
+	var message = ""
+	if randf() < 0.5:
+		var slot = rand_range(0, _node.weapons.size())
+		var ammo = int(rand_range(1, _node.weapons[slot].max_ammo))
+		message = "+" + str(ammo) + " " + _node.weapons[slot].name
+		_node.restock_ammo(slot,ammo)
+		
+	else:
+		var hp = round(rand_range(0, _node.max_hp))
+		message = "+" + str(hp) + " Hitpoint"
+		_node.restore_hp(hp)
+		
+	rpc("_spawn_floating_message",message, _node.translation)
+	
+remotesync func _spawn_floating_message(message : String, translation : Vector3):
+	var msg = preload("res://assets/ui/message-3d/message_3d.tscn").instance()
+	add_child(msg)
+	msg.translation = translation
+	msg.translation.y = Ship.DEFAULT_ALTITUDE
+	msg.set_message(message)
 	
 ################################################################
 # player and bot signal handle event
@@ -262,6 +306,7 @@ func _on_enemy_on_spawning_weapon(_node):
 	if not _node.has_method("take_damage"):
 		return
 		
+	add_minimap_object(_node.get_path())
 	_node.connect("on_click", self ,"_on_enemy_click")
 	
 func _on_enemy_on_destroyed(_node):
@@ -272,8 +317,11 @@ func _on_airship_on_spawning_weapon(_node):
 	if _node.side == HOSTILE_SIDE:
 		return
 		
-	if _node.has_method("take_damage"):
-		_airborne_targets.append(_node)
+	if not _node.has_method("take_damage"):
+		return
+		
+	add_minimap_object(_node.get_path())
+	_airborne_targets.append(_node)
 		
 func _on_player_on_falling(_node):
 	if get_tree().is_network_server():

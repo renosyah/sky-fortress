@@ -11,7 +11,7 @@ const FORT_LIST = [
 		side = "",
 		max_hp = 500,
 		hp = 500,
-		firing_delay = 0.4,
+		firing_delay = 2.0,
 		weapons = Weapons.AA_FORT_TEMPLATE,
 		skin = ""
 	},

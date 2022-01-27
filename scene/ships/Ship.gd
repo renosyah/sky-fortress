@@ -33,7 +33,7 @@ var hp = 100.0
 var max_hp = 100.0
 
 # tag
-var tag_color = Color.white
+var tag_color = MINIMAP_COLOR
 var owner_id = ""
 var owner_name = ""
 var side = ""
@@ -77,9 +77,34 @@ remotesync func _shot(weapon_index : int, name : String, _aim_point : Vector3, _
 	_launch(weapon_index, name, _aim_point, _guided_point, _lock_on_point)
 	
 remotesync func _restock_ammo(weapon_slot, ammo_restock):
-	if weapons[weapon_slot].ammo < weapons[weapon_slot].max_ammo:
-		weapons[weapon_slot].ammo += ammo_restock
-	play_sound("res://assets/sounds/click.wav")
+	if destroyed:
+		return
+		
+	if weapons[weapon_slot].ammo >= weapons[weapon_slot].max_ammo:
+		return
+		
+	if (weapons[weapon_slot].ammo + ammo_restock) >  weapons[weapon_slot].max_ammo:
+		weapons[weapon_slot].ammo = weapons[weapon_slot].max_ammo
+		return
+		
+	weapons[weapon_slot].ammo += ammo_restock
+	
+remotesync func _restore_hp(_hp):
+	if destroyed:
+		return
+		
+	if hp >= max_hp:
+		return
+		
+	if (hp + _hp) > hp:
+		hp = max_hp
+		
+		emit_signal("on_take_damage", self, 0, hp)
+		return
+		
+	hp += _hp
+	
+	emit_signal("on_take_damage", self, 0, hp)
 	
 ###############################################################
 	
@@ -253,6 +278,13 @@ func restock_ammo(weapon_slot : int, ammo_restock : float):
 		return
 		
 	_restock_ammo(weapon_slot, ammo_restock)
+	
+func restore_hp(hp : float):
+	if get_tree().network_peer:
+		rpc("_restore_hp", hp)
+		return
+		
+	_restore_hp(hp)
 	
 	
 func play_sound(path : String):

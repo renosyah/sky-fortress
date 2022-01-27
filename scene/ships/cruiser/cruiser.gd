@@ -33,6 +33,13 @@ remotesync func _take_damage(damage):
 	
 	update_hp_bar()
 	
+remotesync func _restore_hp(_hp):
+	._restore_hp(_hp)
+	
+	if destroyed:
+		return
+	
+	update_hp_bar()
 ###############################################################
 
 
@@ -78,6 +85,7 @@ func highlight(_show : bool):
 func set_skin(_camo : String = ""):
 	$pivot/body_1.texture = load("res://skin/ships/baloons/"+ _camo + "/" +"baloon.png")
 	$pivot/body_2.texture = load("res://skin/ships/baloons/"+ _camo + "/" +"baloon.png")
+	$pivot/sail.texture = load("res://skin/ships/sails/"+ _camo + "/" +"sail.png")
 	$pivot/bridge_1.texture = load("res://skin/ships/beam/"+ _camo + "/" +"beam.png")
 	$pivot/bridge_2.texture = load("res://skin/ships/beam/"+ _camo + "/" +"beam.png")
 	$pivot/bridge_3.texture = load("res://skin/ships/beam/"+ _camo + "/" +"beam.png")
@@ -86,12 +94,6 @@ func set_skin(_camo : String = ""):
 	$pivot/bridge_6.texture = load("res://skin/ships/beam/"+ _camo + "/" +"beam.png")
 	$pivot/bridge_7.texture = load("res://skin/ships/beam/"+ _camo + "/" +"beam.png")
 	$pivot/bridge_8.texture = load("res://skin/ships/beam/"+ _camo + "/" +"beam.png")
-	$pivot/bridge_9.texture = load("res://skin/ships/beam/"+ _camo + "/" +"beam.png")
-	$pivot/bridge_10.texture = load("res://skin/ships/beam/"+ _camo + "/" +"beam.png")
-	$pivot/bridge_11.texture = load("res://skin/ships/beam/"+ _camo + "/" +"beam.png")
-	$pivot/bridge_12.texture = load("res://skin/ships/beam/"+ _camo + "/" +"beam.png")
-	$pivot/bridge_13.texture = load("res://skin/ships/beam/"+ _camo + "/" +"beam.png")
-	$pivot/bridge_14.texture = load("res://skin/ships/beam/"+ _camo + "/" +"beam.png")
 	
 func destroy():
 	.destroy()
@@ -103,6 +105,10 @@ func destroy():
 	
 func restock_ammo(weapon_slot, ammo_restock):
 	.restock_ammo(weapon_slot, ammo_restock)
+	
+func restore_hp(hp : float):
+	.restore_hp(hp)
+	
 	
 func _on_Tween_tween_completed(object, key):
 	if not destroyed:

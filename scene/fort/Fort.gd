@@ -52,9 +52,24 @@ remotesync func _shot(weapon_index : int, name : String, _aim_point : Vector3, _
 	_launch(weapon_index, name, _aim_point, _guided_point, _lock_on_point)
 	
 remotesync func _restock_ammo(weapon_slot, ammo_restock):
-	if weapons[weapon_slot].ammo < weapons[weapon_slot].max_ammo:
-		weapons[weapon_slot].ammo += ammo_restock
-	play_sound("res://assets/sounds/click.wav")
+	if weapons[weapon_slot].ammo >= weapons[weapon_slot].max_ammo:
+		return
+		
+	if (weapons[weapon_slot].ammo + ammo_restock) >  weapons[weapon_slot].max_ammo:
+		weapons[weapon_slot].ammo = weapons[weapon_slot].max_ammo
+		return
+		
+	weapons[weapon_slot].ammo += ammo_restock
+	
+remotesync func _restock_hp(_hp):
+	if hp >= max_hp:
+		return
+		
+	if (hp + _hp) > hp:
+		hp = max_hp
+		return
+		
+	hp += _hp
 	
 ###############################################################
 
@@ -79,10 +94,8 @@ func _ready():
 		
 	destroyed = false
 	visible = true
-	set_process(false)
 	
 	emit_signal("on_ready", self)
-	
 	
 func set_data(_fort_data):
 	max_hp = _fort_data.max_hp
@@ -244,7 +257,10 @@ func play_sound(path : String):
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if destroyed:
+		return
+		
+	check_weapon_status()
 	
 func spawn_explosive_on_destroy():
 	var explosive = preload("res://assets/explosive/explosive.tscn").instance()
@@ -278,11 +294,11 @@ func _on_shot_delay_timer_timeout():
 	if not is_instance_valid(_target):
 		return
 		
-	shot(rand_range(0, weapons.size()),
-		_target.translation,
-		_target.get_path(),
-		_target.get_path()
-	)
+	var slot = rand_range(0, weapons.size())
+	if not weapons[slot].can_fire:
+		return
+		
+	shot(slot,_target.translation,_target.get_path(),_target.get_path())
 	
 	
 func erase_empty(arr):
@@ -293,6 +309,32 @@ func erase_empty(arr):
 		
 	for i in erase_target:
 		arr.erase(i)
+	
+	
+func check_weapon_status():
+	for weapon in weapons:
+		weapon.can_fire = false
+		
+		if weapon.type == Weapons.TYPE_UNGUIDED and aim_point:
+			var _aim_at = aim_point
+			if is_instance_valid(lock_on_point):
+				_aim_at = lock_on_point.translation
+				
+			var distance_to_target = translation.distance_to(_aim_at)
+			weapon.can_fire = distance_to_target < weapon.max_range and distance_to_target > weapon.min_range
+			
+		elif weapon.type == Weapons.TYPE_GUIDED and is_instance_valid(guided_point):
+			var distance_to_target = translation.distance_to(guided_point.translation)
+			weapon.can_fire = distance_to_target < weapon.max_range and distance_to_target > weapon.min_range
+			
+		elif weapon.type == Weapons.TYPE_LOCK_ON and is_instance_valid(lock_on_point):
+			var distance_to_target = translation.distance_to(lock_on_point.translation)
+			weapon.can_fire =  distance_to_target < weapon.max_range and distance_to_target > weapon.min_range
+			
+		elif weapon.type == Weapons.TYPE_CONTROLLED and is_instance_valid(lock_on_point):
+			var distance_to_target = translation.distance_to(lock_on_point.translation)
+			weapon.can_fire = distance_to_target < weapon.max_range and distance_to_target > weapon.min_range
+			
 
 
 

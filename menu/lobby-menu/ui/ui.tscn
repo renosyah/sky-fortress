@@ -114,9 +114,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="player_slot" type="Control" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
-margin_right = 200.0
+margin_right = 190.0
 margin_bottom = 716.0
-rect_min_size = Vector2( 200, 0 )
+rect_min_size = Vector2( 190, 0 )
 size_flags_vertical = 3
 
 [node name="TextureRect" type="ColorRect" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/player_slot"]
@@ -135,7 +135,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/player_slot/VBoxContainer"]
-margin_right = 200.0
+margin_right = 190.0
 margin_bottom = 28.0
 custom_fonts/font = ExtResource( 1 )
 text = "Fleet"
@@ -143,7 +143,7 @@ align = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/player_slot/VBoxContainer"]
 margin_top = 32.0
-margin_right = 200.0
+margin_right = 190.0
 margin_bottom = 716.0
 size_flags_vertical = 3
 scroll_horizontal_enabled = false
@@ -152,13 +152,13 @@ __meta__ = {
 }
 
 [node name="player_slots" type="VBoxContainer" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/player_slot/VBoxContainer/ScrollContainer"]
-margin_right = 200.0
+margin_right = 190.0
 size_flags_horizontal = 3
 
 [node name="chat" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer" instance=ExtResource( 6 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 204.0
+margin_left = 194.0
 margin_right = 1366.0
 margin_bottom = 716.0
 

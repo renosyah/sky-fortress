@@ -81,6 +81,15 @@ func _on_ui_on_next_click():
 func _on_ui_on_prev_click():
 	spectate_cycle(false)
 	
+func add_minimap_object(_node_path : NodePath):
+	.add_minimap_object(_node_path)
+	
+	var _node = get_node_or_null(_node_path)
+	if not is_instance_valid(_node):
+		return
+	
+	_ui.add_minimap_object(_node)
+	
 func _on_ui_on_exit_click():
 	_network_tick.stop()
 	Network.disconnect_from_server()
