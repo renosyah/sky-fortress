@@ -94,6 +94,7 @@ func _ready():
 		
 	destroyed = false
 	visible = true
+	set_process(false)
 	
 	emit_signal("on_ready", self)
 	
@@ -255,12 +256,6 @@ func restock_ammo(weapon_slot : int, ammo_restock : float):
 func play_sound(path : String):
 	pass
 	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	if destroyed:
-		return
-		
-	check_weapon_status()
 	
 func spawn_explosive_on_destroy():
 	var explosive = preload("res://assets/explosive/explosive.tscn").instance()
@@ -295,9 +290,7 @@ func _on_shot_delay_timer_timeout():
 		return
 		
 	var slot = rand_range(0, weapons.size())
-	if not weapons[slot].can_fire:
-		return
-		
+	
 	shot(slot,_target.translation,_target.get_path(),_target.get_path())
 	
 	
@@ -310,31 +303,6 @@ func erase_empty(arr):
 	for i in erase_target:
 		arr.erase(i)
 	
-	
-func check_weapon_status():
-	for weapon in weapons:
-		weapon.can_fire = false
-		
-		if weapon.type == Weapons.TYPE_UNGUIDED and aim_point:
-			var _aim_at = aim_point
-			if is_instance_valid(lock_on_point):
-				_aim_at = lock_on_point.translation
-				
-			var distance_to_target = translation.distance_to(_aim_at)
-			weapon.can_fire = distance_to_target < weapon.max_range and distance_to_target > weapon.min_range
-			
-		elif weapon.type == Weapons.TYPE_GUIDED and is_instance_valid(guided_point):
-			var distance_to_target = translation.distance_to(guided_point.translation)
-			weapon.can_fire = distance_to_target < weapon.max_range and distance_to_target > weapon.min_range
-			
-		elif weapon.type == Weapons.TYPE_LOCK_ON and is_instance_valid(lock_on_point):
-			var distance_to_target = translation.distance_to(lock_on_point.translation)
-			weapon.can_fire =  distance_to_target < weapon.max_range and distance_to_target > weapon.min_range
-			
-		elif weapon.type == Weapons.TYPE_CONTROLLED and is_instance_valid(lock_on_point):
-			var distance_to_target = translation.distance_to(lock_on_point.translation)
-			weapon.can_fire = distance_to_target < weapon.max_range and distance_to_target > weapon.min_range
-			
 
 
 

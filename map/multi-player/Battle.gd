@@ -104,7 +104,10 @@ remotesync func _lock_on(node_path : NodePath, node_path_target : NodePath):
 # on object added to game
 func add_minimap_object(_node_path : NodePath):
 	pass
-
+	
+func remove_minimap_object(_node_path : NodePath):
+	pass
+	
 ################################################################
 # player airship spawner manager
 func spawn_players(_player_holder_path : NodePath, _targeting_guide_holder_path : NodePath, _ui_path : NodePath):
@@ -137,11 +140,6 @@ func spawn_players(_player_holder_path : NodePath, _targeting_guide_holder_path 
 		ship.aim_point = spatial_target.translation
 		ship.guided_point = spatial_target
 		ship.set_data(i)
-		
-		# buff
-		ship.hp += 1000
-		ship.max_hp += 1000
-		
 		ship.show_hp_bar(true)
 		ship.set_hp_bar_name(i.player_name)
 		ship.set_hp_bar_color(Color.blue)
@@ -164,6 +162,7 @@ func spawn_players(_player_holder_path : NodePath, _targeting_guide_holder_path 
 	
 	_player.connect("on_move", self, "_on_player_on_move")
 	_player.connect("on_destroyed",_ui,"_on_player_on_destroyed")
+	_player.connect("on_destroyed",self,"_on_player_on_destroyed")
 	_player.connect("on_falling",self,"_on_player_on_falling")
 	_player.connect("on_falling",_ui,"_on_player_on_falling")
 	_player.connect("on_spawning_weapon" ,self,"_on_airship_on_spawning_weapon")
@@ -326,6 +325,9 @@ func _on_airship_on_spawning_weapon(_node):
 func _on_player_on_falling(_node):
 	if get_tree().is_network_server():
 		_airborne_targets.erase(_node)
+	
+func _on_player_on_destroyed(_node):
+	remove_minimap_object(_node.get_path())
 	
 ################################################################
 # player aim system
