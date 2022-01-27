@@ -145,6 +145,7 @@ func spawn_players(_player_holder_path : NodePath, _targeting_guide_holder_path 
 		ship.set_hp_bar_color(Color.blue)
 		ship.MINIMAP_COLOR = Color.blue
 		ship.update_hp_bar()
+		ship.connect("on_destroyed",self,"_on_player_on_destroyed")
 		
 		if ship.owner_id == Global.player_data.id:
 			_player = ship
@@ -162,7 +163,6 @@ func spawn_players(_player_holder_path : NodePath, _targeting_guide_holder_path 
 	
 	_player.connect("on_move", self, "_on_player_on_move")
 	_player.connect("on_destroyed",_ui,"_on_player_on_destroyed")
-	_player.connect("on_destroyed",self,"_on_player_on_destroyed")
 	_player.connect("on_falling",self,"_on_player_on_falling")
 	_player.connect("on_falling",_ui,"_on_player_on_falling")
 	_player.connect("on_spawning_weapon" ,self,"_on_airship_on_spawning_weapon")
