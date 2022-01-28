@@ -12,8 +12,9 @@ onready var _minimap = $CanvasLayer/Control2/Control/left/MiniMap
 onready var _spectatescreen = $CanvasLayer/Control2/spectate
 onready var _deadscreen = $CanvasLayer/Control2/deadscreen
 onready var _ui_control = $CanvasLayer/Control2/Control
-onready var _hp_bar = $CanvasLayer/Control2/Control/mid/hp_bar
+onready var _hp_bar = $CanvasLayer/Control2/Control/mid/CenterContainer/hp_bar
 onready var _weapons_bar = $CanvasLayer/Control2/Control/mid/VBoxContainer
+onready var _damage_indicator = $CanvasLayer/Control2/damage_indicator
 
 onready var _chat_window = $CanvasLayer/Control2/chating
 onready var _chat_log = $CanvasLayer/Control2/Control/left/chat_log
@@ -32,8 +33,7 @@ var _aim_mode = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_chat_button.visible = (Global.mp_players_data.size() > 1)
-	pass
+	_chat_button.disabled = (Global.mp_players_data.size() <= 1)
 	
 func set_camera(object : Spatial):
 	_minimap.set_camera(object)
@@ -92,6 +92,9 @@ func _on_battle_player_on_ready(player):
 	
 func _on_player_on_take_damage(player, damage, hp):
 	_hp_bar.update_bar(hp,player.max_hp)
+	_damage_indicator.modulate.a = 1.0 if damage > 0.0 else 0.0
+	_tween.interpolate_property(_damage_indicator, "modulate:a", _damage_indicator.modulate.a, 0.0, 1.0)
+	_tween.start()
 	
 func _on_player_on_destroyed(player):
 	if _resultscreen.visible:

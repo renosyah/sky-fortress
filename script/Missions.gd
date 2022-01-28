@@ -32,7 +32,7 @@ static func generate_missions(size : int) -> Array:
 			
 		mission.level += 1
 		mission.maximum_fort += int(rand_range(0,2))
-		mission.maximum_ship += int(rand_range(0,3))
+		mission.maximum_ship += int(rand_range(0,1))
 		mission.hostile_total += int(rand_range(1,4))
 		mission.hostile_left = mission.hostile_total
 		mission.max_crate += int(rand_range(1,2))

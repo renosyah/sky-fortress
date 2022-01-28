@@ -19,7 +19,7 @@ func display_mission_result(is_win : bool, total_airship_destroyed, total_fort_d
 	_condition.modulate = WIN_COLOR if is_win else LOSE_COLOR
 	_condition.text = "Victory" if is_win else "Defeat"
 	
-	_message.text = "All enemy has been Destroyed!" if is_win else "All ally fleet has been destroyed!"
+	_message.text = "All enemy forces has been Destroyed!" if is_win else "Ally Forces has been destroyed!"
 	_airship_destroy.text = str(total_airship_destroyed)
 	_fort_destroy.text = str(total_fort_destroyed)
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/ui/bar/hp_bar.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/ui/deadscreen/deadscreen.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://map/multi-player/ui/ui.gd" type="Script" id=9]
 [ext_resource path="res://assets/ui/resultscreen/resultscreen.tscn" type="PackedScene" id=10]
 [ext_resource path="res://assets/ui/objective_tab/objective_tab.tscn" type="PackedScene" id=11]
+[ext_resource path="res://assets/ui/mini_map/border_no_transparent.png" type="Texture" id=12]
 
 [node name="ui" type="Control"]
 anchor_right = 1.0
@@ -50,7 +51,7 @@ size_flags_horizontal = 0
 [node name="chat_log" type="VBoxContainer" parent="CanvasLayer/Control2/Control/left"]
 margin_top = 204.0
 margin_right = 429.0
-margin_bottom = 706.0
+margin_bottom = 696.0
 rect_min_size = Vector2( 200, 300 )
 mouse_filter = 2
 size_flags_vertical = 3
@@ -59,19 +60,20 @@ __meta__ = {
 }
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control2/Control/left"]
-margin_top = 710.0
-margin_right = 160.0
+margin_top = 700.0
+margin_right = 215.0
 margin_bottom = 800.0
-rect_min_size = Vector2( 160, 90 )
+rect_min_size = Vector2( 215, 100 )
 mouse_filter = 2
 size_flags_horizontal = 0
 
 [node name="chat_button" type="Button" parent="CanvasLayer/Control2/Control/left/CenterContainer"]
-margin_left = 10.0
-margin_top = 15.0
-margin_right = 150.0
-margin_bottom = 75.0
-rect_min_size = Vector2( 140, 60 )
+margin_left = 7.0
+margin_top = 10.0
+margin_right = 207.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 200, 80 )
+custom_fonts/font = ExtResource( 8 )
 text = "Chat"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -85,14 +87,24 @@ rect_min_size = Vector2( 500, 0 )
 mouse_filter = 2
 size_flags_horizontal = 3
 
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control2/Control/mid"]
+anchor_right = 1.0
+rect_min_size = Vector2( 0, 50 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hp_bar" parent="CanvasLayer/Control2/Control/mid/CenterContainer" instance=ExtResource( 1 )]
+margin_top = 10.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 500, 30 )
+
 [node name="VBoxContainer" parent="CanvasLayer/Control2/Control/mid" instance=ExtResource( 3 )]
-anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -169.5
 margin_top = -159.0
-margin_right = 169.5
+margin_right = 0.0
 margin_bottom = 0.0
 
 [node name="mission" type="VBoxContainer" parent="CanvasLayer/Control2/Control/mid"]
@@ -130,12 +142,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="hp_bar" parent="CanvasLayer/Control2/Control/mid" instance=ExtResource( 1 )]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -250.0
-margin_right = 250.0
-
 [node name="right" type="VBoxContainer" parent="CanvasLayer/Control2/Control"]
 margin_left = 937.0
 margin_right = 1366.0
@@ -144,47 +150,58 @@ mouse_filter = 2
 size_flags_horizontal = 3
 
 [node name="CenterContainer2" type="CenterContainer" parent="CanvasLayer/Control2/Control/right"]
-margin_left = 269.0
+margin_left = 214.0
 margin_right = 429.0
-margin_bottom = 90.0
-rect_min_size = Vector2( 160, 90 )
+margin_bottom = 100.0
+rect_min_size = Vector2( 215, 100 )
 mouse_filter = 2
 size_flags_horizontal = 8
 
 [node name="mission_tab" type="Button" parent="CanvasLayer/Control2/Control/right/CenterContainer2"]
-margin_left = 10.0
-margin_top = 15.0
-margin_right = 150.0
-margin_bottom = 75.0
-rect_min_size = Vector2( 140, 60 )
+margin_left = 7.0
+margin_top = 10.0
+margin_right = 207.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 200, 80 )
+custom_fonts/font = ExtResource( 8 )
 text = "Objective"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/Control/right"]
-margin_top = 94.0
+margin_top = 104.0
 margin_right = 429.0
-margin_bottom = 706.0
+margin_bottom = 696.0
 mouse_filter = 2
 size_flags_vertical = 3
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control2/Control/right"]
-margin_left = 269.0
-margin_top = 710.0
+margin_left = 214.0
+margin_top = 700.0
 margin_right = 429.0
 margin_bottom = 800.0
-rect_min_size = Vector2( 160, 90 )
+rect_min_size = Vector2( 215, 100 )
 mouse_filter = 2
 size_flags_horizontal = 8
 
 [node name="aim" type="Button" parent="CanvasLayer/Control2/Control/right/CenterContainer"]
-margin_left = 10.0
-margin_top = 15.0
-margin_right = 150.0
-margin_bottom = 75.0
-rect_min_size = Vector2( 140, 60 )
+margin_left = 7.0
+margin_top = 10.0
+margin_right = 207.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 200, 80 )
+custom_fonts/font = ExtResource( 8 )
 text = "Aim"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="damage_indicator" type="NinePatchRect" parent="CanvasLayer/Control2"]
+modulate = Color( 1, 0, 0, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -211,8 +228,8 @@ __meta__ = {
 
 [node name="PanelContainer" type="Panel" parent="CanvasLayer/Control2/chating"]
 margin_right = 1366.0
-margin_bottom = 80.0
-rect_min_size = Vector2( 0, 80 )
+margin_bottom = 125.0
+rect_min_size = Vector2( 0, 125 )
 mouse_filter = 2
 size_flags_horizontal = 3
 
@@ -224,51 +241,41 @@ __meta__ = {
 }
 
 [node name="btn" type="MarginContainer" parent="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer"]
-margin_right = 100.0
-margin_bottom = 80.0
-rect_min_size = Vector2( 100, 0 )
+margin_right = 200.0
+margin_bottom = 125.0
+rect_min_size = Vector2( 200, 115 )
 
 [node name="close_chat" type="Button" parent="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer/btn"]
-margin_right = 100.0
-margin_bottom = 80.0
+margin_right = 200.0
+margin_bottom = 125.0
 rect_min_size = Vector2( 100, 50 )
-
-[node name="Label" type="Label" parent="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer/btn"]
-margin_top = 26.0
-margin_right = 100.0
-margin_bottom = 54.0
-custom_fonts/font = ExtResource( 7 )
-text = "Back"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+custom_fonts/font = ExtResource( 8 )
+text = "Close"
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer"]
-margin_left = 104.0
-margin_right = 1262.0
-margin_bottom = 80.0
+margin_left = 204.0
+margin_right = 1162.0
+margin_bottom = 125.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer/CenterContainer"]
-margin_left = 487.0
-margin_top = 20.0
-margin_right = 670.0
-margin_bottom = 60.0
+margin_left = 387.0
+margin_top = 42.0
+margin_right = 570.0
+margin_bottom = 82.0
 custom_fonts/font = ExtResource( 8 )
 text = "Team Chat"
 
 [node name="btn2" type="MarginContainer" parent="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer"]
-margin_left = 1266.0
+margin_left = 1166.0
 margin_right = 1366.0
-margin_bottom = 80.0
-rect_min_size = Vector2( 100, 0 )
+margin_bottom = 125.0
+rect_min_size = Vector2( 200, 0 )
 
 [node name="chat" parent="CanvasLayer/Control2/chating" instance=ExtResource( 6 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 84.0
+margin_top = 129.0
 margin_right = 1366.0
 margin_bottom = 800.0
 
