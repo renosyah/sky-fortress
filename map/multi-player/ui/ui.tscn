@@ -241,37 +241,39 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="btn" type="MarginContainer" parent="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer"]
-margin_right = 200.0
+[node name="CenterContainer2" type="CenterContainer" parent="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer"]
+margin_right = 215.0
 margin_bottom = 125.0
-rect_min_size = Vector2( 200, 115 )
+rect_min_size = Vector2( 215, 115 )
 
-[node name="close_chat" type="Button" parent="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer/btn"]
-margin_right = 200.0
-margin_bottom = 125.0
-rect_min_size = Vector2( 100, 50 )
+[node name="close_chat" type="Button" parent="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer/CenterContainer2"]
+margin_left = 12.0
+margin_top = 12.0
+margin_right = 202.0
+margin_bottom = 112.0
+rect_min_size = Vector2( 190, 100 )
 custom_fonts/font = ExtResource( 8 )
 text = "Close"
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer"]
-margin_left = 204.0
-margin_right = 1162.0
+margin_left = 219.0
+margin_right = 1147.0
 margin_bottom = 125.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer/CenterContainer"]
-margin_left = 342.0
+margin_left = 327.0
 margin_top = 32.0
-margin_right = 616.0
+margin_right = 601.0
 margin_bottom = 92.0
 custom_fonts/font = ExtResource( 13 )
 text = "Team Chat"
 
 [node name="btn2" type="MarginContainer" parent="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer"]
-margin_left = 1166.0
+margin_left = 1151.0
 margin_right = 1366.0
 margin_bottom = 125.0
-rect_min_size = Vector2( 200, 0 )
+rect_min_size = Vector2( 215, 115 )
 
 [node name="chat" parent="CanvasLayer/Control2/chating" instance=ExtResource( 6 )]
 anchor_right = 0.0
@@ -292,5 +294,5 @@ margin_bottom = 800.0
 [connection signal="on_close" from="CanvasLayer/Control2/objective_tab" to="." method="_on_objective_tab_on_close"]
 [connection signal="on_spectate_click" from="CanvasLayer/Control2/deadscreen" to="." method="_on_deadscreen_on_spectate_click"]
 [connection signal="on_exit" from="CanvasLayer/Control2/resultscreen" to="." method="_on_resultscreen_on_exit"]
-[connection signal="pressed" from="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer/btn/close_chat" to="." method="_on_close_chat_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer/CenterContainer2/close_chat" to="." method="_on_close_chat_pressed"]
 [connection signal="on_message" from="CanvasLayer/Control2/chating/chat" to="." method="_on_chat_on_message"]
