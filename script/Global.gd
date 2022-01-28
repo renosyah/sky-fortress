@@ -123,6 +123,7 @@ var client = {
 
 var mp_battle_data = {}
 var mp_players_data = []
+var mp_exception_message = ""
 
 ################################################################
 

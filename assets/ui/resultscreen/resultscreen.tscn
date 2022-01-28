@@ -20,22 +20,48 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
-margin_left = 436.0
-margin_top = 129.0
-margin_right = 929.0
-margin_bottom = 671.0
+[node name="Panel" type="Panel" parent="VBoxContainer"]
+margin_right = 1366.0
+margin_bottom = 125.0
+rect_min_size = Vector2( 0, 125 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="condition" type="Label" parent="CenterContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer2" type="CenterContainer" parent="VBoxContainer/Panel/HBoxContainer"]
+margin_right = 1366.0
+margin_bottom = 125.0
+rect_min_size = Vector2( 0, 125 )
+mouse_filter = 2
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Panel/HBoxContainer/CenterContainer2"]
+margin_left = 517.0
+margin_top = 9.0
+margin_right = 848.0
+margin_bottom = 115.0
+mouse_filter = 2
+
+[node name="condition" type="Label" parent="VBoxContainer/Panel/HBoxContainer/CenterContainer2/VBoxContainer"]
 modulate = Color( 1, 0.109375, 0.109375, 1 )
-margin_right = 493.0
+margin_right = 331.0
 margin_bottom = 106.0
 custom_fonts/font = ExtResource( 3 )
 text = "Victory"
@@ -45,45 +71,69 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="message" type="Label" parent="CenterContainer/VBoxContainer"]
-margin_top = 110.0
-margin_right = 493.0
-margin_bottom = 236.0
-custom_fonts/font = ExtResource( 2 )
-text = "All Enemy hass been destroy
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+margin_top = 129.0
+margin_right = 1366.0
+margin_bottom = 499.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-"
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/CenterContainer"]
+margin_left = 436.0
+margin_right = 929.0
+margin_bottom = 370.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer3" type="MarginContainer" parent="VBoxContainer/CenterContainer/VBoxContainer"]
+margin_right = 493.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 0, 50 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="message" type="Label" parent="VBoxContainer/CenterContainer/VBoxContainer"]
+margin_top = 54.0
+margin_right = 493.0
+margin_bottom = 94.0
+custom_fonts/font = ExtResource( 2 )
+text = "All Enemy hass been destroy"
 align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
-margin_top = 240.0
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/CenterContainer/VBoxContainer"]
+margin_top = 98.0
 margin_right = 493.0
-margin_bottom = 324.0
+margin_bottom = 188.0
+rect_min_size = Vector2( 0, 90 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/CenterContainer/VBoxContainer"]
+margin_top = 192.0
+margin_right = 493.0
+margin_bottom = 276.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer"]
 margin_right = 493.0
 margin_bottom = 40.0
-alignment = 1
 
-[node name="message2" type="Label" parent="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
-margin_left = 24.0
-margin_right = 442.0
+[node name="label" type="Label" parent="VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+margin_right = 418.0
 margin_bottom = 40.0
 custom_fonts/font = ExtResource( 2 )
 text = "Enemy Airship Destroy : "
-align = 1
-valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="airship_destroy" type="Label" parent="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
-margin_left = 446.0
-margin_right = 468.0
+[node name="airship_destroy" type="Label" parent="VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+margin_left = 422.0
+margin_right = 444.0
 margin_bottom = 40.0
 custom_fonts/font = ExtResource( 2 )
 text = "0"
@@ -93,27 +143,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer"]
 margin_top = 44.0
 margin_right = 493.0
 margin_bottom = 84.0
-alignment = 1
 
-[node name="message2" type="Label" parent="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
-margin_left = 50.0
-margin_right = 417.0
+[node name="label" type="Label" parent="VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+margin_right = 367.0
 margin_bottom = 40.0
 custom_fonts/font = ExtResource( 2 )
 text = "Enemy Fort Destroy : "
-align = 1
-valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="fort_destroy" type="Label" parent="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
-margin_left = 421.0
-margin_right = 443.0
+[node name="fort_destroy" type="Label" parent="VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+margin_left = 371.0
+margin_right = 393.0
 margin_bottom = 40.0
 custom_fonts/font = ExtResource( 2 )
 text = "0"
@@ -123,18 +169,43 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/VBoxContainer"]
-margin_top = 328.0
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/CenterContainer/VBoxContainer"]
+margin_top = 280.0
 margin_right = 493.0
-margin_bottom = 418.0
+margin_bottom = 370.0
 rect_min_size = Vector2( 0, 90 )
 
-[node name="exit" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 422.0
-margin_right = 493.0
-margin_bottom = 542.0
-rect_min_size = Vector2( 0, 120 )
-custom_fonts/font = ExtResource( 2 )
-text = "Exit"
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 661.0
+margin_right = 1366.0
+margin_bottom = 781.0
+size_flags_vertical = 10
+alignment = 1
 
-[connection signal="pressed" from="CenterContainer/VBoxContainer/exit" to="." method="_on_exit_pressed"]
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
+margin_right = 15.0
+margin_bottom = 120.0
+rect_min_size = Vector2( 15, 0 )
+
+[node name="exit" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 19.0
+margin_right = 1347.0
+margin_bottom = 120.0
+rect_min_size = Vector2( 300, 120 )
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "Return to Hangar"
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
+margin_left = 1351.0
+margin_right = 1366.0
+margin_bottom = 120.0
+rect_min_size = Vector2( 15, 0 )
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+margin_top = 785.0
+margin_right = 1366.0
+margin_bottom = 800.0
+rect_min_size = Vector2( 0, 15 )
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/exit" to="." method="_on_exit_pressed"]

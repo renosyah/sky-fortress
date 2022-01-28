@@ -60,7 +60,12 @@ func _on_cameraPivot_on_body_enter_aim_sight(_body):
 ################################################################
 # network tick to send automatic request
 func _on_network_tick_timeout():
-	.sync_targeting_system()
+	if get_tree().network_peer:
+		.sync_targeting_system()
+	
+func _connection_closed():
+	._connection_closed()
+	_network_tick.stop()
 	
 ################################################################
 # on ui action
@@ -103,6 +108,7 @@ func remove_minimap_object(_node_path : NodePath):
 func _on_ui_on_exit_click():
 	_network_tick.stop()
 	Network.disconnect_from_server()
+	get_tree().change_scene("res://menu/main-menu/main_menu.tscn")
 	
 ################################################################
 # player signal handle event

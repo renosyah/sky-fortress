@@ -55,13 +55,21 @@ remotesync func _display_mission_objective(level, message : String):
 	_tween.start()
 	
 func display_mission_objective(level, message : String):
-	rpc("_display_mission_objective", level, message)
+	if get_tree().network_peer:
+		rpc("_display_mission_objective", level, message)
+		return
+		
+	_display_mission_objective(level, message)
 	
 remotesync func _update_objective(operation : Dictionary, current_mission : Dictionary):
 	_objective_tab.update_objective(operation, current_mission)
 	
 func update_objective(operation : Dictionary, current_mission : Dictionary):
-	rpc("_update_objective", operation, current_mission)
+	if get_tree().network_peer:
+		rpc("_update_objective", operation, current_mission)
+		return
+		
+	_update_objective(operation, current_mission)
 	
 	
 remotesync func _display_mission_result(is_win : bool, total_airship_destroyed, total_fort_destroyed : int):

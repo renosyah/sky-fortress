@@ -4,8 +4,8 @@ class_name Missions
 const TEMPLATE_MISSION = {
 	level = 0,
 	mission = "",
-	hostile_ship = Ships.SHIP_LIST,
-	hostile_fort = Forts.FORT_LIST,
+	hostile_ships = Ships.SHIP_LIST,
+	hostile_forts = Forts.FORT_LIST,
 	maximum_ship = 1,
 	maximum_fort = 1,
 	hostile_left = 2,
@@ -15,12 +15,17 @@ const TEMPLATE_MISSION = {
 	max_crate = 1
 }
 
-const TEMPLATE_OPERATION = {
-	name = "",
-	date = "",
-	missions = [],
-	total_mission = 0
-}
+static func generate_ship_composition(size : int) -> Array:
+	var ships = []
+	for i in size:
+		ships.append( (Ships.SHIP_LIST[randi() % Ships.SHIP_LIST.size()]).duplicate() )
+	return ships
+	
+static func generate_fort_composition(size : int) -> Array:
+	var forts = []
+	for i in size:
+		forts.append( (Forts.FORT_LIST[randi() % Forts.FORT_LIST.size()]).duplicate() )
+	return forts
 
 static func generate_missions(size : int) -> Array:
 	var missions = []
@@ -34,6 +39,8 @@ static func generate_missions(size : int) -> Array:
 		mission.maximum_fort += int(rand_range(0,2))
 		mission.maximum_ship += int(rand_range(0,1))
 		mission.hostile_total += int(rand_range(1,4))
+		mission.hostile_ships = generate_ship_composition(int(rand_range(1,4)))
+		mission.hostile_forts = generate_fort_composition(int(rand_range(1,4)))
 		mission.hostile_left = mission.hostile_total
 		mission.max_crate += int(rand_range(1,2))
 		mission.mission = "Destroy "+ str(mission.hostile_left) + " Enemy" 
@@ -41,7 +48,14 @@ static func generate_missions(size : int) -> Array:
 		missions.append(mission.duplicate())
 		
 	return missions
-
+	
+const TEMPLATE_OPERATION = {
+	name = "",
+	date = "",
+	missions = [],
+	total_level = 0
+}
+	
 static func generate_operation() -> Dictionary:
 	var time = OS.get_datetime()
 	var nameweekday= ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
@@ -57,8 +71,8 @@ static func generate_operation() -> Dictionary:
 	var operation = TEMPLATE_OPERATION.duplicate()
 	operation.name = "Operation " + RandomNameGenerator.generate()
 	operation.date = "%s, %02d %s %d %02d:%02d:%02d GMT" % [nameweekday[dayofweek], day, namemonth[month-1], year, hour, minute, second]
-	operation.total_mission = int(rand_range(3,15))
-	operation.missions = generate_missions(operation.total_mission)
+	operation.total_level = 1 #int(rand_range(3,15))
+	operation.missions = generate_missions(operation.total_level)
 	
 	return operation
 

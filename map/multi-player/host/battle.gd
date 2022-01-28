@@ -77,7 +77,12 @@ func _on_cameraPivot_on_body_enter_aim_sight(_body):
 ################################################################
 # network tick to send automatic request
 func _on_network_tick_timeout():
-	.sync_targeting_system()
+	if get_tree().network_peer:
+		.sync_targeting_system()
+	
+func _connection_closed():
+	._connection_closed()
+	_network_tick.stop()
 	
 ################################################################
 # on ui action
@@ -119,6 +124,7 @@ func remove_minimap_object(_node_path : NodePath):
 func _on_ui_on_exit_click():
 	_network_tick.stop()
 	Network.disconnect_from_server()
+	get_tree().change_scene("res://menu/main-menu/main_menu.tscn")
 	
 ################################################################
 # player signal handle event
@@ -177,13 +183,7 @@ func check_player():
 		
 	if _alive_players.empty():
 		# mission fail all players dead
-		is_over = true
-		_event_timer.stop()
-		_ui.display_mission_result(
-			false,
-			total_airship_destroyed,
-			total_fort_destroyed
-		)
+		on_lose()
 		
 	
 func check_mission():
@@ -203,14 +203,7 @@ func change_mission():
 		
 	if pos_mission > missions.size() - 1:
 		# mission completed all mission aquired
-		is_over = true
-		_event_timer.stop()
-		rpc("_remove_all_hostile" , [_bot_holder.get_path(), _fort_holder.get_path()])
-		_ui.display_mission_result(
-			true,
-			total_airship_destroyed,
-			total_fort_destroyed
-		)
+		on_victory()
 		return
 		
 	mission = missions[pos_mission]
@@ -224,6 +217,27 @@ func change_mission():
 	_ui.display_mission_objective("Level " + str(mission.level), mission.mission)
 	pos_mission += 1
 	
+func on_victory():
+	is_over = true
+	_event_timer.stop()
+	rpc("_remove_all_hostile" , [_bot_holder.get_path(), _fort_holder.get_path()])
+	_ui.display_mission_result(
+		true,
+		total_airship_destroyed,
+		total_fort_destroyed
+	)
+	.disconnect_from_server()
+	
+func on_lose():
+	is_over = true
+	_event_timer.stop()
+	rpc("_remove_all_hostile" , [_bot_holder.get_path(), _fort_holder.get_path()])
+	_ui.display_mission_result(
+		false,
+		total_airship_destroyed,
+		total_fort_destroyed
+	)
+	.disconnect_from_server()
 	
 func _on_enemy_fort_on_destroyed(_node):
 	._on_enemy_fort_on_destroyed(_node)
@@ -268,17 +282,17 @@ func _on_event_timer_timeout():
 		return
 		
 	var bots_count = _bot_holder.get_child_count()
-	if bots_count < _max_hostile_ship:
+	if not mission.empty() and bots_count < _max_hostile_ship:
 		var ship_name =  "BOT-" + str(GDUUID.v4())
 		var spawn_pos = _terrain.cloud_spawn_points[randi() % _terrain.cloud_spawn_points.size()]
-		var ship_data = Ships.SHIP_LIST[randi() % Ships.SHIP_LIST.size()]
+		var ship_data = mission.hostile_ships[randi() % mission.hostile_ships.size()]
 		rpc("_spawn_hostile_airship", Network.PLAYER_HOST_ID, ship_name, ship_data, _bot_holder.get_path(),_ui.get_path(), spawn_pos)
 	
 	var fort_count = _fort_holder.get_child_count()
-	if fort_count < _max_hostile_fort:
+	if not mission.empty() and fort_count < _max_hostile_fort:
 		var fort_name =  "FORT-BOT-" + str(GDUUID.v4())
 		var spawn_pos_fort = _terrain.unused_translations[randi() % _terrain.unused_translations.size()]
-		var fort_data = Forts.FORT_LIST[randi() % Forts.FORT_LIST.size()]
+		var fort_data = mission.hostile_forts[randi() % mission.hostile_forts.size()]
 		rpc("_spawn_hostile_fort", Network.PLAYER_HOST_ID, fort_name, fort_data, _fort_holder.get_path(),_ui.get_path(), spawn_pos_fort.node_translation)
 		
 	check_mission()

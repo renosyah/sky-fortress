@@ -5,6 +5,8 @@ onready var _hp_bar = $hpBar
 onready var _audio = $AudioStreamPlayer3D
 onready var _highlight = $highlight
 onready var _input_detection = $inputDetection
+onready var _pivot = $pivot
+onready var _tween = $Tween
 
 ###############################################################
 # multiplayer sync
@@ -29,6 +31,9 @@ func _ready():
 		
 	if not _input_detection.is_connected("any_gesture", self, "_on_inputDetection_any_gesture"):
 		_input_detection.connect("any_gesture", self, "_on_inputDetection_any_gesture")
+		
+	_tween.interpolate_property(_pivot, "translation:y", -3, 0, 3.0)
+	_tween.start()
 		
 	update_hp_bar()
 	

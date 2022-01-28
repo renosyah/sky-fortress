@@ -1,8 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scene/weapons/guided/guided-missile/guided_missile.gd" type="Script" id=1]
 [ext_resource path="res://scene/weapons/guided/guided-missile/missile.png" type="Texture" id=2]
-[ext_resource path="res://assets/other/prop/prop.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/TrailRenderer/TrailRender.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scene/weapons/lock-on/lock-on-missile/sail.png" type="Texture" id=4]
 
 [sub_resource type="BoxShape" id=2]
@@ -10,6 +10,12 @@ extents = Vector3( 0.086946, 0.0607051, 0.384967 )
 
 [sub_resource type="SphereShape" id=1]
 radius = 0.208971
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0.0387097, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.993548, 0.0272727 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 1, 0.529412, 0.411765, 1 )
 
 [node name="guided_missile" type="KinematicBody"]
 script = ExtResource( 1 )
@@ -59,8 +65,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.421812 )
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
 shape = SubResource( 1 )
 
-[node name="prop" parent="." instance=ExtResource( 3 )]
-transform = Transform( 0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0.826771 )
+[node name="TrailRender" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.771434 )
+width = 0.2
+width_curve = SubResource( 3 )
+material = SubResource( 4 )
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]

@@ -21,6 +21,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.640548, 0 )
 shape = SubResource( 1 )
 
 [node name="pivot" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0 )
 
 [node name="wall" type="Sprite3D" parent="pivot"]
 transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 2.04688 )
@@ -76,3 +77,5 @@ transform = Transform( 8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 2.2378, 0 )
 
 [node name="inputDetection" type="Node" parent="."]
 script = ExtResource( 9 )
+
+[node name="Tween" type="Tween" parent="."]

@@ -40,10 +40,18 @@ func init_connection_watcher():
 	Network.connect("connection_closed", self , "_connection_closed")
 	
 func _connection_closed():
-	_server_disconnected()
+	print("exit by Client!")
 	
 func _server_disconnected():
+	Global.mp_exception_message = "Unexpected exit by Server!"
 	get_tree().change_scene("res://menu/main-menu/main_menu.tscn")
+	
+remotesync func _disconnect_from_server():
+	if not get_tree().is_network_server():
+		Network.disconnect_from_server()
+	
+func disconnect_from_server():
+	rpc("_disconnect_from_server")
 	
 ################################################################
 # client request terrain data section

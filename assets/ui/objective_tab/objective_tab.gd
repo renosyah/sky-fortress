@@ -17,7 +17,7 @@ func update_objective(operation : Dictionary, current_mission : Dictionary):
 	if current_mission.empty():
 		return
 		
-	_operation_level.text = "- Mission Progress (" + str(current_mission.level) + " / " + str(operation.total_mission) + ")"
+	_operation_level.text = "- Mission Progress (" + str(current_mission.level) + " / " + str(operation.total_level) + ")"
 	_operation_progress.text = "- Destroy Enemy (" + str(current_mission.hostile_total - current_mission.hostile_left) + " / " + str(current_mission.hostile_total) + ")"
 	_operation_message.text = "- Survive!"
 	

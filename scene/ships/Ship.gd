@@ -96,7 +96,7 @@ remotesync func _restore_hp(_hp):
 	if hp >= max_hp:
 		return
 		
-	if (hp + _hp) > hp:
+	if (hp + _hp) >= hp:
 		hp = max_hp
 		
 		emit_signal("on_take_damage", self, 0, hp)
