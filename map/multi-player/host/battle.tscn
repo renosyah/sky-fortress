@@ -45,7 +45,7 @@ transform = Transform( 1, 0, 0, 0, 0.573576, 0.819152, 0, -0.819152, 0.573576, 0
 wait_time = 0.2
 
 [node name="event_timer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 8.0
 autostart = true
 
 [node name="bot_command_timer" type="Timer" parent="."]

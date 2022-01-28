@@ -17,11 +17,14 @@ onready var _weapons_bar = $CanvasLayer/Control2/Control/mid/VBoxContainer
 
 onready var _chat_window = $CanvasLayer/Control2/chating
 onready var _chat_log = $CanvasLayer/Control2/Control/left/chat_log
+onready var _chat_button = $CanvasLayer/Control2/Control/left/CenterContainer/chat_button
 
 onready var _resultscreen = $CanvasLayer/Control2/resultscreen
 onready var _mission_tab = $CanvasLayer/Control2/Control/mid/mission
 onready var _mission_label = $CanvasLayer/Control2/Control/mid/mission/level
 onready var _mission_message = $CanvasLayer/Control2/Control/mid/mission/message
+
+onready var _objective_tab = $CanvasLayer/Control2/objective_tab
 
 onready var _tween = $CanvasLayer/Tween
 
@@ -29,7 +32,7 @@ var _aim_mode = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#_weapons_bar.visible = false
+	_chat_button.visible = (Global.mp_players_data.size() > 1)
 	pass
 	
 func set_camera(object : Spatial):
@@ -48,11 +51,17 @@ remotesync func _display_mission_objective(level, message : String):
 	_mission_label.text = level
 	_mission_message.text = message
 	_mission_tab.modulate.a = 1.0
-	_tween.interpolate_property(_mission_tab, "modulate:a", 1.0, 0.0, 5.0)
+	_tween.interpolate_property(_mission_tab, "modulate:a", 1.0, 0.0, 7.0)
 	_tween.start()
 	
 func display_mission_objective(level, message : String):
 	rpc("_display_mission_objective", level, message)
+	
+remotesync func _update_objective(operation : Dictionary, current_mission : Dictionary):
+	_objective_tab.update_objective(operation, current_mission)
+	
+func update_objective(operation : Dictionary, current_mission : Dictionary):
+	rpc("_update_objective", operation, current_mission)
 	
 	
 remotesync func _display_mission_result(is_win : bool, total_airship_destroyed, total_fort_destroyed : int):
@@ -104,9 +113,6 @@ func _on_deadscreen_on_spectate_click():
 func _on_spectate_on_exit_click():
 	emit_signal("on_exit_click")
 
-func _on_exit_pressed():
-	emit_signal("on_exit_click")
-
 func _on_spectate_on_next_click():
 	emit_signal("on_next_click")
 	
@@ -132,3 +138,21 @@ func _on_close_chat_pressed():
 	
 func _on_resultscreen_on_exit():
 	emit_signal("on_exit_click")
+
+func _on_mission_tab_pressed():
+	_objective_tab.visible = true
+
+func _on_objective_tab_on_close():
+	_objective_tab.visible = false
+
+
+
+
+
+
+
+
+
+
+
+

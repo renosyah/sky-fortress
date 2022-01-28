@@ -24,7 +24,9 @@ func _ready():
 	_player_name.text = Global.player_data.name
 	
 func _on_host_pressed():
+	# only host player can control what mission it takes
 	Global.mode = Global.MODE_HOST
+	Global.mp_battle_data = Missions.generate_operation()
 	get_tree().change_scene("res://menu/lobby-menu/lobby_menu.tscn")
 	
 func _on_join_pressed():

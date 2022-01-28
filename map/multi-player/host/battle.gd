@@ -25,8 +25,9 @@ var total_fort_destroyed = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
-	# testing mission
-	missions = Missions.generate_missions(5)
+	missions = Global.mp_battle_data.missions
+	_ui.update_objective(Global.mp_battle_data, missions[pos_mission])
+	_ui.display_mission_objective(Global.mp_battle_data.name, Global.mp_battle_data.date)
 	
 	.init_connection_watcher()
 	.spawn_players(_player_holder.get_path(), _targeting_guide_holder.get_path(), _ui.get_path())
@@ -219,6 +220,7 @@ func change_mission():
 	_min_crate = mission.min_crate
 	_max_crate = mission.max_crate
 	
+	_ui.update_objective(Global.mp_battle_data, mission)
 	_ui.display_mission_objective("Level " + str(mission.level), mission.mission)
 	pos_mission += 1
 	
@@ -232,6 +234,8 @@ func _on_enemy_fort_on_destroyed(_node):
 			
 		mission.hostile_left -= 1
 		total_fort_destroyed += 1
+		
+		_ui.update_objective(Global.mp_battle_data, mission)
 		_ui.display_mission_objective(
 			"Enemy Fort Destroy",
 			str(mission.hostile_left) + " Remaining!" if mission.hostile_left > 0 else "Objective Completed!"
@@ -247,6 +251,7 @@ func _on_enemy_ship_on_destroyed(_node):
 		mission.hostile_left -= 1
 		total_airship_destroyed += 1
 		
+		_ui.update_objective(Global.mp_battle_data, mission)
 		_ui.display_mission_objective(
 			"Enemy Airship Destroy",
 			str(mission.hostile_left) + " Remaining!" if mission.hostile_left > 0 else "Objective Completed!"

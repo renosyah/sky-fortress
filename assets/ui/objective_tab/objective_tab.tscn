@@ -1,0 +1,119 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_48.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/ui/objective_tab/objective_tab.gd" type="Script" id=3]
+
+[node name="objective_tab" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bg" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.117647, 0.117647, 0.117647, 0.788235 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="VBoxContainer"]
+margin_right = 1366.0
+margin_bottom = 125.0
+rect_min_size = Vector2( 0, 125 )
+
+[node name="CenterContainer2" type="CenterContainer" parent="VBoxContainer/Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -683.0
+margin_top = -62.5
+margin_right = 683.0
+margin_bottom = 62.5
+rect_min_size = Vector2( 0, 125 )
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Panel/CenterContainer2"]
+margin_left = 526.0
+margin_top = 32.0
+margin_right = 839.0
+margin_bottom = 92.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Panel/CenterContainer2/VBoxContainer"]
+margin_right = 313.0
+margin_bottom = 60.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 5
+custom_fonts/font = ExtResource( 1 )
+text = "Operation ..."
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+margin_top = 129.0
+margin_right = 1366.0
+margin_bottom = 800.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/CenterContainer"]
+margin_left = 383.0
+margin_top = 147.0
+margin_right = 983.0
+margin_bottom = 524.0
+
+[node name="level" type="Label" parent="VBoxContainer/CenterContainer/VBoxContainer"]
+margin_right = 600.0
+margin_bottom = 60.0
+custom_fonts/font = ExtResource( 1 )
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="progress" type="Label" parent="VBoxContainer/CenterContainer/VBoxContainer"]
+margin_top = 64.0
+margin_right = 600.0
+margin_bottom = 124.0
+custom_fonts/font = ExtResource( 1 )
+text = "- updating..."
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/CenterContainer/VBoxContainer"]
+margin_top = 128.0
+margin_right = 600.0
+margin_bottom = 253.0
+rect_min_size = Vector2( 0, 125 )
+
+[node name="close" type="Button" parent="VBoxContainer/CenterContainer/VBoxContainer"]
+margin_top = 257.0
+margin_right = 600.0
+margin_bottom = 377.0
+rect_min_size = Vector2( 600, 120 )
+custom_fonts/font = ExtResource( 2 )
+text = "Close"
+
+[connection signal="pressed" from="VBoxContainer/CenterContainer/VBoxContainer/close" to="." method="_on_close_pressed"]
