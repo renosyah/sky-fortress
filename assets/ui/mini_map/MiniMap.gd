@@ -60,15 +60,13 @@ func _process(_delta):
 			
 			# If marker is outside grid, hide or shrink it.
 			if grid.get_rect().has_point(obj_pos + grid.rect_position):
-				markers[item].get_child(0).visible = false
+				markers[item].get_child(0).visible = true
 				
 				if item.MINIMAP_MARKER == "troop":
 					markers[item].scale = Vector2(1, 1) #/ Vector2(zoom, zoom) 
-					markers[item].get_child(0).visible = true
 						
 				elif item.MINIMAP_MARKER == "weapon":
 					markers[item].scale = Vector2(0.5, 0.5) #/ Vector2(zoom, zoom) 
-					markers[item].get_child(0).visible = true
 						
 				markers[item].modulate.a = 1.0
 				markers[item].show()
@@ -90,14 +88,14 @@ func _process(_delta):
 		else:
 			remove_object(item)
 		
-func add_object(object):
+func add_object(object : Spatial, _name : String = ""):
 	var new_marker = icons[object.MINIMAP_MARKER].duplicate()
 	grid.add_child(new_marker)
 	grid.move_child(new_marker, 0)
 	new_marker.show()
 	new_marker.self_modulate = Color(object.MINIMAP_COLOR)
 	markers[object] = new_marker
-	#markers[object].get_child(0).text = object.player_name
+	markers[object].get_child(0).text = _name
 	
 	
 func remove_object(object):

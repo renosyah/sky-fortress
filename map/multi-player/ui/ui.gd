@@ -38,8 +38,8 @@ func _ready():
 func set_camera(object : Spatial):
 	_minimap.set_camera(object)
 	
-func add_minimap_object(object : Spatial):
-	_minimap.add_object(object)
+func add_minimap_object(object : Spatial, _name : String = ""):
+	_minimap.add_object(object, _name)
 	
 func remove_minimap_object(object : Spatial):
 	_minimap.remove_object(object)

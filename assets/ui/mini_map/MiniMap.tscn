@@ -48,16 +48,24 @@ visible = false
 texture = ExtResource( 3 )
 
 [node name="Label" type="Label" parent="MarginContainer/Grid/TroopMarker"]
-margin_right = 40.0
-margin_bottom = 14.0
+margin_left = -18.0
+margin_top = 10.0
+margin_right = 22.0
+margin_bottom = 24.0
+align = 1
+valign = 1
 
 [node name="WeaponMarker" type="Sprite" parent="MarginContainer/Grid"]
 visible = false
 texture = ExtResource( 3 )
 
 [node name="Label2" type="Label" parent="MarginContainer/Grid/WeaponMarker"]
-margin_right = 40.0
-margin_bottom = 14.0
+margin_left = -18.0
+margin_top = 12.0
+margin_right = 22.0
+margin_bottom = 26.0
+align = 1
+valign = 1
 
 [node name="Camera" type="Sprite" parent="MarginContainer/Grid"]
 position = Vector2( 89.2929, 113.636 )

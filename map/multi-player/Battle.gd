@@ -115,7 +115,7 @@ remotesync func _lock_on(node_path : NodePath, node_path_target : NodePath):
 	
 ################################################################
 # on object added to game
-func add_minimap_object(_node_path : NodePath):
+func add_minimap_object(_node_path : NodePath, _name : String = ""):
 	pass
 	
 func remove_minimap_object(_node_path : NodePath):
@@ -165,7 +165,7 @@ func spawn_players(_player_holder_path : NodePath, _targeting_guide_holder_path 
 			_player_aim_guider = spatial_target
 			ship.MINIMAP_COLOR = Color.green
 			
-		add_minimap_object(ship.get_path())
+		add_minimap_object(ship.get_path(),i.player_name)
 		spawn_pos.x += 5.0
 		
 	if not is_instance_valid(_player):
@@ -209,12 +209,13 @@ remotesync func _spawn_hostile_airship(player_network_unique_id:int, name:String
 	ship.translation = _spawn_pos
 	ship.translation.y = Ship.DEFAULT_ALTITUDE
 	ship.show_hp_bar(true)
+	ship.set_hp_bar_name(ship_data.name)
 	ship.set_hp_bar_color(color)
 	ship.connect("on_click", self ,"_on_enemy_click")
 	ship.connect("on_spawning_weapon", self, "_on_enemy_on_spawning_weapon")
 	ship.connect("on_destroyed", self, "_on_enemy_ship_on_destroyed")
 	
-	add_minimap_object(ship.get_path())
+	add_minimap_object(ship.get_path(), ship_data.name)
 	
 remotesync func _spawn_hostile_fort(player_network_unique_id:int, name:String, fort_data:Dictionary, holder_path:NodePath, ui_path:NodePath, _spawn_pos:Vector3):
 	var holder = get_node_or_null(holder_path)
@@ -240,12 +241,13 @@ remotesync func _spawn_hostile_fort(player_network_unique_id:int, name:String, f
 	fort.translation = _spawn_pos
 	fort.translation.y = 1.0
 	fort.show_hp_bar(true)
+	fort.set_hp_bar_name(fort_data.name)
 	fort.set_hp_bar_color(color)
 	fort.connect("on_click", self ,"_on_enemy_click")
 	fort.connect("on_spawning_weapon", self, "_on_enemy_on_spawning_weapon")
 	fort.connect("on_destroyed", self, "_on_enemy_fort_on_destroyed")
 	
-	add_minimap_object(fort.get_path())
+	add_minimap_object(fort.get_path(), fort_data.name)
 	
 remotesync func _despawn_hostile_airship(node_path : NodePath):
 	var _node = get_node_or_null(node_path)

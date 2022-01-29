@@ -71,7 +71,7 @@ static func generate_operation() -> Dictionary:
 	var operation = TEMPLATE_OPERATION.duplicate()
 	operation.name = "Operation " + RandomNameGenerator.generate()
 	operation.date = "%s, %02d %s %d %02d:%02d:%02d GMT" % [nameweekday[dayofweek], day, namemonth[month-1], year, hour, minute, second]
-	operation.total_level = 1 #int(rand_range(3,15))
+	operation.total_level = int(rand_range(3,15))
 	operation.missions = generate_missions(operation.total_level)
 	
 	return operation

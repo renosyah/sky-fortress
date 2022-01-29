@@ -47,10 +47,13 @@ mouse_filter = 2
 size_flags_horizontal = 3
 
 [node name="MiniMap" parent="CanvasLayer/Control2/Control/left" instance=ExtResource( 5 )]
+margin_right = 250.0
+margin_bottom = 250.0
+rect_min_size = Vector2( 250, 250 )
 size_flags_horizontal = 0
 
 [node name="chat_log" type="VBoxContainer" parent="CanvasLayer/Control2/Control/left"]
-margin_top = 204.0
+margin_top = 254.0
 margin_right = 429.0
 margin_bottom = 696.0
 rect_min_size = Vector2( 200, 300 )

@@ -3,7 +3,7 @@
 [ext_resource path="res://scene/weapons/guided/guided-missile/guided_missile.gd" type="Script" id=1]
 [ext_resource path="res://scene/weapons/guided/guided-missile/missile.png" type="Texture" id=2]
 [ext_resource path="res://addons/TrailRenderer/TrailRender.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scene/weapons/lock-on/lock-on-missile/sail.png" type="Texture" id=4]
+[ext_resource path="res://skin/ships/beam/beam.png" type="Texture" id=4]
 
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 0.086946, 0.0607051, 0.384967 )
@@ -26,30 +26,31 @@ shape = SubResource( 2 )
 disabled = true
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform( -7.43094e-08, 0, 1.7, 0, 1.7, 0, -1.7, 0, -7.43094e-08, 0, 0, 0 )
+transform = Transform( -6.55671e-08, 0, 2, 0, 2, 0, -1.5, 0, -8.74228e-08, 0, 0, 0 )
 alpha_cut = 2
 texture = ExtResource( 2 )
 
 [node name="Sprite3D2" type="Sprite3D" parent="."]
-transform = Transform( 1.28346e-07, 1.7, -7.43094e-08, 0, -7.43094e-08, -1.7, -1.7, 1.28346e-07, -5.6102e-15, 0, 0, 0 )
+transform = Transform( 1.13247e-07, 2, -8.74228e-08, 0, -8.74228e-08, -2, -1.5, 1.50996e-07, -6.60024e-15, 0, 0, 0 )
 alpha_cut = 2
 texture = ExtResource( 2 )
 
 [node name="Spatial" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.03684 )
 
 [node name="wing_1" type="Sprite3D" parent="Spatial"]
-transform = Transform( 0.695121, -0.0259143, -1.73901, -0.501435, 0.0186936, -1.25446, 0.0149017, 0.399722, -3.09086e-08, 0.101741, -0.083349, -0.468707 )
+transform = Transform( 0.34257, -0.0127711, -0.857019, -0.280558, 0.0104593, -0.701883, 0.0334947, 0.898458, -6.94735e-08, 0.15198, -0.128234, -0.468707 )
 alpha_cut = 2
 texture = ExtResource( 4 )
 
 [node name="wing_2" type="Sprite3D" parent="Spatial"]
-transform = Transform( 0.694902, -0.0312395, 1.73901, 0.501277, -0.022535, -1.25446, 0.0179639, 0.399596, -3.09086e-08, -0.102847, -0.10491, -0.468707 )
+transform = Transform( 0.342462, -0.0153955, 0.857019, 0.280469, -0.0126086, -0.701883, 0.0403776, 0.898175, -6.94735e-08, -0.162332, -0.134224, -0.468707 )
 flip_h = true
 alpha_cut = 2
 texture = ExtResource( 4 )
 
 [node name="wing_3" type="Sprite3D" parent="Spatial"]
-transform = Transform( -1.93113e-09, -4.2957e-08, -2.45933, -0.708913, 0.0318691, -3.3208e-15, 0.0179638, 0.399596, -4.37114e-08, -0.00375953, 0.102232, -0.468707 )
+transform = Transform( -9.517e-10, -2.11701e-08, -1.21201, -0.396644, 0.0178311, -1.85802e-15, 0.0403774, 0.898175, -9.82505e-08, -0.00213325, 0.153427, -0.468707 )
 flip_h = true
 alpha_cut = 2
 texture = ExtResource( 4 )
@@ -66,7 +67,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.421812 )
 shape = SubResource( 1 )
 
 [node name="TrailRender" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.771434 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.69547 )
 width = 0.2
 width_curve = SubResource( 3 )
 material = SubResource( 4 )

@@ -51,6 +51,10 @@ func show_hp_bar(_show : bool):
 	.show_hp_bar(_show)
 	_hp_bar.visible = _show
 	
+func set_hp_bar_name(player_name):
+	.set_hp_bar_name(player_name)
+	_hp_bar.set_player_name(player_name)
+	
 func take_damage(damage):
 	.take_damage(damage)
 	

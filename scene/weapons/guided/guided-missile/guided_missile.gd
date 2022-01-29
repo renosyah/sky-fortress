@@ -3,8 +3,6 @@ extends KinematicBody
 const MINIMAP_MARKER = "weapon"
 var MINIMAP_COLOR = Color.white
 
-onready var _indicator_holder = $Spatial
-
 var tag_color = Color.white
 var owner_id = ""
 var side = ""
@@ -19,9 +17,6 @@ var _direction = Vector3.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	for i in _indicator_holder.get_children():
-		i.modulate = Color.green
-		
 	set_as_toplevel(true)
 
 func _process(delta):
@@ -32,8 +27,6 @@ func _process(delta):
 			move_and_collide(_direction * speed * delta)
 		else:
 			translation += _direction * speed * delta
-			for i in _indicator_holder.get_children():
-				i.modulate = Color.red
 			
 		var distance_to_target = translation.distance_to(_target.translation)
 		if _stay_on:
