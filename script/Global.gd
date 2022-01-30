@@ -72,9 +72,12 @@ func save_player_ships(_ship_list):
 # player ship & equipment
 var selected_ship = {}
 	
-func save_player_selected_ship(_selected_ship):
+func save_player_selected_ship():
+	if selected_ship.empty():
+		return
+		
 	if PERSISTEN_SAVE:
-		SaveLoad.save("ship.dat", _selected_ship)
+		SaveLoad.save("ship.dat", selected_ship)
 	
 func load_player_selected_ship():
 	var _selected_ship = null 

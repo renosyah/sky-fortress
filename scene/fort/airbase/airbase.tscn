@@ -1,0 +1,93 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://assets/ui/highlight/highlight.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/ui/bar-3d/hp_bar_3d.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scene/fort/airstrip/flying_deck.png" type="Texture" id=3]
+[ext_resource path="res://scene/fort/airstrip/tower.png" type="Texture" id=4]
+[ext_resource path="res://addons/Godot-Touch-Input-Manager/InputManager.gd" type="Script" id=5]
+[ext_resource path="res://scene/fort/aa-instalation/turret.png" type="Texture" id=6]
+[ext_resource path="res://scene/fort/aa-instalation/wall.png" type="Texture" id=7]
+[ext_resource path="res://scene/fort/aa-instalation/simple_house.png" type="Texture" id=8]
+[ext_resource path="res://scene/fort/airbase/airbase.gd" type="Script" id=9]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 3.75579, 1.65208, 2.93944 )
+
+[node name="airstrip" type="KinematicBody"]
+script = ExtResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.640548, 0 )
+shape = SubResource( 1 )
+
+[node name="pivot" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0 )
+
+[node name="wall" type="Sprite3D" parent="pivot"]
+transform = Transform( 0.953638, -0.212808, 0.212808, 0, 0.707107, 0.707107, -0.300955, -0.674324, 0.674324, 0.698969, 0, 2.69246 )
+texture = ExtResource( 7 )
+
+[node name="wall6" type="Sprite3D" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0.698969, 0, -4.09376 )
+texture = ExtResource( 7 )
+
+[node name="wall5" type="Sprite3D" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 3.76627, 0, -4.08707 )
+texture = ExtResource( 7 )
+
+[node name="wall3" type="Sprite3D" parent="pivot"]
+transform = Transform( 0.624916, -0.552033, 0.552033, 0, 0.707107, 0.707107, -0.780692, -0.441882, 0.441882, 3.62309, 0, 0.767583 )
+texture = ExtResource( 7 )
+
+[node name="wall4" type="Sprite3D" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, -2.4024, -0.0344858, -4.12725 )
+texture = ExtResource( 7 )
+
+[node name="wall7" type="Sprite3D" parent="pivot"]
+transform = Transform( 0.423549, 0.333979, -0.333979, 0, 0.707107, 0.707107, 0.472318, -0.299494, 0.299494, -3.96909, -0.0344858, 0.420628 )
+texture = ExtResource( 7 )
+
+[node name="strip" type="Sprite3D" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 2.66186, -0.0344858, -1.42864 )
+texture = ExtResource( 3 )
+
+[node name="strip2" type="Sprite3D" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -2.32744, -0.0344858, -1.42864 )
+texture = ExtResource( 3 )
+
+[node name="strip3" type="Sprite3D" parent="pivot"]
+transform = Transform( 0.802255, 0.596981, -2.60949e-08, 0, -4.37114e-08, -1, -0.596981, 0.802255, -3.50677e-08, -0.580121, -0.126878, 0.886664 )
+texture = ExtResource( 3 )
+
+[node name="house" type="Sprite3D" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 1.71511, 0.32511, 1.12976 )
+texture = ExtResource( 8 )
+
+[node name="house3" type="Sprite3D" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0.978941, 0.32511, -2.61517 )
+texture = ExtResource( 8 )
+
+[node name="house4" type="Sprite3D" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, -0.500711, 0.32511, -2.61517 )
+texture = ExtResource( 8 )
+
+[node name="house2" type="Sprite3D" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 3.00475, 0.32511, -2.68856 )
+texture = ExtResource( 4 )
+
+[node name="turret" type="Sprite3D" parent="pivot"]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, -2.78631, 0.32511, -0.11928 )
+texture = ExtResource( 6 )
+
+[node name="hpBar" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.86086, -1.58125 )
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+
+[node name="highlight" parent="." instance=ExtResource( 1 )]
+transform = Transform( 8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 2.2378, 0 )
+
+[node name="inputDetection" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="Tween" type="Tween" parent="."]

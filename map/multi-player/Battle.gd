@@ -276,7 +276,7 @@ remotesync func _spawn_supply_crate(player_network_unique_id:int, name:String,ma
 		var crate = preload("res://scene/crates/flying-crate/crate.tscn").instance()
 		crate.tag_color = Color.orange
 		crate.translation = Vector3(rand_range(-5.0, 5.0), 0.0, rand_range(-5.0, 5.0)) + translation
-		crate.translation.y = Ship.DEFAULT_ALTITUDE
+		crate.translation.y = 2.0
 		crate.owner_id = HOSTILE_SIDE
 		crate.side = HOSTILE_SIDE
 		crate.name = name +"-"+ str(i)
@@ -292,15 +292,15 @@ func _on_supply_crate_picked_up(_node, _by):
 		return
 		
 	var message = ""
-	if randf() < 0.5:
+	if _node.content_type == FlyingCrate.CONTENT_TYPE_AMMO:
 		var slot = rand_range(0, _by.weapons.size())
 		var ammo = int(rand_range(1, _by.weapons[slot].max_ammo))
 		message = "+" + str(ammo) + " " + _by.weapons[slot].name
 		_by.restock_ammo(slot,ammo)
 		
-	else:
-		var hp = round(rand_range(0, _by.max_hp))
-		message = "+" + str(hp) + " Hitpoint"
+	elif _node.content_type == FlyingCrate.CONTENT_TYPE_HP:
+		var hp = round(rand_range(10, _by.max_hp))
+		message = "+" + str(hp) + " HP"
 		_by.restore_hp(hp)
 		
 	rpc("_spawn_floating_message",message, _node.translation)

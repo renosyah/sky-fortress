@@ -15,21 +15,30 @@ const TEMPLATE_MISSION = {
 	max_crate = 1
 }
 
-static func generate_ship_composition(size : int) -> Array:
+static func generate_ship_composition(size : int, multiplier_hp : float) -> Array:
 	var ships = []
 	for i in size:
-		ships.append( (Ships.SHIP_LIST[randi() % Ships.SHIP_LIST.size()]).duplicate() )
+		var ship = (Ships.SHIP_LIST[randi() % Ships.SHIP_LIST.size()]).duplicate()
+		ship.max_hp += multiplier_hp
+		ship.hp = ship.max_hp
+		ships.append(ship)
+		
 	return ships
 	
-static func generate_fort_composition(size : int) -> Array:
+static func generate_fort_composition(size : int, multiplier_hp : float) -> Array:
 	var forts = []
 	for i in size:
-		forts.append( (Forts.FORT_LIST[randi() % Forts.FORT_LIST.size()]).duplicate() )
+		var fort = (Forts.FORT_LIST[randi() % Forts.FORT_LIST.size()]).duplicate()
+		fort.max_hp += multiplier_hp
+		fort.hp = fort.max_hp
+		forts.append(fort)
+		
 	return forts
 
 static func generate_missions(size : int) -> Array:
 	var missions = []
 	var mission = TEMPLATE_MISSION.duplicate()
+	var multiplier_hp = 0.0
 	for i in size:
 		mission.aggresion += rand_range(0.0, 0.5)
 		if mission.aggresion > 0.99:
@@ -39,13 +48,14 @@ static func generate_missions(size : int) -> Array:
 		mission.maximum_fort += int(rand_range(0,2))
 		mission.maximum_ship += int(rand_range(0,1))
 		mission.hostile_total += int(rand_range(1,4))
-		mission.hostile_ships = generate_ship_composition(int(rand_range(1,4)))
-		mission.hostile_forts = generate_fort_composition(int(rand_range(1,4)))
+		mission.hostile_ships = generate_ship_composition(int(rand_range(1,4)), multiplier_hp)
+		mission.hostile_forts = generate_fort_composition(int(rand_range(1,4)), multiplier_hp)
 		mission.hostile_left = mission.hostile_total
 		mission.max_crate += int(rand_range(1,2))
 		mission.mission = "Destroy "+ str(mission.hostile_left) + " Enemy" 
 		
 		missions.append(mission.duplicate())
+		multiplier_hp += round(rand_range(100, 200))
 		
 	return missions
 	
@@ -71,11 +81,11 @@ static func generate_operation() -> Dictionary:
 	var operation = TEMPLATE_OPERATION.duplicate()
 	operation.name = "Operation " + RandomNameGenerator.generate()
 	operation.date = "%s, %02d %s %d %02d:%02d:%02d GMT" % [nameweekday[dayofweek], day, namemonth[month-1], year, hour, minute, second]
-	operation.total_level = int(rand_range(3,15))
+	operation.total_level = int(rand_range(3,6))
 	operation.missions = generate_missions(operation.total_level)
 	
 	return operation
-
+	
 
 
 

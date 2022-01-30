@@ -4,7 +4,7 @@
 [ext_resource path="res://scene/crates/flying-crate/crate.gd" type="Script" id=2]
 [ext_resource path="res://scene/crates/flying-crate/baloon.png" type="Texture" id=3]
 [ext_resource path="res://scene/crates/flying-crate/box.png" type="Texture" id=4]
-[ext_resource path="res://scene/weapons/controlled/fighter/biplane/tag.png" type="Texture" id=5]
+[ext_resource path="res://scene/crates/flying-crate/ammo_crate.png" type="Texture" id=5]
 
 [sub_resource type="CylinderShape" id=4]
 radius = 1.11692
@@ -160,8 +160,8 @@ alpha_cut = 2
 texture = ExtResource( 4 )
 
 [node name="tag" type="Sprite3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.402617, 0, 0, 0, 0.860592, 0, 2.6202, 0 )
-modulate = Color( 1, 0, 0, 1 )
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2.6202, 0 )
+modulate = Color( 1, 0.560784, 0, 1 )
 billboard = 1
 texture = ExtResource( 5 )
 

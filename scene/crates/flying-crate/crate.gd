@@ -1,6 +1,10 @@
 extends Area
 class_name FlyingCrate
 
+const CONTENT_TYPE_AMMO = "res://scene/crates/flying-crate/ammo_crate.png"
+const CONTENT_TYPE_HP = "res://scene/crates/flying-crate/hp_crate.png"
+const CONTENTS = [CONTENT_TYPE_AMMO,CONTENT_TYPE_HP]
+
 const MINIMAP_MARKER = "weapon"
 var MINIMAP_COLOR = Color.orange
 
@@ -16,6 +20,9 @@ var side = ""
 var damage = 0
 var speed = 0.4
 var spread = 0.2
+var altitude = 10.0
+
+var content_type = CONTENT_TYPE_HP
 
 var _velocity : Vector3
 
@@ -48,12 +55,17 @@ func _ready():
 		_network_timmer.autostart = true
 		add_child(_network_timmer)
 		
+	content_type = CONTENTS[randi() % CONTENTS.size()]
 	_tag.modulate = tag_color
+	_tag.texture = load(content_type)
 	set_as_toplevel(true)
 	
 func _process(delta):
 	if get_tree().network_peer and not is_network_master():
 		return
+		
+	if translation.y < altitude:
+		translation.y += 1.0 * delta
 		
 	translation += _velocity * speed * delta
 	

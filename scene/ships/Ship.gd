@@ -93,10 +93,10 @@ remotesync func _restore_hp(_hp):
 	if destroyed:
 		return
 		
-	if hp >= max_hp:
+	if hp == max_hp:
 		return
 		
-	if (hp + _hp) >= hp:
+	if (hp + _hp) >= max_hp:
 		hp = max_hp
 		
 		emit_signal("on_take_damage", self, 0, hp)
@@ -279,12 +279,12 @@ func restock_ammo(weapon_slot : int, ammo_restock : float):
 		
 	_restock_ammo(weapon_slot, ammo_restock)
 	
-func restore_hp(hp : float):
+func restore_hp(_hp : float):
 	if get_tree().network_peer:
-		rpc("_restore_hp", hp)
+		rpc("_restore_hp", _hp)
 		return
 		
-	_restore_hp(hp)
+	_restore_hp(_hp)
 	
 	
 func play_sound(path : String):
