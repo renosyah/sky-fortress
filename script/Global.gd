@@ -17,7 +17,8 @@ func new_player_data() -> Dictionary:
 	return {
 		id = GDUUID.v4(),
 		name = RandomNameGenerator.generate(),
-		color = Color.white
+		color = Color.white,
+		cash = 100
 	}
 	
 func save_player_data(_data):

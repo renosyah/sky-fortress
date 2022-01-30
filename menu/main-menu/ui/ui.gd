@@ -10,6 +10,7 @@ onready var _server_browser = $CanvasLayer/Control/server_browser
 
 onready var _input_name_window = $CanvasLayer/Control/input_name
 onready var _player_name = $CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/MarginContainer4/name_button/Label
+onready var _cash = $CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/MarginContainer3/name_button2/cash
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -22,6 +23,8 @@ func _ready():
 	
 	_ship_label.text = Global.selected_ship.name
 	_player_name.text = Global.player_data.name
+	
+	_cash.text = "$" + str(Global.player_data.cash)
 	
 func _on_host_pressed():
 	# only host player can control what mission it takes

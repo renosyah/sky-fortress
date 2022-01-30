@@ -72,15 +72,15 @@ func update_objective(operation : Dictionary, current_mission : Dictionary):
 	_update_objective(operation, current_mission)
 	
 	
-remotesync func _display_mission_result(is_win : bool, total_airship_destroyed, total_fort_destroyed : int):
+remotesync func _display_mission_result(_result : Dictionary):
 	_resultscreen.visible = true
 	_ui_control.visible = false
 	_spectatescreen.visible = false
 	_deadscreen.visible = false
-	_resultscreen.display_mission_result(is_win, total_airship_destroyed, total_fort_destroyed)
+	_resultscreen.display_mission_result(_result)
 	
-func display_mission_result(is_win : bool, total_airship_destroyed, total_fort_destroyed : int):
-	rpc("_display_mission_result",is_win, total_airship_destroyed, total_fort_destroyed)
+func display_mission_result(_result : Dictionary):
+	rpc("_display_mission_result",_result)
 	
 	
 func _on_aim_pressed():

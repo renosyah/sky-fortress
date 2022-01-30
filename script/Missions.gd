@@ -12,7 +12,9 @@ const TEMPLATE_MISSION = {
 	hostile_total = 0,
 	aggresion = 0.2,
 	min_crate = 1,
-	max_crate = 1
+	max_crate = 1,
+	min_cash = 100,
+	max_cash = 250
 }
 
 static func generate_ship_composition(size : int, multiplier_hp, multiplier_dmg : float) -> Array:
@@ -70,6 +72,8 @@ static func generate_missions(size : int) -> Array:
 		mission.hostile_forts = generate_fort_composition(int(rand_range(1,4)), multiplier_hp, multiplier_dmg)
 		mission.hostile_left = mission.hostile_total
 		mission.max_crate += int(rand_range(1,2))
+		mission.min_cash += int(rand_range(10,50))
+		mission.max_cash += int(rand_range(20,80))
 		mission.mission = "Destroy "+ str(mission.hostile_left) + " Enemy" 
 		
 		missions.append(mission.duplicate())

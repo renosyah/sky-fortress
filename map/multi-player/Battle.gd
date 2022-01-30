@@ -30,7 +30,8 @@ var _max_hostile_fort = 0
 var _aggresion = 0.0
 var _min_crate = 0
 var _max_crate = 0
-
+var _min_cash = 100
+var _max_cash = 250
 
 ################################################################
 # network connection watcher
@@ -256,7 +257,8 @@ remotesync func _despawn_hostile_airship(node_path : NodePath):
 		
 	if get_tree().is_network_server():
 		var qty = rand_range(_min_crate,_max_crate)
-		rpc("_spawn_supply_crate", Network.PLAYER_HOST_ID, "SUPPLY-" + str(GDUUID.v4()) ,qty, _node.translation)
+		var content_type = FlyingCrate.CONTENTS[randi() % FlyingCrate.CONTENTS.size()]
+		rpc("_spawn_supply_crate", Network.PLAYER_HOST_ID, "SUPPLY-" + str(GDUUID.v4()) , content_type, qty, _node.translation)
 		
 	_node.queue_free()
 	
@@ -271,7 +273,7 @@ remotesync func _remove_all_hostile(holder_paths: Array):
 	
 ################################################################
 # supply crate spawn and manager 
-remotesync func _spawn_supply_crate(player_network_unique_id:int, name:String,max_crate : int, translation : Vector3):
+remotesync func _spawn_supply_crate(player_network_unique_id:int, name:String,content_type : String, max_crate : int, translation : Vector3):
 	for i in max_crate:
 		var crate = preload("res://scene/crates/flying-crate/crate.tscn").instance()
 		crate.tag_color = Color.orange
@@ -280,6 +282,7 @@ remotesync func _spawn_supply_crate(player_network_unique_id:int, name:String,ma
 		crate.owner_id = HOSTILE_SIDE
 		crate.side = HOSTILE_SIDE
 		crate.name = name +"-"+ str(i)
+		crate.content_type = content_type
 		crate.set_network_master(player_network_unique_id)
 		add_child(crate)
 		crate.lauching_at(Vector3.ZERO, 0.0)
@@ -303,7 +306,21 @@ func _on_supply_crate_picked_up(_node, _by):
 		message = "+" + str(hp) + " HP"
 		_by.restore_hp(hp)
 		
+	elif _node.content_type == FlyingCrate.CONTENT_TYPE_CASH:
+		var cash = round(rand_range(_min_cash, _max_cash))
+		message = "$"+str(cash)+" Cash"
+		rpc("_cash_pickup", _by.owner_id, cash)
+		cash_obtain(cash)
+		
 	rpc("_spawn_floating_message",message, _node.translation)
+	
+remotesync func _cash_pickup(_player_id, _amount):
+	if Global.player_data.id == _player_id:
+		Global.player_data.cash += _amount
+		cash_obtain(_amount)
+		
+func cash_obtain(_amount):
+	pass
 	
 remotesync func _spawn_floating_message(message : String, translation : Vector3, color : Color = Color.white):
 	var msg = preload("res://assets/ui/message-3d/message_3d.tscn").instance()

@@ -189,6 +189,25 @@ margin_right = 1366.0
 margin_bottom = 80.0
 size_flags_horizontal = 3
 
+[node name="name_button2" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/MarginContainer3"]
+margin_left = 361.0
+margin_right = 461.0
+margin_bottom = 80.0
+size_flags_horizontal = 8
+
+[node name="cash" type="Label" parent="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/MarginContainer3/name_button2"]
+margin_right = 100.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 100, 50 )
+size_flags_vertical = 5
+custom_fonts/font = ExtResource( 8 )
+text = "$200"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer"]
 margin_top = 84.0
 margin_right = 1366.0

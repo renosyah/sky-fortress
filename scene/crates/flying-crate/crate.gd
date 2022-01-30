@@ -3,7 +3,8 @@ class_name FlyingCrate
 
 const CONTENT_TYPE_AMMO = "res://scene/crates/flying-crate/ammo_crate.png"
 const CONTENT_TYPE_HP = "res://scene/crates/flying-crate/hp_crate.png"
-const CONTENTS = [CONTENT_TYPE_AMMO,CONTENT_TYPE_HP]
+const CONTENT_TYPE_CASH = "res://scene/crates/flying-crate/cash_crate.png"
+const CONTENTS = [CONTENT_TYPE_AMMO,CONTENT_TYPE_HP,CONTENT_TYPE_CASH]
 
 const MINIMAP_MARKER = "weapon"
 var MINIMAP_COLOR = Color.orange
@@ -55,7 +56,6 @@ func _ready():
 		_network_timmer.autostart = true
 		add_child(_network_timmer)
 		
-	content_type = CONTENTS[randi() % CONTENTS.size()]
 	_tag.modulate = tag_color
 	_tag.texture = load(content_type)
 	set_as_toplevel(true)
