@@ -93,15 +93,16 @@ size_flags_horizontal = 3
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control2/Control/mid"]
 anchor_right = 1.0
-rect_min_size = Vector2( 0, 50 )
+margin_bottom = 75.0
+rect_min_size = Vector2( 0, 75 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="hp_bar" parent="CanvasLayer/Control2/Control/mid/CenterContainer" instance=ExtResource( 1 )]
-margin_top = 10.0
-margin_bottom = 40.0
-rect_min_size = Vector2( 500, 30 )
+margin_top = 12.0
+margin_bottom = 62.0
+rect_min_size = Vector2( 500, 50 )
 
 [node name="VBoxContainer" parent="CanvasLayer/Control2/Control/mid" instance=ExtResource( 3 )]
 anchor_top = 1.0
@@ -114,8 +115,8 @@ margin_bottom = 0.0
 [node name="mission" type="VBoxContainer" parent="CanvasLayer/Control2/Control/mid"]
 modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
-margin_top = 61.0
-margin_bottom = 183.0
+margin_top = 89.0
+margin_bottom = 227.0
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false

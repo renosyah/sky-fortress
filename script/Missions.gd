@@ -15,22 +15,30 @@ const TEMPLATE_MISSION = {
 	max_crate = 1
 }
 
-static func generate_ship_composition(size : int, multiplier_hp : float) -> Array:
+static func generate_ship_composition(size : int, multiplier_hp, multiplier_dmg : float) -> Array:
 	var ships = []
 	for i in size:
 		var ship = (Ships.SHIP_LIST[randi() % Ships.SHIP_LIST.size()]).duplicate()
 		ship.max_hp += multiplier_hp
 		ship.hp = ship.max_hp
+		for w in ship.weapons:
+			if w.has("damage"):
+				w.damage = w.damage * multiplier_dmg
+				
 		ships.append(ship)
 		
 	return ships
 	
-static func generate_fort_composition(size : int, multiplier_hp : float) -> Array:
+static func generate_fort_composition(size : int, multiplier_hp, multiplier_dmg: float) -> Array:
 	var forts = []
 	for i in size:
 		var fort = (Forts.FORT_LIST[randi() % Forts.FORT_LIST.size()]).duplicate()
 		fort.max_hp += multiplier_hp
 		fort.hp = fort.max_hp
+		for w in fort.weapons:
+			if w.has("damage"):
+				w.damage = w.damage * multiplier_dmg
+				
 		forts.append(fort)
 		
 	return forts
@@ -39,23 +47,34 @@ static func generate_missions(size : int) -> Array:
 	var missions = []
 	var mission = TEMPLATE_MISSION.duplicate()
 	var multiplier_hp = 0.0
+	var multiplier_dmg = 1.0
 	for i in size:
 		mission.aggresion += rand_range(0.0, 0.5)
 		if mission.aggresion > 0.99:
 			mission.aggresion = 1.0
 			
 		mission.level += 1
-		mission.maximum_fort += int(rand_range(0,2))
+		mission.maximum_fort += int(rand_range(0,1))
+		if mission.maximum_fort >= 4:
+			mission.maximum_fort = 4
+		
 		mission.maximum_ship += int(rand_range(0,1))
+		if mission.maximum_ship >= 4:
+			mission.maximum_ship = 4
+			
 		mission.hostile_total += int(rand_range(1,4))
-		mission.hostile_ships = generate_ship_composition(int(rand_range(1,4)), multiplier_hp)
-		mission.hostile_forts = generate_fort_composition(int(rand_range(1,4)), multiplier_hp)
+		if mission.hostile_total >= 8:
+			mission.hostile_total = 8
+		
+		mission.hostile_ships = generate_ship_composition(int(rand_range(1,4)), multiplier_hp, multiplier_dmg)
+		mission.hostile_forts = generate_fort_composition(int(rand_range(1,4)), multiplier_hp, multiplier_dmg)
 		mission.hostile_left = mission.hostile_total
 		mission.max_crate += int(rand_range(1,2))
 		mission.mission = "Destroy "+ str(mission.hostile_left) + " Enemy" 
 		
 		missions.append(mission.duplicate())
 		multiplier_hp += round(rand_range(100, 200))
+		multiplier_dmg += 0.05
 		
 	return missions
 	

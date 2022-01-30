@@ -305,11 +305,12 @@ func _on_supply_crate_picked_up(_node, _by):
 		
 	rpc("_spawn_floating_message",message, _node.translation)
 	
-remotesync func _spawn_floating_message(message : String, translation : Vector3):
+remotesync func _spawn_floating_message(message : String, translation : Vector3, color : Color = Color.white):
 	var msg = preload("res://assets/ui/message-3d/message_3d.tscn").instance()
 	add_child(msg)
+	msg.set_color(color)
 	msg.translation = translation
-	msg.translation.y = Ship.DEFAULT_ALTITUDE
+	# msg.translation.y = Ship.DEFAULT_ALTITUDE
 	msg.set_message(message)
 	
 ################################################################
