@@ -5,10 +5,12 @@ signal on_prev_click
 signal on_next_click
 
 onready var _name = $VBoxContainer/CenterContainer/VBoxContainer/message
+onready var _exit_button = $VBoxContainer/Control/CenterContainer/HBoxContainer/exit
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	if get_tree().network_peer:
+		_exit_button.disabled = get_tree().is_network_server()
 	
 func set_spectating_name(nm : String):
 	_name.text = "[ "+ nm +" ]"

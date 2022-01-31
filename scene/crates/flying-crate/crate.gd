@@ -4,7 +4,7 @@ class_name FlyingCrate
 const CONTENT_TYPE_AMMO = "res://scene/crates/flying-crate/ammo_crate.png"
 const CONTENT_TYPE_HP = "res://scene/crates/flying-crate/hp_crate.png"
 const CONTENT_TYPE_CASH = "res://scene/crates/flying-crate/cash_crate.png"
-const CONTENTS = [CONTENT_TYPE_AMMO,CONTENT_TYPE_HP,CONTENT_TYPE_CASH]
+const CONTENTS = [CONTENT_TYPE_AMMO, CONTENT_TYPE_HP, CONTENT_TYPE_CASH]
 
 const MINIMAP_MARKER = "weapon"
 var MINIMAP_COLOR = Color.orange

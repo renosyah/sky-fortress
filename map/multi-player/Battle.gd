@@ -257,8 +257,11 @@ remotesync func _despawn_hostile_airship(node_path : NodePath):
 		
 	if get_tree().is_network_server():
 		var qty = rand_range(_min_crate,_max_crate)
-		var content_type = FlyingCrate.CONTENTS[randi() % FlyingCrate.CONTENTS.size()]
-		rpc("_spawn_supply_crate", Network.PLAYER_HOST_ID, "SUPPLY-" + str(GDUUID.v4()) , content_type, qty, _node.translation)
+		var content_types = []
+		for i in qty:
+			content_types.append(FlyingCrate.CONTENTS[randi() % FlyingCrate.CONTENTS.size()])
+		
+		rpc("_spawn_supply_crate", Network.PLAYER_HOST_ID, "SUPPLY-" + str(GDUUID.v4()) , content_types, _node.translation)
 		
 	_node.queue_free()
 	
@@ -273,15 +276,16 @@ remotesync func _remove_all_hostile(holder_paths: Array):
 	
 ################################################################
 # supply crate spawn and manager 
-remotesync func _spawn_supply_crate(player_network_unique_id:int, name:String,content_type : String, max_crate : int, translation : Vector3):
-	for i in max_crate:
+remotesync func _spawn_supply_crate(player_network_unique_id:int, name:String,content_types : Array, translation : Vector3):
+	var pos = 0
+	for content_type in content_types:
 		var crate = preload("res://scene/crates/flying-crate/crate.tscn").instance()
 		crate.tag_color = Color.orange
 		crate.translation = Vector3(rand_range(-5.0, 5.0), 0.0, rand_range(-5.0, 5.0)) + translation
 		crate.translation.y = 2.0
 		crate.owner_id = HOSTILE_SIDE
 		crate.side = HOSTILE_SIDE
-		crate.name = name +"-"+ str(i)
+		crate.name = name +"-"+ str(pos)
 		crate.content_type = content_type
 		crate.set_network_master(player_network_unique_id)
 		add_child(crate)
@@ -289,6 +293,7 @@ remotesync func _spawn_supply_crate(player_network_unique_id:int, name:String,co
 		crate.connect("on_pickup", self, "_on_supply_crate_picked_up")
 		
 		add_minimap_object(crate.get_path())
+		pos += 1
 	
 func _on_supply_crate_picked_up(_node, _by):
 	if not get_tree().is_network_server():
@@ -315,9 +320,8 @@ func _on_supply_crate_picked_up(_node, _by):
 	rpc("_spawn_floating_message",message, _node.translation)
 	
 remotesync func _cash_pickup(_player_id, _amount):
-	if Global.player_data.id == _player_id:
+	if _player_id == "" or Global.player_data.id == _player_id:
 		Global.player_data.cash += _amount
-		cash_obtain(_amount)
 		
 func cash_obtain(_amount):
 	pass

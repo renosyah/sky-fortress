@@ -29,7 +29,7 @@ func _ready():
 	
 	missions = Global.mp_battle_data.missions
 	_ui.update_objective(Global.mp_battle_data, missions[pos_mission])
-	_ui.display_mission_objective(Global.mp_battle_data.name, Global.mp_battle_data.date)
+	_ui.display_mission_objective(Global.mp_battle_data.name, Global.mp_battle_data.date, "")
 	
 	.init_connection_watcher()
 	.spawn_players(_player_holder.get_path(), _targeting_guide_holder.get_path(), _ui.get_path())
@@ -216,9 +216,15 @@ func change_mission():
 	_max_crate = mission.max_crate
 	_min_cash = mission.min_cash
 	_max_cash = mission.max_cash
-
+	
+	var reward_message = ""
+	if pos_mission > 0:
+		reward_message = "Reward : $" +str(_max_cash)
+		total_cash_collected += _max_cash
+		rpc("_cash_pickup", "", _max_cash)
+	
 	_ui.update_objective(Global.mp_battle_data, mission)
-	_ui.display_mission_objective("Level " + str(mission.level), mission.mission)
+	_ui.display_mission_objective("Level " + str(mission.level), mission.mission ,reward_message)
 	pos_mission += 1
 	
 func on_victory():
@@ -239,7 +245,7 @@ func on_lose():
 	_event_timer.stop()
 	rpc("_remove_all_hostile" , [_bot_holder.get_path(), _fort_holder.get_path()])
 	_ui.display_mission_result({
-			is_win = true,
+			is_win = false,
 			total_airship_destroyed = total_airship_destroyed,
 			total_fort_destroyed = total_fort_destroyed,
 			total_cash_collected = total_cash_collected
@@ -260,7 +266,8 @@ func _on_enemy_fort_on_destroyed(_node):
 		_ui.update_objective(Global.mp_battle_data, mission)
 		_ui.display_mission_objective(
 			"Enemy Fort Destroy",
-			str(mission.hostile_left) + " Remaining!" if mission.hostile_left > 0 else "Objective Completed!"
+			str(mission.hostile_left) + " Remaining!" if mission.hostile_left > 0 else "Objective Completed!",
+			""
 		)
 	
 func _on_enemy_ship_on_destroyed(_node):
@@ -276,7 +283,8 @@ func _on_enemy_ship_on_destroyed(_node):
 		_ui.update_objective(Global.mp_battle_data, mission)
 		_ui.display_mission_objective(
 			"Enemy Airship Destroy",
-			str(mission.hostile_left) + " Remaining!" if mission.hostile_left > 0 else "Objective Completed!"
+			str(mission.hostile_left) + " Remaining!" if mission.hostile_left > 0 else "Objective Completed!",
+			""
 		)
 		
 func cash_obtain(_amount):

@@ -147,6 +147,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="reward" type="Label" parent="CanvasLayer/Control2/Control/mid/mission"]
+modulate = Color( 0.129412, 0.756863, 0, 1 )
+margin_top = 76.0
+margin_right = 500.0
+margin_bottom = 104.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 5
+custom_fonts/font = ExtResource( 7 )
+text = "kill all enemy"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="right" type="VBoxContainer" parent="CanvasLayer/Control2/Control"]
 margin_left = 937.0
 margin_right = 1366.0

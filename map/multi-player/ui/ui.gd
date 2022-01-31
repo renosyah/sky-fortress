@@ -24,6 +24,7 @@ onready var _resultscreen = $CanvasLayer/Control2/resultscreen
 onready var _mission_tab = $CanvasLayer/Control2/Control/mid/mission
 onready var _mission_label = $CanvasLayer/Control2/Control/mid/mission/level
 onready var _mission_message = $CanvasLayer/Control2/Control/mid/mission/message
+onready var _miision_reward = $CanvasLayer/Control2/Control/mid/mission/reward
 
 onready var _objective_tab = $CanvasLayer/Control2/objective_tab
 
@@ -47,19 +48,20 @@ func remove_minimap_object(object : Spatial):
 func set_spectating_name(nm : String):
 	_spectatescreen.set_spectating_name(nm)
 	
-remotesync func _display_mission_objective(level, message : String):
+remotesync func _display_mission_objective(level, message, reward : String):
 	_mission_label.text = level
 	_mission_message.text = message
+	_miision_reward.text = reward
 	_mission_tab.modulate.a = 1.0
 	_tween.interpolate_property(_mission_tab, "modulate:a", 1.0, 0.0, 7.0)
 	_tween.start()
 	
-func display_mission_objective(level, message : String):
+func display_mission_objective(level, message, reward : String):
 	if get_tree().network_peer:
-		rpc("_display_mission_objective", level, message)
+		rpc("_display_mission_objective", level, message, reward)
 		return
 		
-	_display_mission_objective(level, message)
+	_display_mission_objective(level, message, reward)
 	
 remotesync func _update_objective(operation : Dictionary, current_mission : Dictionary):
 	_objective_tab.update_objective(operation, current_mission)
