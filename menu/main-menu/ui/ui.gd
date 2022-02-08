@@ -23,6 +23,7 @@ onready var _ship_info = $CanvasLayer/Control/VBoxContainer/HBoxContainer/Contro
 onready var _mission_info = $CanvasLayer/Control/VBoxContainer/HBoxContainer/Control/mission_info
 
 onready var _mission_browser = $CanvasLayer/Control/mission_browser
+onready var _shop_browser = $CanvasLayer/Control/shop
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -166,7 +167,30 @@ func _on_close_exeption_message_pressed():
 	_exeption_message.visible = false
 	
 func _on_shop_button_pressed():
-	pass # Replace with function body.
+	_shop_browser.make_ready()
+	_shop_browser.visible = true
+	
+func _on_shop_on_repaired(_ok):
+	if not _ok:
+		_exeption_message.visible = true
+		_exeption_message_label.text = "Insufficient funds!"
+		return
+		
+	Global.save_player_selected_ship()
+		
+	_cash.text = "$" + str(Global.player_data.cash)
+	show_ship_condition_message("Repair Required!", not Global.is_ship_ok())
+	
+func _on_shop_on_resupply(_ok):
+	if not _ok:
+		_exeption_message.visible = true
+		_exeption_message_label.text = "Insufficient funds!"
+		return
+		
+	Global.save_player_selected_ship()
+	
+	_cash.text = "$" + str(Global.player_data.cash)
+	_on_list_panel_on_item_press(Global.selected_ship)
 	
 func _on_mission_button_pressed():
 	_mission_browser.display_missions(Global.mission_list)
@@ -183,6 +207,12 @@ func _on_mission_browser_accept_mission(_mission):
 	_mission_browser.display_missions(Global.mission_list)
 	
 	_mission_browser.visible = false
+
+
+
+
+
+
 
 
 

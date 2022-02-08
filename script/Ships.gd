@@ -17,7 +17,8 @@ const SHIP_LIST = [
 		cruise_speed = 2.0,
 		turn_speed = 0.5,
 		weapons = [Weapons.FIGHTER, Weapons.INTERCEPTOR, Weapons.BOMBER, Weapons.AUTO_CANNON],
-		skin = ""
+		skin = "",
+		repair_cost_per_hp = 6
 	},
 	{
 		id = "s-2",
@@ -34,7 +35,8 @@ const SHIP_LIST = [
 		cruise_speed = 3.0,
 		turn_speed = 1.0,
 		weapons = [Weapons.GUIDED_TORPEDO,Weapons.BOMB,Weapons.AIR_MINE,Weapons.AUTO_CANNON],
-		skin = ""
+		skin = "",
+		repair_cost_per_hp = 7
 	},
 	{
 		id = "s-3",
@@ -51,6 +53,7 @@ const SHIP_LIST = [
 		cruise_speed = 4.0,
 		turn_speed = 1.5,
 		weapons = [Weapons.HEAT_SEAKING_TORPEDO, Weapons.AUTO_CANNON],
-		skin = ""
+		skin = "",
+		repair_cost_per_hp = 4
 	}
 ]

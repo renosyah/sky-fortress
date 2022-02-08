@@ -26,6 +26,7 @@ const HEAT_SEAKING_TORPEDO = {
 	max_range = 70.0,
 	ammo = 45,
 	max_ammo = 45,
+	ammo_cost = 70,
 	can_fire = false
 }
 const AUTO_CANNON = {
@@ -41,6 +42,7 @@ const AUTO_CANNON = {
 	max_range = 40.0,
 	ammo = 450,
 	max_ammo = 450,
+	ammo_cost = 3,
 	can_fire = false
 }
 
@@ -63,6 +65,7 @@ const FIGHTER = {
 	max_range = 90.0,
 	ammo = 4,
 	max_ammo = 4,
+	ammo_cost = 120,
 	can_fire = false
 }
 
@@ -85,6 +88,7 @@ const BOMBER = {
 	max_range = 120.0,
 	ammo = 2,
 	max_ammo = 2,
+	ammo_cost = 180,
 	can_fire = false
 }
 const INTERCEPTOR = {
@@ -106,6 +110,7 @@ const INTERCEPTOR = {
 	max_range = 130.0,
 	ammo = 2,
 	max_ammo = 2,
+	ammo_cost = 210,
 	can_fire = false
 }
 const GUIDED_TORPEDO = {
@@ -121,6 +126,7 @@ const GUIDED_TORPEDO = {
 	max_range = 70.0,
 	ammo = 25,
 	max_ammo = 25,
+	ammo_cost = 260,
 	can_fire = true
 }
 const AIR_MINE = {
@@ -136,6 +142,7 @@ const AIR_MINE = {
 	max_range = 900.0,
 	ammo = 5,
 	max_ammo = 5,
+	ammo_cost = 45,
 	can_fire = true
 }
 const BOMB = {
@@ -151,6 +158,7 @@ const BOMB = {
 	max_range = 900.0,
 	ammo = 50,
 	max_ammo = 50,
+	ammo_cost = 12,
 	can_fire = true
 }
 

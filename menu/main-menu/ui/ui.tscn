@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://assets/ui/button/bg.png" type="Texture" id=1]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://assets/ui/ship-info/ship_info.tscn" type="PackedScene" id=11]
 [ext_resource path="res://assets/ui/mission-info/mission_info.tscn" type="PackedScene" id=12]
 [ext_resource path="res://assets/ui/mission-browser/mission_browser.tscn" type="PackedScene" id=13]
+[ext_resource path="res://assets/ui/shop/shop.tscn" type="PackedScene" id=14]
 
 [node name="ui" type="Control"]
 anchor_right = 1.0
@@ -364,6 +365,9 @@ margin_bottom = 133.0
 [node name="mission_browser" parent="CanvasLayer/Control" instance=ExtResource( 13 )]
 visible = false
 
+[node name="shop" parent="CanvasLayer/Control" instance=ExtResource( 14 )]
+visible = false
+
 [node name="server_browser" parent="CanvasLayer/Control" instance=ExtResource( 9 )]
 visible = false
 
@@ -647,6 +651,8 @@ rect_min_size = Vector2( 0, 10 )
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer/Control2/shop_button/shop_button" to="." method="_on_shop_button_pressed"]
 [connection signal="on_item_press" from="CanvasLayer/Control/VBoxContainer/PanelContainer2/list_panel" to="." method="_on_list_panel_on_item_press"]
 [connection signal="accept_mission" from="CanvasLayer/Control/mission_browser" to="." method="_on_mission_browser_accept_mission"]
+[connection signal="on_repaired" from="CanvasLayer/Control/shop" to="." method="_on_shop_on_repaired"]
+[connection signal="on_resupply" from="CanvasLayer/Control/shop" to="." method="_on_shop_on_resupply"]
 [connection signal="on_join" from="CanvasLayer/Control/server_browser" to="." method="_on_server_browser_on_join"]
 [connection signal="on_continue" from="CanvasLayer/Control/input_name" to="." method="_on_input_name_on_continue"]
 [connection signal="pressed" from="CanvasLayer/Control/battle_result/Panel/VBoxContainer/HBoxContainer/receive_reward_confirm" to="." method="_on_receive_reward_confirm_pressed"]

@@ -27,13 +27,11 @@ func spawn_selected_ship(ship_data):
 	_ui.show_ship_condition_message("Repair Required!", not Global.is_ship_ok())
 	
 func _on_ui_on_list_panel_on_item_press(ship_data):
-	var _selected_ship = ship_data.duplicate()
-	_selected_ship.owner_id = Global.player_data.id
-	_selected_ship.player_name = Global.player_data.name
-	
-	Global.selected_ship = _selected_ship
-	Global.save_player_selected_ship()
-	spawn_selected_ship(Global.selected_ship)
+	if ship_data != Global.selected_ship:
+		Global.selected_ship = ship_data
+		Global.save_player_selected_ship()
+		
+	spawn_selected_ship(ship_data)
 
 
 

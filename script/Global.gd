@@ -1,6 +1,6 @@
 extends Node
 
-const PERSISTEN_SAVE = false
+const PERSISTEN_SAVE = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
