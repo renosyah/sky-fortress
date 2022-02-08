@@ -12,6 +12,8 @@ onready var _airship_destroy = $VBoxContainer/CenterContainer/VBoxContainer/VBox
 onready var _fort_destroy = $VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer2/fort_destroy
 onready var _cash_collected = $VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer2/HBoxContainer/cash_collected
 
+onready var _button_close = $VBoxContainer/HBoxContainer/exit
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.

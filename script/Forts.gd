@@ -12,7 +12,7 @@ const FORT_LIST = [
 		max_hp = 500,
 		hp = 500,
 		firing_delay = 2.0,
-		weapons = [Weapons.FORT_AUTO_CANNON],
+		weapons = [Weapons.AUTO_CANNON],
 		skin = ""
 	},
 	{
@@ -25,7 +25,7 @@ const FORT_LIST = [
 		max_hp = 250,
 		hp = 250,
 		firing_delay = 12.0,
-		weapons = [Weapons.AIRSTRIP_FIGHTER],
+		weapons = [Weapons.FIGHTER],
 		skin = ""
 	},
 	{

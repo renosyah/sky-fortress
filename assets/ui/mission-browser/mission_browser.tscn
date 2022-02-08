@@ -1,0 +1,117 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_48.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_16.tres" type="DynamicFont" id=3]
+[ext_resource path="res://assets/ui/mission-browser/mission_browser.gd" type="Script" id=4]
+
+[node name="mission_browser" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.862745 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+margin_right = 1366.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 0, 80 )
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1359.0
+margin_bottom = 73.0
+
+[node name="btn" type="MarginContainer" parent="VBoxContainer/PanelContainer/HBoxContainer"]
+margin_right = 100.0
+margin_bottom = 66.0
+rect_min_size = Vector2( 100, 0 )
+
+[node name="exit" type="Button" parent="VBoxContainer/PanelContainer/HBoxContainer/btn"]
+margin_right = 100.0
+margin_bottom = 66.0
+rect_min_size = Vector2( 100, 50 )
+
+[node name="Label" type="Label" parent="VBoxContainer/PanelContainer/HBoxContainer/btn"]
+margin_top = 19.0
+margin_right = 100.0
+margin_bottom = 47.0
+custom_fonts/font = ExtResource( 3 )
+text = "Back"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="margin" type="CenterContainer" parent="VBoxContainer/PanelContainer/HBoxContainer"]
+margin_left = 104.0
+margin_right = 1248.0
+margin_bottom = 66.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/PanelContainer/HBoxContainer/margin"]
+margin_left = 462.0
+margin_top = 3.0
+margin_right = 681.0
+margin_bottom = 63.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+text = "Missions"
+align = 1
+valign = 1
+
+[node name="margin2" type="MarginContainer" parent="VBoxContainer/PanelContainer/HBoxContainer"]
+margin_left = 1252.0
+margin_right = 1352.0
+margin_bottom = 66.0
+rect_min_size = Vector2( 100, 0 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+visible = false
+margin_top = 84.0
+margin_right = 1366.0
+margin_bottom = 440.0
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+margin_right = 1366.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_top = 84.0
+margin_right = 1366.0
+margin_bottom = 800.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_fonts/font = ExtResource( 2 )
+text = "
+
+No Mission Found!
+
+"
+align = 1
+
+[connection signal="pressed" from="VBoxContainer/PanelContainer/HBoxContainer/btn/exit" to="." method="_on_exit_pressed"]

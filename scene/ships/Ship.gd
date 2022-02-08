@@ -9,7 +9,7 @@ signal on_click(_node)
 signal on_move(_node, _translation)
 signal on_ready(_node)
 signal on_take_damage(_node, damage, hp)
-signal on_spawning_weapon(_node)
+signal on_spawning_weapon(_node, _weapon)
 signal on_falling(_node)
 signal on_destroyed(_node)
 
@@ -137,6 +137,23 @@ func set_data(_ship_data):
 		
 	set_skin(_ship_data.skin)
 	
+func get_data() -> Dictionary:
+	return {
+		id = "",
+		name = "",
+		icon = "",
+		scene = "",
+		owner_id = owner_id,
+		player_name = owner_name,
+		side = side,
+		max_hp = max_hp,
+		hp = hp,
+		cruise_speed = cruise_speed,
+		turn_speed = turn_speed,
+		weapons = weapons.duplicate(true),
+		skin = ""
+	}
+	
 func set_hp_bar_color(_color : Color):
 	tag_color = _color
 	
@@ -232,7 +249,7 @@ func _launch(weapon_index : int, name : String, _aim_point : Vector3, _guided_po
 		projectile.lauching_at(guided_point)
 		play_sound("res://assets/sounds/cant_click.wav")
 		
-		emit_signal("on_spawning_weapon", projectile)
+		emit_signal("on_spawning_weapon", self, projectile)
 		
 	if weapon.type == Weapons.TYPE_LOCK_ON and is_instance_valid(lock_on_point):
 		var distance_to_target = translation.distance_to(lock_on_point.translation)
@@ -246,7 +263,7 @@ func _launch(weapon_index : int, name : String, _aim_point : Vector3, _guided_po
 		projectile.lauching_at(lock_on_point)
 		play_sound("res://assets/sounds/cant_click.wav")
 		
-		emit_signal("on_spawning_weapon", projectile)
+		emit_signal("on_spawning_weapon", self, projectile)
 		
 	if weapon.type == Weapons.TYPE_CONTROLLED and is_instance_valid(lock_on_point):
 		var distance_to_target = translation.distance_to(lock_on_point.translation)
@@ -270,7 +287,7 @@ func _launch(weapon_index : int, name : String, _aim_point : Vector3, _guided_po
 		projectile.lauching_at(lock_on_point)
 		play_sound("res://assets/sounds/cant_click.wav")
 		
-		emit_signal("on_spawning_weapon", projectile)
+		emit_signal("on_spawning_weapon", self, projectile)
 	
 func restock_ammo(weapon_slot : int, ammo_restock : float):
 	if get_tree().network_peer:
@@ -331,7 +348,7 @@ func _process(delta):
 func transform_turning(direction, delta):
 	var new_transform = transform.looking_at(direction, Vector3.UP)
 	transform = transform.interpolate_with(new_transform, turn_speed * delta)
-	
+
 func spawn_explosive_on_destroy():
 	var explosive = preload("res://assets/explosive/explosive.tscn").instance()
 	explosive.connect("on_finish_explode", self , "_on_finish_explode")

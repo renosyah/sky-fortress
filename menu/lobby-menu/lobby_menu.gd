@@ -31,6 +31,8 @@ func _server_player_connected(_player_network_unique_id : int, _player : Diction
 	_server_advertise.serverInfo["name"] = Global.player_data.name
 	_server_advertise.serverInfo["port"] = Global.server.port
 	_server_advertise.serverInfo["public"] = true
+	_server_advertise.serverInfo["player"] = 1
+	_server_advertise.serverInfo["max_player"] = Global.server.max_player
 	
 	_ui.broadcast_host_player_join()
 	
@@ -59,13 +61,10 @@ func _client_player_connected(_player_network_unique_id : int, player : Dictiona
 ################################################################
 func _on_ui_on_exit_click():
 	Network.disconnect_from_server()
-
-
-
-
-
-
-
+	
+func _on_ui_on_player_joined_update():
+	if get_tree().is_network_server():
+		_server_advertise.serverInfo["player"] = _ui.player_joined.size()
 
 
 

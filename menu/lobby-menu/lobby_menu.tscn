@@ -40,3 +40,4 @@ environment = SubResource( 2 )
 script = ExtResource( 4 )
 
 [connection signal="on_exit_click" from="ui" to="." method="_on_ui_on_exit_click"]
+[connection signal="on_player_joined_update" from="ui" to="." method="_on_ui_on_player_joined_update"]

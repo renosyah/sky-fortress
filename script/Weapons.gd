@@ -43,21 +43,7 @@ const AUTO_CANNON = {
 	max_ammo = 450,
 	can_fire = false
 }
-const FORT_AUTO_CANNON = {
-	id = "",
-	name = "40MM",
-	icon = "res://assets/ui/icon/weapon/40mm.png",
-	cool_down = 0.3,
-	damage = 10.0,
-	speed = 15.0,
-	type = TYPE_UNGUIDED,
-	ammo_scene = "res://scene/weapons/un-guided/cannon/cannon.tscn",
-	min_range = 0.0,
-	max_range = 40.0,
-	ammo = 9500,
-	max_ammo = 9500,
-	can_fire = false
-}
+
 const FIGHTER = {
 	id = "",
 	name = "Fighter",
@@ -79,27 +65,7 @@ const FIGHTER = {
 	max_ammo = 4,
 	can_fire = false
 }
-const AIRSTRIP_FIGHTER = {
-	id = "",
-	name = "Fighter",
-	icon = "res://assets/ui/icon/weapon/fighter.png",
-	cool_down = 4,
-	damage = 1.0,
-	speed = 5.2,
-	ammo_restock = 1,
-	ranges = 10.0,
-	fuel = 45.0,
-	accuracy = 0.4,
-	hp = 25,
-	max_hp = 25,
-	type = TYPE_CONTROLLED,
-	ammo_scene = "res://scene/weapons/controlled/fighter/biplane/biplane.tscn",
-	min_range = 5.0,
-	max_range = 90.0,
-	ammo = 2,
-	max_ammo = 2,
-	can_fire = false
-}
+
 const BOMBER = {
 	id = "",
 	name = "Bomber",
@@ -187,24 +153,6 @@ const BOMB = {
 	max_ammo = 50,
 	can_fire = true
 }
-
-const CRUISER_TEMPLATES = [
-	HEAT_SEAKING_TORPEDO,
-	AUTO_CANNON
-]
-const CARRIER_TEMPLATES = [
-	FIGHTER,
-	INTERCEPTOR,
-	BOMBER,
-	AUTO_CANNON
-]
-const BOMBER_TEMPLATES = [
-	GUIDED_TORPEDO,
-	BOMB,
-	AIR_MINE,
-	AUTO_CANNON,
-]
-
 
 
 

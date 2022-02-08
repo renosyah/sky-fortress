@@ -1,6 +1,13 @@
 extends Node
 class_name Missions
 
+const EASY = "EASY"
+const MEDIUM = "MEDIUM"
+const HARD = "HARD"
+const EXTREME = "EXTREME"
+
+const DIFFICULTIES = [EASY, MEDIUM, HARD, EXTREME]
+
 const TEMPLATE_MISSION = {
 	level = 0,
 	mission = "",
@@ -20,7 +27,7 @@ const TEMPLATE_MISSION = {
 static func generate_ship_composition(size : int, multiplier_hp, multiplier_dmg : float) -> Array:
 	var ships = []
 	for i in size:
-		var ship = (Ships.SHIP_LIST[randi() % Ships.SHIP_LIST.size()]).duplicate()
+		var ship = (Ships.SHIP_LIST[randi() % Ships.SHIP_LIST.size()]).duplicate(true)
 		ship.max_hp += multiplier_hp
 		ship.hp = ship.max_hp
 		for w in ship.weapons:
@@ -34,7 +41,7 @@ static func generate_ship_composition(size : int, multiplier_hp, multiplier_dmg 
 static func generate_fort_composition(size : int, multiplier_hp, multiplier_dmg: float) -> Array:
 	var forts = []
 	for i in size:
-		var fort = (Forts.FORT_LIST[randi() % Forts.FORT_LIST.size()]).duplicate()
+		var fort = (Forts.FORT_LIST[randi() % Forts.FORT_LIST.size()]).duplicate(true)
 		fort.max_hp += multiplier_hp
 		fort.hp = fort.max_hp
 		for w in fort.weapons:
@@ -82,14 +89,34 @@ static func generate_missions(size : int) -> Array:
 		
 	return missions
 	
+const OPERATION_NOT_COMMIT = 0
+const OPERATION_SUCCESS = 1
+const OPERATION_FAILED = 2
+
+const SEASONS = ["summer", "winter"]
+
+const DESCRIPTIONS = [
+	"Clear all enemy airship and ground instalation in the area, intel suggest prepare for heavy fight!",
+	"Objective for this operation will be destroy all airship or enemy fort in the area!",
+	"Intel report suggest enemy activity in this area are increasing, go there and destroy all posible hostile!",
+	"This area has very important resources, go there and clear up the area from enemy present!",
+	"Task for this operation, is to destroy posible enemy hostile, beware... enemy present is not something you cant handle with single ship!"
+]
+
 const TEMPLATE_OPERATION = {
+	id = "",
 	name = "",
 	date = "",
+	description = "",
+	season = "summer",
 	missions = [],
-	total_level = 0
+	total_level = 0,
+	difficulty = EASY,
+	status = OPERATION_NOT_COMMIT,
+	is_selected = false
 }
 	
-static func generate_operation() -> Dictionary:
+static func generate_operation(difficulty : String = EASY) -> Dictionary:
 	var time = OS.get_datetime()
 	var nameweekday= ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 	var namemonth= ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -102,14 +129,35 @@ static func generate_operation() -> Dictionary:
 	var second= time["second"] 
 	
 	var operation = TEMPLATE_OPERATION.duplicate()
+	operation.id = "MISSION-" + str(GDUUID.v4())
 	operation.name = "Operation " + RandomNameGenerator.generate()
 	operation.date = "%s, %02d %s %d %02d:%02d:%02d GMT" % [nameweekday[dayofweek], day, namemonth[month-1], year, hour, minute, second]
-	operation.total_level = int(rand_range(3,6))
-	operation.missions = generate_missions(operation.total_level)
+	operation.description = DESCRIPTIONS[randi() % DESCRIPTIONS.size()]
+	operation.status = OPERATION_NOT_COMMIT
+	operation.difficulty = difficulty
+	operation.season = SEASONS[randi() % SEASONS.size()]
 	
+	match operation.difficulty:
+		EASY:
+			operation.total_level = int(rand_range(3,6))
+			operation.missions = generate_missions(operation.total_level)
+		MEDIUM:
+			operation.total_level = int(rand_range(4,7))
+			operation.missions = generate_missions(operation.total_level)
+		HARD:
+			operation.total_level = int(rand_range(6,8))
+			operation.missions = generate_missions(operation.total_level)
+		EXTREME:
+			operation.total_level = int(rand_range(8,10))
+			operation.missions = generate_missions(operation.total_level)
+			
 	return operation
 	
-
+static func get_total_reward(_operation) -> int:
+	var total = 0
+	for i in _operation.missions:
+		total += i.max_cash
+	return total
 
 
 

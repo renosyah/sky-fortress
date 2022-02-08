@@ -23,13 +23,13 @@ func setup():
 		socketUDP = PacketPeerUDP.new()
 		socketUDP.set_broadcast_enabled(true)
 		socketUDP.set_dest_address('255.255.255.255', broadcastPort)
-
+	
 func broadcast():
 	#print('Broadcasting game...')
 	var packetMessage := to_json(serverInfo)
 	var packet := packetMessage.to_ascii()
 	socketUDP.put_packet(packet)
-
+	
 func _exit_tree():
 	broadcastTimer.stop()
 	if socketUDP != null:

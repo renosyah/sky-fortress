@@ -27,15 +27,17 @@ var cash_obtain = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
-	missions = Global.mp_battle_data.missions
-	_ui.update_objective(Global.mp_battle_data, missions[pos_mission])
-	_ui.display_mission_objective(Global.mp_battle_data.name, Global.mp_battle_data.date, "")
+	missions = Global.selected_mission.missions
+	_ui.update_objective(Global.selected_mission, missions[pos_mission])
+	_ui.display_mission_objective(Global.selected_mission.name, Global.selected_mission.date, "")
 	
 	.init_connection_watcher()
 	.spawn_players(_player_holder.get_path(), _targeting_guide_holder.get_path(), _ui.get_path())
 	
 	_ui.set_camera(_camera)
 	_network_tick.start()
+	
+	_terrain.season = Global.selected_mission.season
 	_terrain.generate()
 	
 	emit_signal("player_on_ready", _player)
@@ -74,6 +76,9 @@ func _on_cameraPivot_on_camera_moving(_translation, _zoom):
 	._on_camera_moving(_translation, _zoom)
 	
 func _on_cameraPivot_on_body_enter_aim_sight(_body):
+	if not _aim_mode:
+		return
+		
 	._on_body_enter_aim_sight(_body)
 	
 ################################################################
@@ -133,8 +138,8 @@ func _on_ui_on_exit_click():
 func _on_player_on_falling(_node):
 	._on_player_on_falling(_node)
 	
-	if is_instance_valid(_player.lock_on_point):
-		_player.lock_on_point.highlight(false)
+	if is_instance_valid(_node.lock_on_point):
+		_node.lock_on_point.highlight(false)
 		
 	_camera.translation = _node.translation
 	_spectate_mode = true
@@ -223,7 +228,7 @@ func change_mission():
 		total_cash_collected += _max_cash
 		rpc("_cash_pickup", "", _max_cash)
 	
-	_ui.update_objective(Global.mp_battle_data, mission)
+	_ui.update_objective(Global.selected_mission, mission)
 	_ui.display_mission_objective("Level " + str(mission.level), mission.mission ,reward_message)
 	pos_mission += 1
 	
@@ -238,6 +243,10 @@ func on_victory():
 			total_cash_collected = total_cash_collected
 		}
 	)
+	Global.selected_mission.status = Missions.OPERATION_SUCCESS
+	Global.save_player_selected_mission()
+	Global.update_player_missions(Global.selected_mission)
+	Global.selected_mission = {}
 	.disconnect_from_server()
 	
 func on_lose():
@@ -251,6 +260,10 @@ func on_lose():
 			total_cash_collected = total_cash_collected
 		}
 	)
+	Global.selected_mission.status = Missions.OPERATION_FAILED
+	Global.save_player_selected_mission()
+	Global.update_player_missions(Global.selected_mission)
+	Global.selected_mission = {}
 	.disconnect_from_server()
 	
 func _on_enemy_fort_on_destroyed(_node):
@@ -263,7 +276,7 @@ func _on_enemy_fort_on_destroyed(_node):
 		mission.hostile_left -= 1
 		total_fort_destroyed += 1
 		
-		_ui.update_objective(Global.mp_battle_data, mission)
+		_ui.update_objective(Global.selected_mission, mission)
 		_ui.display_mission_objective(
 			"Enemy Fort Destroy",
 			str(mission.hostile_left) + " Remaining!" if mission.hostile_left > 0 else "Objective Completed!",
@@ -280,7 +293,7 @@ func _on_enemy_ship_on_destroyed(_node):
 		mission.hostile_left -= 1
 		total_airship_destroyed += 1
 		
-		_ui.update_objective(Global.mp_battle_data, mission)
+		_ui.update_objective(Global.selected_mission, mission)
 		_ui.display_mission_objective(
 			"Enemy Airship Destroy",
 			str(mission.hostile_left) + " Remaining!" if mission.hostile_left > 0 else "Objective Completed!",

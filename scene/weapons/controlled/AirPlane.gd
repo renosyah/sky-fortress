@@ -118,7 +118,7 @@ func update_course():
 		while translation.distance_to(_waypoint) < 5.0:
 			_waypoint = Vector3.ONE * rand_range(-12.0, 12.0) + _target.translation
 		
-	_waypoint.y = rand_range(5.0,20.0)
+	_waypoint.y = rand_range(3.0,20.0)
 	
 	
 func spawn_explosive_on_destroy():

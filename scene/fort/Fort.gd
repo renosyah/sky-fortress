@@ -9,7 +9,7 @@ signal on_click(_node)
 signal on_ready(_node)
 signal on_take_damage(_node, damage, hp)
 signal on_weapon_update(_node, _weapon_index, _weapon)
-signal on_spawning_weapon(_node)
+signal on_spawning_weapon(_node, _weapon)
 signal on_destroyed(_node)
 
 # targeting
@@ -205,7 +205,7 @@ func _launch(weapon_index : int, name : String, _aim_point : Vector3, _guided_po
 		projectile.lauching_at(guided_point)
 		play_sound("res://assets/sounds/cant_click.wav")
 		
-		emit_signal("on_spawning_weapon", projectile)
+		emit_signal("on_spawning_weapon", self, projectile)
 		
 	if weapon.type == Weapons.TYPE_LOCK_ON and is_instance_valid(lock_on_point):
 		var distance_to_target = translation.distance_to(lock_on_point.translation)
@@ -219,7 +219,7 @@ func _launch(weapon_index : int, name : String, _aim_point : Vector3, _guided_po
 		projectile.lauching_at(lock_on_point)
 		play_sound("res://assets/sounds/cant_click.wav")
 		
-		emit_signal("on_spawning_weapon", projectile)
+		emit_signal("on_spawning_weapon", self, projectile)
 		
 	if weapon.type == Weapons.TYPE_CONTROLLED and is_instance_valid(lock_on_point):
 		var distance_to_target = translation.distance_to(lock_on_point.translation)
@@ -243,7 +243,7 @@ func _launch(weapon_index : int, name : String, _aim_point : Vector3, _guided_po
 		projectile.lauching_at(lock_on_point)
 		play_sound("res://assets/sounds/cant_click.wav")
 		
-		emit_signal("on_spawning_weapon", projectile)
+		emit_signal("on_spawning_weapon", self, projectile)
 	
 func restock_ammo(weapon_slot : int, ammo_restock : float):
 	if get_tree().network_peer:

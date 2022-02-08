@@ -181,6 +181,7 @@ func spawn_players(_player_holder_path : NodePath, _targeting_guide_holder_path 
 	_player.connect("on_falling",_ui,"_on_player_on_falling")
 	_player.connect("on_spawning_weapon" ,self,"_on_airship_on_spawning_weapon")
 	_player.connect("on_take_damage",_ui,"_on_player_on_take_damage")
+	_player.connect("on_take_damage",self,"_on_player_on_take_damage")
 	
 	if get_tree().is_network_server():
 		_airborne_targets.append_array(_player_holder.get_children())
@@ -321,7 +322,12 @@ func _on_supply_crate_picked_up(_node, _by):
 	
 remotesync func _cash_pickup(_player_id, _amount):
 	if _player_id == "" or Global.player_data.id == _player_id:
+		if not Global.mp_battle_result.has("cash"):
+			Global.mp_battle_result["cash"] = 0
+			
+		Global.mp_battle_result["cash"] += _amount
 		Global.player_data.cash += _amount
+		Global.save_player_data()
 		
 func cash_obtain(_amount):
 	pass
@@ -342,12 +348,12 @@ func _on_enemy_click(_node):
 		
 	_on_body_enter_aim_sight(_node)
 	
-func _on_enemy_on_spawning_weapon(_node):
-	if not _node.has_method("take_damage"):
+func _on_enemy_on_spawning_weapon(_node, _weapon):
+	if not _weapon.has_method("take_damage"):
 		return
 		
-	add_minimap_object(_node.get_path())
-	_node.connect("on_click", self ,"_on_enemy_click")
+	add_minimap_object(_weapon.get_path())
+	_weapon.connect("on_click", self ,"_on_enemy_click")
 	
 func _on_enemy_fort_on_destroyed(_node):
 	_on_enemy_on_destroyed(_node)
@@ -359,22 +365,31 @@ func _on_enemy_on_destroyed(_node):
 	if get_tree().is_network_server():
 		rpc("_despawn_hostile_airship", _node.get_path())
 	
-func _on_airship_on_spawning_weapon(_node):
-	if _node.side == HOSTILE_SIDE:
+func _on_airship_on_spawning_weapon(_node, _weapon):
+	_update_selected_ship_condition(_node.get_data())
+	
+	if not _weapon.has_method("take_damage"):
 		return
 		
-	if not _node.has_method("take_damage"):
-		return
-		
-	add_minimap_object(_node.get_path())
-	_airborne_targets.append(_node)
-		
+	add_minimap_object(_weapon.get_path())
+	_airborne_targets.append( _weapon)
+
+func _on_player_on_take_damage(_node, damage, hp):
+	_update_selected_ship_condition(_node.get_data())
+	
 func _on_player_on_falling(_node):
 	if get_tree().is_network_server():
 		_airborne_targets.erase(_node)
 	
 func _on_player_on_destroyed(_node):
+	_update_selected_ship_condition(_node.get_data())
 	remove_minimap_object(_node.get_path())
+	
+func _update_selected_ship_condition(_updated_ship_condition):
+	Global.selected_ship.hp = _updated_ship_condition.hp
+	Global.selected_ship.weapons = _updated_ship_condition.weapons
+	Global.update_player_ships(Global.selected_ship)
+	Global.save_player_selected_ship()
 	
 ################################################################
 # player aim system

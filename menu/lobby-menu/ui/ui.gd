@@ -2,6 +2,7 @@ extends Control
 
 signal on_exit_click()
 signal on_battle_click()
+signal on_player_joined_update()
 
 onready var _battle_btn_layout = $CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer
 onready var _player_slots = $CanvasLayer/Control/VBoxContainer/HBoxContainer/player_slot/VBoxContainer/ScrollContainer/player_slots
@@ -61,6 +62,8 @@ func fill_player_slot():
 		item.data = { name = i.name, icon = i.icon}
 		_player_slots.add_child(item)
 		item.display_item()
+		
+	emit_signal("on_player_joined_update")
 		
 func _on_exit_pressed():
 	if not get_tree().is_network_server():

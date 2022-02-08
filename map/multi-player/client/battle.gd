@@ -16,12 +16,15 @@ func _ready():
 	
 	_ui.set_camera(_camera)
 	_network_tick.start()
-	rpc_id(Network.PLAYER_HOST_ID,"_request_terrain_data", Global.client.network_unique_id)
+	request_terrain_data()
 	
 	emit_signal("player_on_ready", _player)
 	
 ################################################################
 # client grpc functions
+func request_terrain_data():
+	rpc_id(Network.PLAYER_HOST_ID,"_request_terrain_data", Global.client.network_unique_id)
+	
 remote func _receive_terrain_data(unused_translations :Array,feature_translations :Array,features :Array,season : String):
 	if get_tree().is_network_server():
 		return
@@ -45,6 +48,7 @@ func _on_terrain_on_ground_clicked(_translation):
 		
 	_cursor.translation = _translation
 	_cursor.show()
+	
 	rpc_id(Network.PLAYER_HOST_ID,"_move", _player.get_path(),_translation)
 	
 func _on_player_on_move(_node, _translation):
@@ -55,6 +59,9 @@ func _on_cameraPivot_on_camera_moving(_translation, _zoom):
 	._on_camera_moving(_translation, _zoom)
 	
 func _on_cameraPivot_on_body_enter_aim_sight(_body):
+	if not _aim_mode:
+		return
+		
 	._on_body_enter_aim_sight(_body)
 	
 ################################################################
@@ -115,8 +122,8 @@ func _on_ui_on_exit_click():
 func _on_player_on_falling(_node):
 	._on_player_on_falling(_node)
 	
-	if is_instance_valid(_player.lock_on_point):
-		_player.lock_on_point.highlight(false)
+	if is_instance_valid(_node.lock_on_point):
+		_node.lock_on_point.highlight(false)
 		
 	_camera.translation = _node.translation
 	_spectate_mode = true

@@ -33,6 +33,7 @@ remotesync func _take_damage(damage):
 remotesync func _falling():
 	._falling()
 	_highlight.visible = false
+	_tag.visible = false
 	var _down = Vector3(translation.x, 1.0, translation.y)
 	look_at(_down, Vector3.UP)
 	

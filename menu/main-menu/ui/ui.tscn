@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/ui/button/bg.png" type="Texture" id=1]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=2]
@@ -10,6 +10,9 @@
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_16.tres" type="DynamicFont" id=8]
 [ext_resource path="res://assets/ui/server-browser/server_browser.tscn" type="PackedScene" id=9]
 [ext_resource path="res://assets/ui/input-name/input_name.tscn" type="PackedScene" id=10]
+[ext_resource path="res://assets/ui/ship-info/ship_info.tscn" type="PackedScene" id=11]
+[ext_resource path="res://assets/ui/mission-info/mission_info.tscn" type="PackedScene" id=12]
+[ext_resource path="res://assets/ui/mission-browser/mission_browser.tscn" type="PackedScene" id=13]
 
 [node name="ui" type="Control"]
 anchor_right = 1.0
@@ -214,22 +217,59 @@ margin_right = 1366.0
 margin_bottom = 656.0
 mouse_filter = 2
 size_flags_vertical = 3
+alignment = 1
 
 [node name="Control" type="Control" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
-margin_right = 452.0
+margin_right = 329.0
 margin_bottom = 572.0
 mouse_filter = 2
 size_flags_horizontal = 3
 
+[node name="mission_info" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/Control" instance=ExtResource( 12 )]
+margin_bottom = -135.0
+
+[node name="mission_button" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/Control"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = -83.0
+margin_right = 220.0
+margin_bottom = -13.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mission_button" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/Control/mission_button"]
+modulate = Color( 0.0470588, 0.615686, 0.705882, 1 )
+margin_right = 200.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 200, 50 )
+texture_normal = ExtResource( 1 )
+texture_pressed = ExtResource( 3 )
+expand = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/Control/mission_button"]
+margin_top = 15.0
+margin_right = 200.0
+margin_bottom = 55.0
+custom_fonts/font = ExtResource( 2 )
+text = "Mission"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
-margin_left = 456.0
-margin_right = 909.0
+margin_left = 333.0
+margin_right = 1033.0
 margin_bottom = 572.0
+rect_min_size = Vector2( 700, 0 )
 mouse_filter = 2
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/VBoxContainer"]
-margin_right = 453.0
+margin_right = 700.0
 margin_bottom = 60.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 7 )
@@ -239,22 +279,74 @@ valign = 1
 
 [node name="Control" type="Control" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/VBoxContainer"]
 margin_top = 64.0
-margin_right = 453.0
+margin_right = 700.0
 margin_bottom = 409.0
 mouse_filter = 2
 size_flags_vertical = 3
 
+[node name="condition" type="Label" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/VBoxContainer/Control"]
+visible = false
+modulate = Color( 0.823529, 0, 0, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 7 )
+text = "Repair
+Required!"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="weapon_list" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource( 6 )]
 margin_top = 413.0
-margin_right = 453.0
+margin_right = 700.0
 margin_bottom = 572.0
 
 [node name="Control2" type="Control" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
-margin_left = 913.0
+margin_left = 1037.0
 margin_right = 1366.0
 margin_bottom = 572.0
 mouse_filter = 2
 size_flags_horizontal = 3
+
+[node name="ship_info" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/Control2" instance=ExtResource( 11 )]
+margin_bottom = -150.0
+
+[node name="shop_button" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/Control2"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -224.0
+margin_top = -88.0
+margin_right = -24.0
+margin_bottom = -18.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="shop_button" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/Control2/shop_button"]
+modulate = Color( 0.72549, 0.427451, 0, 1 )
+margin_right = 200.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 200, 50 )
+texture_normal = ExtResource( 1 )
+texture_pressed = ExtResource( 3 )
+expand = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/Control2/shop_button"]
+margin_top = 15.0
+margin_right = 200.0
+margin_bottom = 55.0
+custom_fonts/font = ExtResource( 2 )
+text = "Shop"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/Control/VBoxContainer"]
 self_modulate = Color( 1, 1, 1, 0.694118 )
@@ -269,16 +361,293 @@ margin_top = 7.0
 margin_right = 1359.0
 margin_bottom = 133.0
 
+[node name="mission_browser" parent="CanvasLayer/Control" instance=ExtResource( 13 )]
+visible = false
+
 [node name="server_browser" parent="CanvasLayer/Control" instance=ExtResource( 9 )]
 visible = false
 
 [node name="input_name" parent="CanvasLayer/Control" instance=ExtResource( 10 )]
 visible = false
 
+[node name="battle_result" type="Control" parent="CanvasLayer/Control"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/battle_result"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.603922 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="PanelContainer" parent="CanvasLayer/Control/battle_result"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -334.5
+margin_top = -215.0
+margin_right = 334.5
+margin_bottom = 215.0
+rect_min_size = Vector2( 200, 200 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/battle_result/Panel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 662.0
+margin_bottom = 423.0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/Control/battle_result/Panel/VBoxContainer"]
+margin_right = 655.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 100 )
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/battle_result/Panel/VBoxContainer/HBoxContainer3"]
+margin_right = 80.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 80, 0 )
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/battle_result/Panel/VBoxContainer/HBoxContainer3"]
+margin_left = 84.0
+margin_top = 20.0
+margin_right = 571.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 7 )
+text = "Battle Result"
+align = 1
+valign = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/battle_result/Panel/VBoxContainer/HBoxContainer3"]
+margin_left = 575.0
+margin_right = 655.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 80, 0 )
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Control/battle_result/Panel/VBoxContainer"]
+margin_top = 104.0
+margin_right = 655.0
+margin_bottom = 254.0
+rect_min_size = Vector2( 500, 150 )
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/battle_result/Panel/VBoxContainer/HBoxContainer2"]
+margin_right = 10.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/battle_result/Panel/VBoxContainer/HBoxContainer2"]
+margin_left = 14.0
+margin_top = 55.0
+margin_right = 325.0
+margin_bottom = 95.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "Cash : "
+align = 2
+valign = 1
+
+[node name="cash" type="Label" parent="CanvasLayer/Control/battle_result/Panel/VBoxContainer/HBoxContainer2"]
+modulate = Color( 0.192157, 0.792157, 0, 1 )
+margin_left = 329.0
+margin_top = 55.0
+margin_right = 641.0
+margin_bottom = 95.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "$ 0"
+valign = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/battle_result/Panel/VBoxContainer/HBoxContainer2"]
+margin_left = 645.0
+margin_right = 655.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/battle_result/Panel/VBoxContainer"]
+margin_top = 258.0
+margin_right = 655.0
+margin_bottom = 298.0
+rect_min_size = Vector2( 0, 40 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/battle_result/Panel/VBoxContainer"]
+margin_top = 302.0
+margin_right = 655.0
+margin_bottom = 402.0
+rect_min_size = Vector2( 0, 100 )
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/battle_result/Panel/VBoxContainer/HBoxContainer"]
+margin_right = 10.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="receive_reward_confirm" type="Button" parent="CanvasLayer/Control/battle_result/Panel/VBoxContainer/HBoxContainer"]
+margin_left = 14.0
+margin_right = 641.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 80, 0 )
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 7 )
+text = "Continue"
+
+[node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/Control/battle_result/Panel/VBoxContainer/HBoxContainer"]
+margin_left = 645.0
+margin_right = 655.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/battle_result/Panel/VBoxContainer"]
+margin_top = 406.0
+margin_right = 655.0
+margin_bottom = 416.0
+rect_min_size = Vector2( 0, 10 )
+
+[node name="exception_message" type="Control" parent="CanvasLayer/Control"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/exception_message"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.603922 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="PanelContainer" parent="CanvasLayer/Control/exception_message"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -334.5
+margin_top = -215.0
+margin_right = 334.5
+margin_bottom = 215.0
+rect_min_size = Vector2( 200, 200 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/exception_message/Panel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 662.0
+margin_bottom = 423.0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/Control/exception_message/Panel/VBoxContainer"]
+margin_right = 655.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 100 )
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/exception_message/Panel/VBoxContainer/HBoxContainer3"]
+margin_right = 80.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 80, 0 )
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/exception_message/Panel/VBoxContainer/HBoxContainer3"]
+margin_left = 84.0
+margin_top = 20.0
+margin_right = 571.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 7 )
+text = "Attention!"
+align = 1
+valign = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/exception_message/Panel/VBoxContainer/HBoxContainer3"]
+margin_left = 575.0
+margin_right = 655.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 80, 0 )
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Control/exception_message/Panel/VBoxContainer"]
+margin_top = 104.0
+margin_right = 655.0
+margin_bottom = 254.0
+rect_min_size = Vector2( 500, 150 )
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/exception_message/Panel/VBoxContainer/HBoxContainer2"]
+margin_right = 10.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="message" type="Label" parent="CanvasLayer/Control/exception_message/Panel/VBoxContainer/HBoxContainer2"]
+margin_left = 14.0
+margin_top = 55.0
+margin_right = 641.0
+margin_bottom = 95.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "..."
+align = 1
+valign = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/exception_message/Panel/VBoxContainer/HBoxContainer2"]
+margin_left = 645.0
+margin_right = 655.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/exception_message/Panel/VBoxContainer"]
+margin_top = 258.0
+margin_right = 655.0
+margin_bottom = 298.0
+rect_min_size = Vector2( 0, 40 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/exception_message/Panel/VBoxContainer"]
+margin_top = 302.0
+margin_right = 655.0
+margin_bottom = 402.0
+rect_min_size = Vector2( 0, 100 )
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/exception_message/Panel/VBoxContainer/HBoxContainer"]
+margin_right = 10.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="close_exeption_message" type="Button" parent="CanvasLayer/Control/exception_message/Panel/VBoxContainer/HBoxContainer"]
+margin_left = 14.0
+margin_right = 641.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 80, 0 )
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 7 )
+text = "Close"
+
+[node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/Control/exception_message/Panel/VBoxContainer/HBoxContainer"]
+margin_left = 645.0
+margin_right = 655.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/exception_message/Panel/VBoxContainer"]
+margin_top = 406.0
+margin_right = 655.0
+margin_bottom = 416.0
+rect_min_size = Vector2( 0, 10 )
+
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/MarginContainer4/name_button/change_player_name" to="." method="_on_change_player_name_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/HBoxContainer/host_button2/host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/HBoxContainer/battle_button/battle_button" to="." method="_on_battle_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/PanelContainer/HBoxContainer/CenterContainer/HBoxContainer/join_button/join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer/Control/mission_button/mission_button" to="." method="_on_mission_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer/Control2/shop_button/shop_button" to="." method="_on_shop_button_pressed"]
 [connection signal="on_item_press" from="CanvasLayer/Control/VBoxContainer/PanelContainer2/list_panel" to="." method="_on_list_panel_on_item_press"]
+[connection signal="accept_mission" from="CanvasLayer/Control/mission_browser" to="." method="_on_mission_browser_accept_mission"]
 [connection signal="on_join" from="CanvasLayer/Control/server_browser" to="." method="_on_server_browser_on_join"]
 [connection signal="on_continue" from="CanvasLayer/Control/input_name" to="." method="_on_input_name_on_continue"]
+[connection signal="pressed" from="CanvasLayer/Control/battle_result/Panel/VBoxContainer/HBoxContainer/receive_reward_confirm" to="." method="_on_receive_reward_confirm_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/exception_message/Panel/VBoxContainer/HBoxContainer/close_exeption_message" to="." method="_on_close_exeption_message_pressed"]

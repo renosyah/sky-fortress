@@ -39,6 +39,7 @@ remotesync func _falling():
 	_tag.visible = false
 	var _down = Vector3(translation.x, 1.0, translation.y)
 	look_at(_down, Vector3.UP)
+	
 	_tween.interpolate_property(_pivot, "rotation", _pivot.rotation,  Vector3(0,0,120), 10.0)
 	_tween.interpolate_property(self, "translation", translation, _down, rand_range(3.0,4.0))
 	_tween.start()
@@ -92,7 +93,7 @@ func master_movement(delta):
 			.update_course()
 			ready_attack = randf() < accuracy
 			
-		if distance_to_target <= 15.0 and not delivered and ready_attack:
+		if distance_to_target <= 10.0 and not delivered and ready_attack:
 			deliver_payload()
 			delivered = true
 			return
