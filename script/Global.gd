@@ -16,7 +16,7 @@ var player_data = {}
 	
 func new_player_data() -> Dictionary:
 	return {
-		id = GDUUID.v4(),
+		id = "PLAYER-" + GDUUID.v4(),
 		name = RandomNameGenerator.generate(),
 		color = Color.white,
 		cash = 100
@@ -136,9 +136,10 @@ func load_player_selected_mission():
 		_selected_mission = SaveLoad.load_save("mission.dat")
 		
 	if not _selected_mission:
-		_selected_mission = {}
+		_selected_mission = mission_list[0]
 		
 	selected_mission  = _selected_mission
+	selected_mission.is_selected = true
 	save_player_selected_mission()
 	
 ################################################################

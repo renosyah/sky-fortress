@@ -1,0 +1,116 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/ui/objective_tab/score-board-item/score_board_item.gd" type="Script" id=1]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_48.tres" type="DynamicFont" id=3]
+[ext_resource path="res://scene/ships/cruiser/icon.png" type="Texture" id=4]
+
+[node name="score_board_item" type="PanelContainer"]
+margin_right = 1366.0
+margin_bottom = 173.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1359.0
+margin_bottom = 174.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 1352.0
+margin_bottom = 158.0
+rect_min_size = Vector2( 0, 158 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="icon" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
+margin_right = 200.0
+margin_bottom = 158.0
+rect_min_size = Vector2( 200, 150 )
+texture = ExtResource( 4 )
+expand = true
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
+margin_left = 204.0
+margin_right = 209.0
+margin_bottom = 158.0
+rect_min_size = Vector2( 5, 0 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+margin_left = 213.0
+margin_right = 744.0
+margin_bottom = 158.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_name" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_right = 531.0
+margin_bottom = 60.0
+size_flags_vertical = 1
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 5
+custom_fonts/font = ExtResource( 3 )
+text = "player name"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player_ship" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 64.0
+margin_right = 531.0
+margin_bottom = 104.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 5
+custom_fonts/font = ExtResource( 2 )
+text = "ship name : cruiser"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="kill_count" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_left = 748.0
+margin_right = 1048.0
+margin_bottom = 158.0
+rect_min_size = Vector2( 300, 0 )
+size_flags_vertical = 1
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 5
+custom_fonts/font = ExtResource( 2 )
+text = "Kill : 0"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="cash_count" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_left = 1052.0
+margin_right = 1352.0
+margin_bottom = 158.0
+rect_min_size = Vector2( 300, 0 )
+size_flags_vertical = 1
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 5
+custom_fonts/font = ExtResource( 2 )
+text = "Cash : $0"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+margin_top = 162.0
+margin_right = 1352.0
+margin_bottom = 167.0
+rect_min_size = Vector2( 0, 5 )

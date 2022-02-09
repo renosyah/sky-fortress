@@ -51,7 +51,7 @@ func _on_cannonBall_body_entered(body):
 		return
 		
 	if body.has_method("take_damage"):
-		body.take_damage(Weapons.get_damage_mult(damage))
+		body.take_damage(Weapons.get_damage_mult(damage), owner_id)
 		
 	spawn_explosive()
 	

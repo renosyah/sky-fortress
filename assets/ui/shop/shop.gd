@@ -3,17 +3,20 @@ extends Control
 signal on_repaired(_ok)
 signal on_resupply(_ok)
 
-onready var _service_page= $VBoxContainer/HBoxContainer/service_page
-onready var _upgrade_page = $VBoxContainer/HBoxContainer/upgrade_page
-onready var _depot_page = $VBoxContainer/HBoxContainer/depot_page
-onready var _market_page = $VBoxContainer/HBoxContainer/market_page
+onready var _player_cash = $VBoxContainer/PanelContainer/HBoxContainer/margin2/name_button2/cash
 
-onready var _repair_cost = $VBoxContainer/HBoxContainer/service_page/VBoxContainer/repair_panel/Panel/HBoxContainer/VBoxContainer/cost
-onready var _button_repair = $VBoxContainer/HBoxContainer/service_page/VBoxContainer/repair_panel/Panel/HBoxContainer/btn_repair/btn_repair
+onready var _service_page= $VBoxContainer/HBoxContainer2/HBoxContainer/service_page
+onready var _upgrade_page = $VBoxContainer/HBoxContainer2/HBoxContainer/upgrade_page
+onready var _depot_page = $VBoxContainer/HBoxContainer2/HBoxContainer/depot_page
+onready var _market_page = $VBoxContainer/HBoxContainer2/HBoxContainer/market_page
 
-onready var _armory_holder = $VBoxContainer/HBoxContainer/service_page/VBoxContainer/VBoxContainer
+onready var _repair_cost = $VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/repair_panel/Panel/HBoxContainer/VBoxContainer/cost
+onready var _button_repair = $VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/repair_panel/Panel/HBoxContainer/btn_repair/btn_repair
+
+onready var _armory_holder = $VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/VBoxContainer
 
 func _ready():
+	_player_cash.text = "$" + str(Global.player_data.cash)
 	_check_repair_status()
 	_check_armory_status()
 
@@ -64,6 +67,7 @@ func _on_btn_market_pressed():
 	_market_page.visible = true
 
 func _on_resupply(_ok):
+	_ready()
 	emit_signal("on_resupply", _ok)
 
 func _on_btn_repair_pressed():
@@ -77,7 +81,9 @@ func _on_btn_repair_pressed():
 	Global.selected_ship.hp = Global.selected_ship.max_hp
 	Global.save_player_selected_ship()
 	
-	_check_repair_status()
+	_player_cash.text = "$" + str(Global.player_data.cash)
+	
+	_ready()
 	emit_signal("on_repaired", true)
 
 

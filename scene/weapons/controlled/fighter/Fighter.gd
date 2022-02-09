@@ -119,7 +119,7 @@ func shot_bullet():
 		return
 		
 	if _target.has_method("take_damage") and randf() < accuracy:
-		_target.take_damage(Weapons.get_damage_mult(damage))
+		_target.take_damage(Weapons.get_damage_mult(damage), owner_id)
 		
 	
 	

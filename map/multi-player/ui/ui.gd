@@ -73,7 +73,6 @@ func update_objective(operation : Dictionary, current_mission : Dictionary):
 		
 	_update_objective(operation, current_mission)
 	
-	
 remotesync func _display_mission_result(_result : Dictionary):
 	_resultscreen.visible = true
 	_ui_control.visible = false
@@ -85,6 +84,19 @@ func display_mission_result(_result : Dictionary):
 	rpc("_display_mission_result",_result)
 	
 	
+func display_fleet_status(_players):
+	_objective_tab.display_fleet_status(_players)
+	
+func display_scoreboard(_players):
+	_objective_tab.display_scoreboard(_players)
+	
+remotesync func _update_scoreboard(_player_id : String, kill_add, cash_add : int = 0):
+	_objective_tab.update_scoreboard(_player_id, kill_add, cash_add)
+	
+func update_scoreboard(_player_id : String, kill_add, cash_add : int = 0):
+	rpc("_update_scoreboard",_player_id, kill_add, cash_add)
+	
+	
 func _on_aim_pressed():
 	_aim_mode = not _aim_mode
 	#_weapons_bar.visible = _aim_mode
@@ -92,6 +104,9 @@ func _on_aim_pressed():
 	
 func _on_VBoxContainer_on_item_press(index, data):
 	emit_signal("on_shot_press" , index)
+	
+func _on_fleet_on_take_damage(ship, damage, hp):
+	_objective_tab.on_fleet_on_take_damage(ship, damage, hp)
 	
 func _on_battle_player_on_ready(player):
 	_ui_control.visible = true
@@ -112,6 +127,7 @@ func _on_player_on_destroyed(player):
 		
 	_ui_control.visible = false
 	_deadscreen.visible = true
+	_deadscreen.show_deadscreen()
 	
 func _on_player_on_falling(player):
 	_aim_mode = false

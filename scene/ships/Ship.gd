@@ -38,6 +38,8 @@ var owner_id = ""
 var owner_name = ""
 var side = ""
 
+# other
+var hit_by = ""
 
 ###############################################################
 # multiplayer sync
@@ -62,14 +64,19 @@ puppet var _puppet_rotation: Vector3 setget _set_puppet_rotation
 func _set_puppet_rotation(_val:Vector3):
 	_puppet_rotation = _val
 	
-remotesync func _take_damage(damage):
+remotesync func _take_damage(damage, _hit_by):
 	if destroyed:
 		return
 		
+	hit_by = _hit_by
+		
 	hp = round(hp - damage)
 	
-	if hp < 0.0:
+	if hp < 1.0:
 		destroy()
+		
+	if hp < 0.0:
+		hp = 0.0
 		
 	emit_signal("on_take_damage", self, damage , hp)
 	
@@ -169,12 +176,12 @@ func set_hp_bar_name(_name):
 func set_skin(_camo : String = ""):
 	pass
 	
-func take_damage(damage):
+func take_damage(damage, _hit_by):
 	if get_tree().network_peer:
-		rpc("_take_damage",damage)
+		rpc("_take_damage",damage, _hit_by)
 		return
 		
-	_take_damage(damage)
+	_take_damage(damage, _hit_by)
 	
 func destroy():
 	destroyed = true

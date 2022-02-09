@@ -249,7 +249,6 @@ func on_victory():
 	)
 	Global.selected_mission.status = Missions.OPERATION_SUCCESS
 	Global.save_player_selected_mission()
-	Global.selected_mission = {}
 	.disconnect_from_server()
 	
 func on_lose():
@@ -265,13 +264,14 @@ func on_lose():
 	)
 	Global.selected_mission.status = Missions.OPERATION_FAILED
 	Global.save_player_selected_mission()
-	Global.selected_mission = {}
 	.disconnect_from_server()
 	
 func _on_enemy_fort_on_destroyed(_node):
 	._on_enemy_fort_on_destroyed(_node)
 	
 	if get_tree().is_network_server():
+		_ui.update_scoreboard(_node.hit_by, 1, 0)
+		
 		if mission.empty():
 			return
 			
@@ -289,6 +289,8 @@ func _on_enemy_ship_on_destroyed(_node):
 	._on_enemy_ship_on_destroyed(_node)
 	
 	if get_tree().is_network_server():
+		_ui.update_scoreboard(_node.hit_by, 1, 0)
+		
 		if mission.empty():
 			return
 			
@@ -302,8 +304,9 @@ func _on_enemy_ship_on_destroyed(_node):
 			""
 		)
 		
-func cash_obtain(_amount):
+func cash_obtain(_amount, _by):
 	total_cash_collected += _amount
+	_ui.update_scoreboard(_by, 0, _amount)
 	
 ################################################################
 # event countdown on host player

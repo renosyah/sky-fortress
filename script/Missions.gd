@@ -139,16 +139,16 @@ static func generate_operation(difficulty : String = EASY) -> Dictionary:
 	
 	match operation.difficulty:
 		EASY:
-			operation.total_level = int(rand_range(3,6))
+			operation.total_level = int(rand_range(2,4))
 			operation.missions = generate_missions(operation.total_level)
 		MEDIUM:
-			operation.total_level = int(rand_range(4,7))
+			operation.total_level = int(rand_range(4,9))
 			operation.missions = generate_missions(operation.total_level)
 		HARD:
-			operation.total_level = int(rand_range(6,8))
+			operation.total_level = int(rand_range(8,12))
 			operation.missions = generate_missions(operation.total_level)
 		EXTREME:
-			operation.total_level = int(rand_range(8,10))
+			operation.total_level = int(rand_range(12,18))
 			operation.missions = generate_missions(operation.total_level)
 			
 	return operation

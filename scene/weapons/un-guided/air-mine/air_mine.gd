@@ -83,7 +83,7 @@ func _on_air_mine_body_entered(body):
 		return
 		
 	if body.has_method("take_damage"):
-		body.take_damage(Weapons.get_damage_mult(damage))
+		body.take_damage(Weapons.get_damage_mult(damage), owner_id)
 		
 	if get_tree().network_peer and is_network_master():
 		rpc("spawn_explosive")

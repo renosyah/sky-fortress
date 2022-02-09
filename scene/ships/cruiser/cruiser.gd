@@ -25,8 +25,8 @@ func _set_puppet_rotation(_val:Vector3):
 		rotation = _puppet_rotation
 		return
 		
-remotesync func _take_damage(damage):
-	._take_damage(damage)
+remotesync func _take_damage(damage, _hit_by):
+	._take_damage(damage, _hit_by)
 	
 	if destroyed:
 		return

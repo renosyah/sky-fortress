@@ -99,7 +99,7 @@ func lauching_at(to: Spatial):
 	
 	
 	
-func take_damage(damage):
+func take_damage(damage, _hit_by = ""):
 	if get_tree().network_peer:
 		rpc("_take_damage", damage)
 		return

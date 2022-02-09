@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_48.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=2]
 [ext_resource path="res://assets/ui/objective_tab/objective_tab.gd" type="Script" id=3]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_16.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/ui/input-name/close.png" type="Texture" id=5]
 
 [node name="objective_tab" type="Control"]
 anchor_right = 1.0
@@ -40,13 +42,13 @@ __meta__ = {
 }
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Panel/HBoxContainer"]
-margin_right = 215.0
+margin_right = 120.0
 margin_bottom = 125.0
-rect_min_size = Vector2( 215, 115 )
+rect_min_size = Vector2( 120, 115 )
 
 [node name="CenterContainer2" type="CenterContainer" parent="VBoxContainer/Panel/HBoxContainer"]
-margin_left = 219.0
-margin_right = 1147.0
+margin_left = 124.0
+margin_right = 1242.0
 margin_bottom = 125.0
 rect_min_size = Vector2( 0, 125 )
 mouse_filter = 2
@@ -56,9 +58,9 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Panel/HBoxContainer/CenterContainer2"]
-margin_left = 307.0
+margin_left = 402.0
 margin_top = 32.0
-margin_right = 620.0
+margin_right = 715.0
 margin_bottom = 92.0
 mouse_filter = 2
 
@@ -75,22 +77,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/Panel/HBoxContainer"]
-margin_left = 1151.0
+[node name="button_close" type="Button" parent="VBoxContainer/Panel/HBoxContainer"]
+margin_left = 1246.0
 margin_right = 1366.0
 margin_bottom = 125.0
-rect_min_size = Vector2( 215, 115 )
+rect_min_size = Vector2( 120, 0 )
+icon = ExtResource( 5 )
+flat = true
+expand_icon = true
 
-[node name="close" type="Button" parent="VBoxContainer/Panel/HBoxContainer/CenterContainer"]
-margin_left = 12.0
-margin_top = 12.0
-margin_right = 202.0
-margin_bottom = 112.0
-rect_min_size = Vector2( 190, 100 )
-custom_fonts/font = ExtResource( 2 )
-text = "Close"
-
-[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 129.0
 margin_right = 1366.0
 margin_bottom = 800.0
@@ -99,13 +95,147 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/CenterContainer"]
-margin_left = 529.0
+[node name="PanelContainer2" type="PanelContainer" parent="VBoxContainer/HBoxContainer2"]
+margin_right = 220.0
+margin_bottom = 671.0
+rect_min_size = Vector2( 220, 80 )
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer2/PanelContainer2"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 213.0
+margin_bottom = 664.0
+
+[node name="btn_objective" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer"]
+margin_right = 206.0
+margin_bottom = 161.0
+rect_min_size = Vector2( 100, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="btn_objective" type="Button" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_objective"]
+margin_right = 206.0
+margin_bottom = 161.0
+rect_min_size = Vector2( 100, 50 )
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_objective"]
+margin_top = 51.0
+margin_right = 206.0
+margin_bottom = 110.0
+custom_fonts/font = ExtResource( 4 )
+text = "Mission
+Objective"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="btn_team_status" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer"]
+margin_top = 165.0
+margin_right = 206.0
+margin_bottom = 326.0
+rect_min_size = Vector2( 100, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="btn_team_status" type="Button" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_team_status"]
+margin_right = 206.0
+margin_bottom = 161.0
+rect_min_size = Vector2( 100, 50 )
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_team_status"]
+margin_top = 51.0
+margin_right = 206.0
+margin_bottom = 110.0
+custom_fonts/font = ExtResource( 4 )
+text = "Fleet 
+Status"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="btn_score_board" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer"]
+margin_top = 330.0
+margin_right = 206.0
+margin_bottom = 491.0
+rect_min_size = Vector2( 100, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="btn_score_board" type="Button" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_score_board"]
+margin_right = 206.0
+margin_bottom = 161.0
+rect_min_size = Vector2( 100, 50 )
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_score_board"]
+margin_top = 51.0
+margin_right = 206.0
+margin_bottom = 110.0
+custom_fonts/font = ExtResource( 4 )
+text = "Score
+Board"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="btn_menu" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer"]
+margin_top = 495.0
+margin_right = 206.0
+margin_bottom = 657.0
+rect_min_size = Vector2( 100, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="btn_menu" type="Button" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_menu"]
+margin_right = 206.0
+margin_bottom = 162.0
+rect_min_size = Vector2( 100, 50 )
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_menu"]
+margin_top = 51.0
+margin_right = 206.0
+margin_bottom = 110.0
+custom_fonts/font = ExtResource( 4 )
+text = "Option
+Menu"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 224.0
+margin_right = 1366.0
+margin_bottom = 671.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="objective_page" type="CenterContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer"]
+margin_right = 1142.0
+margin_bottom = 671.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/objective_page"]
+margin_left = 417.0
 margin_top = 177.0
-margin_right = 837.0
+margin_right = 725.0
 margin_bottom = 494.0
 
-[node name="level" type="Label" parent="VBoxContainer/CenterContainer/VBoxContainer"]
+[node name="level" type="Label" parent="VBoxContainer/HBoxContainer2/HBoxContainer/objective_page/VBoxContainer"]
 margin_right = 308.0
 margin_bottom = 60.0
 custom_fonts/font = ExtResource( 1 )
@@ -114,7 +244,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="progress" type="Label" parent="VBoxContainer/CenterContainer/VBoxContainer"]
+[node name="progress" type="Label" parent="VBoxContainer/HBoxContainer2/HBoxContainer/objective_page/VBoxContainer"]
 margin_top = 64.0
 margin_right = 308.0
 margin_bottom = 124.0
@@ -125,7 +255,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="message" type="Label" parent="VBoxContainer/CenterContainer/VBoxContainer"]
+[node name="message" type="Label" parent="VBoxContainer/HBoxContainer2/HBoxContainer/objective_page/VBoxContainer"]
 margin_top = 128.0
 margin_right = 308.0
 margin_bottom = 188.0
@@ -135,10 +265,68 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/CenterContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/objective_page/VBoxContainer"]
 margin_top = 192.0
 margin_right = 308.0
 margin_bottom = 317.0
 rect_min_size = Vector2( 0, 125 )
 
-[connection signal="pressed" from="VBoxContainer/Panel/HBoxContainer/CenterContainer/close" to="." method="_on_close_pressed"]
+[node name="team_status_page" type="ScrollContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer"]
+visible = false
+margin_right = 1142.0
+margin_bottom = 671.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/team_status_page"]
+margin_right = 1142.0
+size_flags_horizontal = 3
+
+[node name="score_board_page" type="ScrollContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer"]
+visible = false
+margin_left = 456.0
+margin_right = 909.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/score_board_page"]
+margin_right = 453.0
+size_flags_horizontal = 3
+
+[node name="menu_page" type="ScrollContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer"]
+visible = false
+margin_left = 685.0
+margin_right = 1366.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/menu_page"]
+margin_right = 681.0
+margin_bottom = 427.0
+size_flags_horizontal = 3
+
+[node name="label5" type="Label" parent="VBoxContainer/HBoxContainer2/HBoxContainer/menu_page/VBoxContainer"]
+margin_left = -685.0
+margin_right = 681.0
+margin_bottom = 427.0
+custom_fonts/font = ExtResource( 2 )
+text = "
+
+
+
+ Coming soon...
+
+
+
+
+"
+align = 1
+
+[connection signal="pressed" from="VBoxContainer/Panel/HBoxContainer/button_close" to="." method="_on_button_close_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_objective/btn_objective" to="." method="_on_btn_objective_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_team_status/btn_team_status" to="." method="_on_btn_team_status_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_score_board/btn_score_board" to="." method="_on_btn_score_board_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_menu/btn_menu" to="." method="_on_btn_menu_pressed"]

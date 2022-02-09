@@ -137,6 +137,7 @@ func spawn_players(_player_holder_path : NodePath, _targeting_guide_holder_path 
 	if not is_instance_valid(_ui):
 		return
 		
+	var fleets = []
 	var spawn_pos = Vector3(0, 10, 0)
 	for i in Global.mp_players_data:
 		var spatial_target = Spatial.new()
@@ -160,6 +161,16 @@ func spawn_players(_player_holder_path : NodePath, _targeting_guide_holder_path 
 		ship.MINIMAP_COLOR = Color.blue
 		ship.update_hp_bar()
 		ship.connect("on_destroyed",self,"_on_player_on_destroyed")
+		ship.connect("on_take_damage",_ui,"_on_fleet_on_take_damage")
+		
+		fleets.append({
+			player_id = i.owner_id,
+			player_name = i.player_name,
+			player_ship_name = i.name,
+			player_ship_icon = i.icon,
+			hp = i.hp,
+			max_hp = i.max_hp,
+		})
 		
 		if ship.owner_id == Global.player_data.id:
 			_player = ship
@@ -168,6 +179,9 @@ func spawn_players(_player_holder_path : NodePath, _targeting_guide_holder_path 
 			
 		add_minimap_object(ship.get_path(),i.player_name)
 		spawn_pos.x += 5.0
+		
+	_ui.display_fleet_status(fleets)
+	_ui.display_scoreboard(fleets)
 		
 	if not is_instance_valid(_player):
 		return
@@ -316,7 +330,7 @@ func _on_supply_crate_picked_up(_node, _by):
 		var cash = round(rand_range(_min_cash, _max_cash))
 		message = "$"+str(cash)+" Cash"
 		rpc("_cash_pickup", _by.owner_id, cash)
-		cash_obtain(cash)
+		cash_obtain(cash, _by.owner_id)
 		
 	rpc("_spawn_floating_message",message, _node.translation)
 	
@@ -329,7 +343,7 @@ remotesync func _cash_pickup(_player_id, _amount):
 		Global.player_data.cash += _amount
 		Global.save_player_data()
 		
-func cash_obtain(_amount):
+func cash_obtain(_amount, _by):
 	pass
 	
 remotesync func _spawn_floating_message(message : String, translation : Vector3, color : Color = Color.white):

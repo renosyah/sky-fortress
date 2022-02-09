@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_16.tres" type="DynamicFont" id=2]
 [ext_resource path="res://assets/ui/mission-info/mission_info.gd" type="Script" id=3]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_48.tres" type="DynamicFont" id=4]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -113,3 +114,19 @@ margin_top = 154.0
 margin_right = 1342.0
 margin_bottom = 254.0
 rect_min_size = Vector2( 0, 100 )
+
+[node name="status" type="Label" parent="."]
+modulate = Color( 0, 1, 0.439216, 1 )
+margin_top = 184.0
+margin_right = 344.0
+margin_bottom = 294.0
+rect_rotation = -33.2194
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 5
+custom_fonts/font = ExtResource( 4 )
+text = "[Completed]"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

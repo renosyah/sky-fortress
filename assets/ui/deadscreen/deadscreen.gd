@@ -1,25 +1,23 @@
 extends Control
 
-signal on_respawn_click()
 signal on_spectate_click()
 
-onready var _bg = $bg
-onready var _screen = $CenterContainer
-onready var _killedby = $CenterContainer/VBoxContainer/killedby
+onready var _timer = $Timer
+onready var _spectate_countdown = $CenterContainer/VBoxContainer/spectate_text
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-	
-func show_deadscreen(_is_show : bool, _killed_by : String = ""):
-	visible = _is_show
-	_screen.visible = _is_show
-	_killedby.text = "Killed By " + _killed_by
-	
-	
-func _on_respawn_pressed():
-	emit_signal("on_respawn_click")
+	set_process(false)
+
+func show_deadscreen():
+	_timer.wait_time = 5.0
+	_timer.start()
+	set_process(true)
 	
 	
-func _on_spectate_pressed():
+func _process(delta):
+	_spectate_countdown.text = "Spectate in " + str(int(_timer.time_left)) + "..."
+	
+	
+func _on_Timer_timeout():
 	emit_signal("on_spectate_click")
+	set_process(false)

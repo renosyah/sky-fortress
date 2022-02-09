@@ -10,8 +10,8 @@ onready var _tween = $Tween
 
 ###############################################################
 # multiplayer sync
-remotesync func _take_damage(damage):
-	._take_damage(damage)
+remotesync func _take_damage(damage, _hit_by):
+	._take_damage(damage, _hit_by)
 	
 	if destroyed:
 		return
@@ -55,8 +55,8 @@ func set_hp_bar_name(player_name):
 	.set_hp_bar_name(player_name)
 	_hp_bar.set_player_name(player_name)
 	
-func take_damage(damage):
-	.take_damage(damage)
+func take_damage(damage, _hit_by):
+	.take_damage(damage, _hit_by)
 	
 	if destroyed:
 		return
