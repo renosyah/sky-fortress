@@ -173,6 +173,10 @@ func _on_mission_tab_pressed():
 
 func _on_objective_tab_on_close():
 	_objective_tab.visible = false
+	
+func _on_objective_tab_on_abort():
+	emit_signal("on_exit_click")
+
 
 
 

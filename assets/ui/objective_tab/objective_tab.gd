@@ -1,6 +1,7 @@
 extends Control
 
 signal on_close
+signal on_abort
 
 onready var _operation_name = $VBoxContainer/Panel/HBoxContainer/CenterContainer2/VBoxContainer/Label
 
@@ -98,6 +99,11 @@ func _on_btn_score_board_pressed():
 func _on_btn_menu_pressed():
 	hide_all()
 	_menu_page.visible = true
+	
+func _on_abort_button_pressed():
+	emit_signal("on_abort")
+
+
 
 
 

@@ -8,6 +8,7 @@
 [node name="score_board_item" type="PanelContainer"]
 margin_right = 1366.0
 margin_bottom = 173.0
+mouse_filter = 2
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -18,11 +19,13 @@ margin_left = 7.0
 margin_top = 7.0
 margin_right = 1359.0
 margin_bottom = 174.0
+mouse_filter = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_right = 1352.0
 margin_bottom = 158.0
 rect_min_size = Vector2( 0, 158 )
+mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -31,6 +34,7 @@ __meta__ = {
 margin_right = 200.0
 margin_bottom = 158.0
 rect_min_size = Vector2( 200, 150 )
+mouse_filter = 2
 texture = ExtResource( 4 )
 expand = true
 
@@ -39,11 +43,13 @@ margin_left = 204.0
 margin_right = 209.0
 margin_bottom = 158.0
 rect_min_size = Vector2( 5, 0 )
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 margin_left = 213.0
 margin_right = 744.0
 margin_bottom = 158.0
+mouse_filter = 2
 size_flags_horizontal = 3
 __meta__ = {
 "_edit_use_anchors_": false
@@ -114,3 +120,4 @@ margin_top = 162.0
 margin_right = 1352.0
 margin_bottom = 167.0
 rect_min_size = Vector2( 0, 5 )
+mouse_filter = 2
