@@ -1,14 +1,14 @@
 extends Node
 
-const PERSISTEN_SAVE = false
+const PERSISTEN_SAVE = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	load_player_data()
 	load_player_ships()
 	load_player_selected_ship()
-	load_player_selected_mission()
 	load_player_missions()
+	load_player_selected_mission()
 	
 ################################################################
 # player ship & equipment
@@ -19,7 +19,7 @@ func new_player_data() -> Dictionary:
 		id = GDUUID.v4(),
 		name = RandomNameGenerator.generate(),
 		color = Color.white,
-		cash = 10000
+		cash = 100
 	}
 	
 func save_player_data():
@@ -34,9 +34,9 @@ func load_player_data():
 		
 	if not _player_data:
 		_player_data = new_player_data()
-		save_player_data()
 		
 	player_data = _player_data
+	save_player_data()
 	
 ################################################################
 # ship list
@@ -48,7 +48,7 @@ func started_ships():
 		var ship = i.duplicate()
 		ship.id = GDUUID.v4()
 		ship.owner_id = player_data.id
-		ship.player_name = Global.player_data.name
+		ship.player_name = player_data.name
 		
 		ship_list.append(ship)
 		
@@ -64,6 +64,7 @@ func load_player_ships():
 		_ship_list = started_ships()
 		
 	ship_list  = _ship_list
+	save_player_ships()
 	
 func update_player_ships(_current_ship):
 	var pos = 0
@@ -73,20 +74,24 @@ func update_player_ships(_current_ship):
 		pos += 1
 		
 	ship_list[pos] = _current_ship
-	save_player_ships(ship_list)
+	save_player_ships()
 	
-func save_player_ships(_ship_list):
+func apply_ships_ownership():
+	for i in ship_list:
+		i.owner_id = player_data.id
+		i.player_name = player_data.name
+		
+	save_player_ships()
+	
+func save_player_ships():
 	if PERSISTEN_SAVE:
-		SaveLoad.save("ship_list.dat", _ship_list)
+		SaveLoad.save("ship_list.dat", ship_list)
 	
 ################################################################
 # player ship & equipment
 var selected_ship = {}
 	
 func save_player_selected_ship():
-	if selected_ship.empty():
-		return
-		
 	if PERSISTEN_SAVE:
 		SaveLoad.save("ship.dat", selected_ship)
 		
@@ -102,29 +107,27 @@ func load_player_selected_ship():
 		_selected_ship = ship_list[0]
 		
 	selected_ship  = _selected_ship
+	save_player_selected_ship()
+	
+func apply_ship_ownership():
+	selected_ship.owner_id = player_data.id
+	selected_ship.player_name = player_data.name
+	save_player_selected_ship()
 	
 func is_ship_ok() -> bool:
 	if selected_ship.hp < selected_ship.max_hp:
 		return false
 		
-#	if selected_ship.weapons.empty():
-#		return false
-#
-#	for i in selected_ship.weapons:
-#		if i.ammo <= 0:
-#			return false
-#
 	return true
 ################################################################
 # player mission
 var selected_mission = {}
 	
 func save_player_selected_mission():
-	if selected_mission.empty():
-		return
-		
 	if PERSISTEN_SAVE:
 		SaveLoad.save("mission.dat", selected_mission)
+		
+	update_player_missions(selected_mission)
 	
 func load_player_selected_mission():
 	var _selected_mission = null 
@@ -136,33 +139,35 @@ func load_player_selected_mission():
 		_selected_mission = {}
 		
 	selected_mission  = _selected_mission
+	save_player_selected_mission()
+	
 ################################################################
 # mission list
 var mission_list = []
 	
 func started_missions():
-	var mission_list = []
+	var _mission_list = []
 	for i in 5:
-		mission_list.append(
+		_mission_list.append(
 			Missions.generate_operation(Missions.EASY)
 		)
 		
 	for i in 4:
-		mission_list.append(
+		_mission_list.append(
 			Missions.generate_operation(Missions.MEDIUM)
 		)
 		
 	for i in 3:
-		mission_list.append(
+		_mission_list.append(
 			Missions.generate_operation(Missions.HARD)
 		)
 		
 	for i in 2:
-		mission_list.append(
+		_mission_list.append(
 			Missions.generate_operation(Missions.EXTREME)
 		)
 		
-	return mission_list
+	return _mission_list
 	
 func load_player_missions():
 	var _mission_list = null
@@ -173,21 +178,36 @@ func load_player_missions():
 	if not _mission_list:
 		_mission_list = started_missions()
 		
-	mission_list  = _mission_list
+	while (_mission_list.size() < 15):
+		_mission_list.append(
+			Missions.generate_operation(Missions.DIFFICULTIES[randi() % Missions.DIFFICULTIES.size()])
+		)
+		
+	for i in _mission_list:
+		if i.status == Missions.OPERATION_NOT_COMMIT:
+			mission_list.append(i)
+			
+	save_player_missions()
 	
 func update_player_missions(_current_mission):
+	if _current_mission.empty():
+		return
+		
 	var pos = 0
 	for i in mission_list:
 		if i.id == _current_mission.id:
 			break
 		pos += 1
-		
-	mission_list[pos] = _current_mission
-	save_player_ships(mission_list)
 	
-func save_player_missions(_mission_list):
+	if pos >= mission_list.size():
+		return
+	
+	mission_list[pos] = _current_mission
+	save_player_missions()
+	
+func save_player_missions():
 	if PERSISTEN_SAVE:
-		SaveLoad.save("mission_list.dat", _mission_list)
+		SaveLoad.save("mission_list.dat", mission_list)
 	
 ################################################################
 # multiplayer connection and data

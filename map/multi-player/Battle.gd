@@ -366,7 +366,8 @@ func _on_enemy_on_destroyed(_node):
 		rpc("_despawn_hostile_airship", _node.get_path())
 	
 func _on_airship_on_spawning_weapon(_node, _weapon):
-	_update_selected_ship_condition(_node.get_data())
+	if _node == _player:
+		_update_selected_ship_condition(_node.get_data())
 	
 	if not _weapon.has_method("take_damage"):
 		return
@@ -375,20 +376,21 @@ func _on_airship_on_spawning_weapon(_node, _weapon):
 	_airborne_targets.append( _weapon)
 
 func _on_player_on_take_damage(_node, damage, hp):
-	_update_selected_ship_condition(_node.get_data())
+	if _node == _player:
+		_update_selected_ship_condition(_node.get_data())
 	
 func _on_player_on_falling(_node):
 	if get_tree().is_network_server():
 		_airborne_targets.erase(_node)
 	
 func _on_player_on_destroyed(_node):
-	_update_selected_ship_condition(_node.get_data())
 	remove_minimap_object(_node.get_path())
+	if _node == _player:
+		_update_selected_ship_condition(_node.get_data())
 	
 func _update_selected_ship_condition(_updated_ship_condition):
 	Global.selected_ship.hp = _updated_ship_condition.hp
 	Global.selected_ship.weapons = _updated_ship_condition.weapons
-	Global.update_player_ships(Global.selected_ship)
 	Global.save_player_selected_ship()
 	
 ################################################################

@@ -92,16 +92,6 @@ func _on_join_pressed():
 		_exeption_message_label.text = "Repair Required!"
 		return
 		
-	if Global.selected_mission.empty():
-		_exeption_message.visible = true
-		_exeption_message_label.text = "Mission not Selected!"
-		return
-		
-	if Global.selected_mission.status != Missions.OPERATION_NOT_COMMIT:
-		_exeption_message.visible = true
-		_exeption_message_label.text = "Mission expired!"
-		return
-		
 	_server_browser.visible = true
 	_server_browser.clear_list()
 	_server_browser.start_finding()
@@ -152,6 +142,10 @@ func _on_input_name_on_continue(_name, html_color):
 	Global.player_data.name = _name
 	Global.player_data.color = Color(html_color)
 	Global.save_player_data()
+	
+	Global.apply_ship_ownership()
+	Global.apply_ships_ownership()
+	
 	_player_name.text = " " + _name + " "
 	_input_name_window.visible = false
 	
@@ -193,7 +187,7 @@ func _on_mission_button_pressed():
 	_mission_browser.visible = true
 	
 func _on_mission_browser_accept_mission(_mission):
-	Global.selected_mission = _mission.duplicate(true)
+	Global.selected_mission = _mission
 	show_mission_info(Global.selected_mission)
 	
 	for i in Global.mission_list:
@@ -201,6 +195,8 @@ func _on_mission_browser_accept_mission(_mission):
 		
 	_mission.is_selected = true
 	_mission_browser.display_missions(Global.mission_list)
+	
+	Global.save_player_selected_mission()
 	
 	_mission_browser.visible = false
 

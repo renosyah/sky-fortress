@@ -27,6 +27,10 @@ var cash_obtain = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
+	# default will be failed if player decide to leave
+	Global.selected_mission.status = Missions.OPERATION_FAILED
+	Global.save_player_selected_mission()
+	
 	missions = Global.selected_mission.missions
 	_ui.update_objective(Global.selected_mission, missions[pos_mission])
 	_ui.display_mission_objective(Global.selected_mission.name, Global.selected_mission.date, "")
@@ -245,7 +249,6 @@ func on_victory():
 	)
 	Global.selected_mission.status = Missions.OPERATION_SUCCESS
 	Global.save_player_selected_mission()
-	Global.update_player_missions(Global.selected_mission)
 	Global.selected_mission = {}
 	.disconnect_from_server()
 	
@@ -262,7 +265,6 @@ func on_lose():
 	)
 	Global.selected_mission.status = Missions.OPERATION_FAILED
 	Global.save_player_selected_mission()
-	Global.update_player_missions(Global.selected_mission)
 	Global.selected_mission = {}
 	.disconnect_from_server()
 	
