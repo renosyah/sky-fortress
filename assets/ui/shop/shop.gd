@@ -71,12 +71,11 @@ func _on_btn_repair_pressed():
 		emit_signal("on_repaired", false)
 		return
 		
+	Global.player_data.cash = Global.player_data.cash - ((Global.selected_ship.max_hp - Global.selected_ship.hp) * Global.selected_ship.repair_cost_per_hp)
+	Global.save_player_data()
+	
 	Global.selected_ship.hp = Global.selected_ship.max_hp
 	Global.save_player_selected_ship()
-	Global.update_player_ships(Global.selected_ship)
-	
-	Global.player_data.cash -= ((Global.selected_ship.max_hp - Global.selected_ship.hp) * Global.selected_ship.repair_cost_per_hp)
-	Global.save_player_data()
 	
 	_check_repair_status()
 	emit_signal("on_repaired", true)

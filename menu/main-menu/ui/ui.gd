@@ -176,8 +176,6 @@ func _on_shop_on_repaired(_ok):
 		_exeption_message_label.text = "Insufficient funds!"
 		return
 		
-	Global.save_player_selected_ship()
-		
 	_cash.text = "$" + str(Global.player_data.cash)
 	show_ship_condition_message("Repair Required!", not Global.is_ship_ok())
 	
@@ -187,8 +185,6 @@ func _on_shop_on_resupply(_ok):
 		_exeption_message_label.text = "Insufficient funds!"
 		return
 		
-	Global.save_player_selected_ship()
-	
 	_cash.text = "$" + str(Global.player_data.cash)
 	_on_list_panel_on_item_press(Global.selected_ship)
 	

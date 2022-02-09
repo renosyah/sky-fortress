@@ -12,40 +12,6 @@ static func get_damage_mult(damage) -> float:
 	var r_dmg = DAMAGE_MULTIPLIER * damage
 	return rand_range(damage - r_dmg, damage + r_dmg)
 	
-
-const HEAT_SEAKING_TORPEDO = {
-	id = "",
-	name = "H-S-M",
-	icon = "res://assets/ui/icon/weapon/heat_seeking.png",
-	cool_down = 3,
-	damage = 10.0,
-	speed = 5.0,
-	type = TYPE_LOCK_ON,
-	ammo_scene = "res://scene/weapons/lock-on/lock-on-missile/lock_on_missile.tscn",
-	min_range = 0.0,
-	max_range = 70.0,
-	ammo = 45,
-	max_ammo = 45,
-	ammo_cost = 70,
-	can_fire = false
-}
-const AUTO_CANNON = {
-	id = "",
-	name = "40MM",
-	icon = "res://assets/ui/icon/weapon/40mm.png",
-	cool_down = 0.3,
-	damage = 10.0,
-	speed = 15.0,
-	type = TYPE_UNGUIDED,
-	ammo_scene = "res://scene/weapons/un-guided/cannon/cannon.tscn",
-	min_range = 0.0,
-	max_range = 40.0,
-	ammo = 450,
-	max_ammo = 450,
-	ammo_cost = 3,
-	can_fire = false
-}
-
 const FIGHTER = {
 	id = "",
 	name = "Fighter",
@@ -68,7 +34,6 @@ const FIGHTER = {
 	ammo_cost = 120,
 	can_fire = false
 }
-
 const BOMBER = {
 	id = "",
 	name = "Bomber",
@@ -113,6 +78,22 @@ const INTERCEPTOR = {
 	ammo_cost = 210,
 	can_fire = false
 }
+const HEAT_SEAKING_TORPEDO = {
+	id = "",
+	name = "H-S-M",
+	icon = "res://assets/ui/icon/weapon/heat_seeking.png",
+	cool_down = 3,
+	damage = 10.0,
+	speed = 5.0,
+	type = TYPE_LOCK_ON,
+	ammo_scene = "res://scene/weapons/lock-on/lock-on-missile/lock_on_missile.tscn",
+	min_range = 0.0,
+	max_range = 70.0,
+	ammo = 45,
+	max_ammo = 45,
+	ammo_cost = 9,
+	can_fire = false
+}
 const GUIDED_TORPEDO = {
 	id = "",
 	name = "G-M",
@@ -126,7 +107,7 @@ const GUIDED_TORPEDO = {
 	max_range = 70.0,
 	ammo = 25,
 	max_ammo = 25,
-	ammo_cost = 260,
+	ammo_cost = 25,
 	can_fire = true
 }
 const AIR_MINE = {
@@ -142,7 +123,7 @@ const AIR_MINE = {
 	max_range = 900.0,
 	ammo = 5,
 	max_ammo = 5,
-	ammo_cost = 45,
+	ammo_cost = 12,
 	can_fire = true
 }
 const BOMB = {
@@ -158,10 +139,25 @@ const BOMB = {
 	max_range = 900.0,
 	ammo = 50,
 	max_ammo = 50,
-	ammo_cost = 12,
+	ammo_cost = 6,
 	can_fire = true
 }
-
+const AUTO_CANNON = {
+	id = "",
+	name = "40MM",
+	icon = "res://assets/ui/icon/weapon/40mm.png",
+	cool_down = 0.3,
+	damage = 10.0,
+	speed = 15.0,
+	type = TYPE_UNGUIDED,
+	ammo_scene = "res://scene/weapons/un-guided/cannon/cannon.tscn",
+	min_range = 0.0,
+	max_range = 40.0,
+	ammo = 450,
+	max_ammo = 450,
+	ammo_cost = 3,
+	can_fire = false
+}
 
 
 

@@ -3,7 +3,7 @@ class_name SaveLoad
 
 const prefix = "user://"
 
-static func save(_filename: String, _data : Dictionary):
+static func save(_filename: String, _data):
 	var file = File.new()
 	file.open(prefix + _filename, File.WRITE)
 	file.store_var(_data, true)

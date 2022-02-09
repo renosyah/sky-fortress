@@ -1,6 +1,6 @@
 extends Node
 
-const PERSISTEN_SAVE = true
+const PERSISTEN_SAVE = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,7 +19,7 @@ func new_player_data() -> Dictionary:
 		id = GDUUID.v4(),
 		name = RandomNameGenerator.generate(),
 		color = Color.white,
-		cash = 100
+		cash = 10000
 	}
 	
 func save_player_data():
@@ -89,6 +89,8 @@ func save_player_selected_ship():
 		
 	if PERSISTEN_SAVE:
 		SaveLoad.save("ship.dat", selected_ship)
+		
+	update_player_ships(selected_ship)
 	
 func load_player_selected_ship():
 	var _selected_ship = null 

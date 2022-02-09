@@ -27,12 +27,11 @@ func _on_btn_resupply_pressed():
 		emit_signal("on_resupply", false)
 		return
 		
+	Global.player_data.cash = Global.player_data.cash - ((weapon.max_ammo - weapon.ammo) * weapon.ammo_cost)
+	Global.save_player_data()
+	
 	weapon.ammo = weapon.max_ammo
 	Global.save_player_selected_ship()
-	Global.update_player_ships(Global.selected_ship)
-	
-	Global.player_data.cash -= ((weapon.max_ammo - weapon.ammo) * weapon.ammo_cost)
-	Global.save_player_data()
 	
 	_check_resupply_status()
 	emit_signal("on_resupply", true)
