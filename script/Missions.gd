@@ -226,10 +226,10 @@ static func generate_contract(difficulty : String = EASY) -> Dictionary:
 				sub.contract_type = CONTRACT_TYPES[randi() % CONTRACT_TYPES.size()]
 				sub.status = CONTRACT_NOT_COMMIT
 				sub.progress = 0
-				sub.goal = int(rand_range(1,2))
+				sub.goal = int(rand_range(1,5))
 				subs.append(sub)
 				
-			contract.reward = (int(rand_range(50, 200)))
+			contract.reward = (int(rand_range(150, 200))) * total_sub
 		MEDIUM:
 			var total_sub = int(rand_range(1,3))
 			for i in total_sub:
@@ -237,10 +237,10 @@ static func generate_contract(difficulty : String = EASY) -> Dictionary:
 				sub.contract_type = CONTRACT_TYPES[randi() % CONTRACT_TYPES.size()]
 				sub.status = CONTRACT_NOT_COMMIT
 				sub.progress = 0
-				sub.goal = int(rand_range(2,4))
+				sub.goal = int(rand_range(6,10))
 				subs.append(sub)
 				
-			contract.reward = (int(rand_range(200, 400)))
+			contract.reward = (int(rand_range(300, 600))) * total_sub
 		HARD:
 			var total_sub = int(rand_range(2,3))
 			for i in total_sub:
@@ -248,10 +248,10 @@ static func generate_contract(difficulty : String = EASY) -> Dictionary:
 				sub.contract_type = CONTRACT_TYPES[randi() % CONTRACT_TYPES.size()]
 				sub.status = CONTRACT_NOT_COMMIT
 				sub.progress = 0
-				sub.goal = int(rand_range(4,8))
+				sub.goal = int(rand_range(12,18))
 				subs.append(sub)
 			
-			contract.reward = (int(rand_range(500, 800)))
+			contract.reward = (int(rand_range(700, 900))) * total_sub
 		EXTREME:
 			var total_sub = int(rand_range(3,4))
 			for i in total_sub:
@@ -259,10 +259,10 @@ static func generate_contract(difficulty : String = EASY) -> Dictionary:
 				sub.contract_type = CONTRACT_TYPES[randi() % CONTRACT_TYPES.size()]
 				sub.status = CONTRACT_NOT_COMMIT
 				sub.progress = 0
-				sub.goal = int(rand_range(6,9))
+				sub.goal = int(rand_range(18,22))
 				subs.append(sub)
 			
-			contract.reward = (int(rand_range(800,1200)))
+			contract.reward = (int(rand_range(1000,1500))) * total_sub
 			
 	contract.subs = subs.duplicate()
 	

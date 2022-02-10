@@ -132,6 +132,7 @@ func update_active_contract(_player_id : String, enemy_destroy : int = 0, airshi
 			sub.progress += airship_destroy
 			
 		sub.status = Missions.CONTRACT_SUCCESS if sub.progress >= sub.goal else Missions.CONTRACT_NOT_COMMIT
+		break
 		
 	var is_sub_completed = true
 	var reward_from_contract = 0

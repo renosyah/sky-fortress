@@ -217,17 +217,17 @@ var contract_list = []
 	
 func started_contracts():
 	var _contract_list = []
-	for i in 3:
+	for i in 2:
 		_contract_list.append(
 			Missions.generate_contract(Missions.EASY)
 		)
 		
-	for i in 2:
+	for i in 1:
 		_contract_list.append(
 			Missions.generate_contract(Missions.MEDIUM)
 		)
 		
-	for i in 2:
+	for i in 1:
 		_contract_list.append(
 			Missions.generate_contract(Missions.HARD)
 		)
@@ -248,7 +248,7 @@ func load_player_contracts():
 	if not _contract_list:
 		_contract_list = started_contracts()
 		
-	while (_contract_list.size() < 8):
+	while (_contract_list.size() < 5):
 		_contract_list.append(
 			Missions.generate_contract(Missions.DIFFICULTIES[randi() % Missions.DIFFICULTIES.size()])
 		)
