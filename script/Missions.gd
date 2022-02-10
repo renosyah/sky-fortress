@@ -220,7 +220,7 @@ static func generate_contract(difficulty : String = EASY) -> Dictionary:
 	
 	match difficulty:
 		EASY:
-			var total_sub = int(rand_range(1,2))
+			var total_sub = 1
 			for i in total_sub:
 				var sub = TEMPLATE_SUB_CONTRACT.duplicate()
 				sub.contract_type = CONTRACT_TYPES[randi() % CONTRACT_TYPES.size()]
@@ -231,7 +231,7 @@ static func generate_contract(difficulty : String = EASY) -> Dictionary:
 				
 			contract.reward = (int(rand_range(150, 200))) * total_sub
 		MEDIUM:
-			var total_sub = int(rand_range(1,3))
+			var total_sub = 2
 			for i in total_sub:
 				var sub = TEMPLATE_SUB_CONTRACT.duplicate()
 				sub.contract_type = CONTRACT_TYPES[randi() % CONTRACT_TYPES.size()]
@@ -253,7 +253,7 @@ static func generate_contract(difficulty : String = EASY) -> Dictionary:
 			
 			contract.reward = (int(rand_range(700, 900))) * total_sub
 		EXTREME:
-			var total_sub = int(rand_range(3,4))
+			var total_sub = int(rand_range(2,3))
 			for i in total_sub:
 				var sub = TEMPLATE_SUB_CONTRACT.duplicate()
 				sub.contract_type = CONTRACT_TYPES[randi() % CONTRACT_TYPES.size()]

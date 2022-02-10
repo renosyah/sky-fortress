@@ -186,6 +186,15 @@ func _on_shop_on_resupply(_ok):
 	_cash.text = "$" + str(Global.player_data.cash)
 	_on_list_panel_on_item_press(Global.selected_ship)
 	
+func _on_shop_on_apply_camo(_ok):
+	if not _ok:
+		_exeption_message.visible = true
+		_exeption_message_label.text = "Insufficient funds!"
+		return
+		
+	_cash.text = "$" + str(Global.player_data.cash)
+	_on_list_panel_on_item_press(Global.selected_ship)
+	
 func _on_mission_button_pressed():
 	_mission_browser.display_missions(Global.mission_list)
 	_mission_browser.display_contracts(Global.contract_list)
@@ -213,6 +222,9 @@ func _on_mission_browser_accept_contract(_contract):
 	_mission_browser.display_contracts(Global.contract_list)
 	
 	Global.save_player_contracts()
+	
+
+
 
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_48.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_16.tres" type="DynamicFont" id=2]
@@ -7,6 +7,9 @@
 [ext_resource path="res://assets/ui/button/bg_press.png" type="Texture" id=5]
 [ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=6]
 [ext_resource path="res://assets/ui/icon/repair.png" type="Texture" id=7]
+[ext_resource path="res://assets/ui/icon/camo/winter.png" type="Texture" id=8]
+[ext_resource path="res://assets/ui/icon/camo/green.png" type="Texture" id=9]
+[ext_resource path="res://assets/ui/bar/bar.png" type="Texture" id=10]
 
 [node name="shop" type="Control"]
 anchor_right = 1.0
@@ -244,19 +247,19 @@ size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page"]
-margin_right = 1182.0
-margin_bottom = 564.0
+margin_right = 1170.0
+margin_bottom = 1563.0
 size_flags_horizontal = 3
 
 [node name="label" type="Label" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer"]
-margin_right = 1182.0
+margin_right = 1170.0
 margin_bottom = 40.0
 custom_fonts/font = ExtResource( 6 )
 text = " Workshop : "
 
 [node name="repair_panel" type="Control" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer"]
 margin_top = 44.0
-margin_right = 1182.0
+margin_right = 1170.0
 margin_bottom = 344.0
 rect_min_size = Vector2( 0, 300 )
 mouse_filter = 2
@@ -315,15 +318,15 @@ align = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/repair_panel/Panel/HBoxContainer"]
 margin_left = 254.0
-margin_right = 823.0
+margin_right = 811.0
 margin_bottom = 267.0
 mouse_filter = 2
 size_flags_horizontal = 3
 
 [node name="btn_repair" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/repair_panel/Panel/HBoxContainer"]
-margin_left = 827.0
+margin_left = 815.0
 margin_top = 187.0
-margin_right = 1127.0
+margin_right = 1115.0
 margin_bottom = 267.0
 rect_min_size = Vector2( 300, 80 )
 size_flags_vertical = 8
@@ -351,7 +354,7 @@ __meta__ = {
 
 [node name="label2" type="Label" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer"]
 margin_top = 348.0
-margin_right = 1182.0
+margin_right = 1170.0
 margin_bottom = 431.0
 custom_fonts/font = ExtResource( 6 )
 text = "
@@ -359,14 +362,308 @@ text = "
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer"]
 margin_top = 435.0
-margin_right = 1182.0
+margin_right = 1170.0
 margin_bottom = 435.0
 mouse_filter = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer"]
+[node name="label3" type="Label" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer"]
 margin_top = 439.0
-margin_right = 1182.0
-margin_bottom = 564.0
+margin_right = 1170.0
+margin_bottom = 522.0
+custom_fonts/font = ExtResource( 6 )
+text = " 
+ Camouflage : "
+
+[node name="paint_green_panel" type="Control" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer"]
+margin_top = 526.0
+margin_right = 1170.0
+margin_bottom = 826.0
+rect_min_size = Vector2( 0, 300 )
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_green_panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_green_panel/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 17.0
+margin_right = -35.0
+margin_bottom = -16.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_green_panel/Panel/HBoxContainer"]
+margin_right = 250.0
+margin_bottom = 267.0
+rect_min_size = Vector2( 250, 0 )
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_green_panel/Panel/HBoxContainer/VBoxContainer"]
+margin_right = 250.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 150, 180 )
+texture = ExtResource( 9 )
+expand = true
+
+[node name="label" type="Label" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_green_panel/Panel/HBoxContainer/VBoxContainer"]
+margin_top = 184.0
+margin_right = 250.0
+margin_bottom = 212.0
+custom_fonts/font = ExtResource( 2 )
+text = "Green Camo"
+align = 1
+
+[node name="cost" type="Label" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_green_panel/Panel/HBoxContainer/VBoxContainer"]
+margin_top = 216.0
+margin_right = 250.0
+margin_bottom = 244.0
+custom_fonts/font = ExtResource( 2 )
+text = "Cost : $150"
+align = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_green_panel/Panel/HBoxContainer"]
+margin_left = 254.0
+margin_right = 811.0
+margin_bottom = 267.0
+mouse_filter = 2
+size_flags_horizontal = 3
+
+[node name="btn_green_camo" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_green_panel/Panel/HBoxContainer"]
+margin_left = 815.0
+margin_top = 187.0
+margin_right = 1115.0
+margin_bottom = 267.0
+rect_min_size = Vector2( 300, 80 )
+size_flags_vertical = 8
+
+[node name="btn_green_camo" type="TextureButton" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_green_panel/Panel/HBoxContainer/btn_green_camo"]
+modulate = Color( 0.670588, 0.498039, 0.0392157, 1 )
+margin_right = 300.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 100, 50 )
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 5 )
+expand = true
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_green_panel/Panel/HBoxContainer/btn_green_camo"]
+margin_top = 26.0
+margin_right = 300.0
+margin_bottom = 54.0
+custom_fonts/font = ExtResource( 2 )
+text = "Apply"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="paint_winter_panel2" type="Control" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer"]
+margin_top = 830.0
+margin_right = 1170.0
+margin_bottom = 1130.0
+rect_min_size = Vector2( 0, 300 )
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_winter_panel2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_winter_panel2/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 17.0
+margin_right = -35.0
+margin_bottom = -16.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_winter_panel2/Panel/HBoxContainer"]
+margin_right = 250.0
+margin_bottom = 267.0
+rect_min_size = Vector2( 250, 0 )
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_winter_panel2/Panel/HBoxContainer/VBoxContainer"]
+margin_right = 250.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 150, 180 )
+texture = ExtResource( 8 )
+expand = true
+
+[node name="label" type="Label" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_winter_panel2/Panel/HBoxContainer/VBoxContainer"]
+margin_top = 184.0
+margin_right = 250.0
+margin_bottom = 212.0
+custom_fonts/font = ExtResource( 2 )
+text = "Winter Camo"
+align = 1
+
+[node name="cost" type="Label" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_winter_panel2/Panel/HBoxContainer/VBoxContainer"]
+margin_top = 216.0
+margin_right = 250.0
+margin_bottom = 244.0
+custom_fonts/font = ExtResource( 2 )
+text = "Cost : $150"
+align = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_winter_panel2/Panel/HBoxContainer"]
+margin_left = 254.0
+margin_right = 811.0
+margin_bottom = 267.0
+mouse_filter = 2
+size_flags_horizontal = 3
+
+[node name="btn_winter_camo" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_winter_panel2/Panel/HBoxContainer"]
+margin_left = 815.0
+margin_top = 187.0
+margin_right = 1115.0
+margin_bottom = 267.0
+rect_min_size = Vector2( 300, 80 )
+size_flags_vertical = 8
+
+[node name="btn_winter_camo" type="TextureButton" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_winter_panel2/Panel/HBoxContainer/btn_winter_camo"]
+modulate = Color( 0.670588, 0.498039, 0.0392157, 1 )
+margin_right = 300.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 100, 50 )
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 5 )
+expand = true
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_winter_panel2/Panel/HBoxContainer/btn_winter_camo"]
+margin_top = 26.0
+margin_right = 300.0
+margin_bottom = 54.0
+custom_fonts/font = ExtResource( 2 )
+text = "Apply"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="paint_default_panel3" type="Control" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer"]
+margin_top = 1134.0
+margin_right = 1170.0
+margin_bottom = 1434.0
+rect_min_size = Vector2( 0, 300 )
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_default_panel3"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_default_panel3/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 17.0
+margin_right = -35.0
+margin_bottom = -16.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_default_panel3/Panel/HBoxContainer"]
+margin_right = 250.0
+margin_bottom = 267.0
+rect_min_size = Vector2( 250, 0 )
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_default_panel3/Panel/HBoxContainer/VBoxContainer"]
+modulate = Color( 0.670588, 0.670588, 0.670588, 1 )
+margin_right = 250.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 150, 180 )
+texture = ExtResource( 10 )
+expand = true
+
+[node name="label" type="Label" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_default_panel3/Panel/HBoxContainer/VBoxContainer"]
+margin_top = 184.0
+margin_right = 250.0
+margin_bottom = 212.0
+custom_fonts/font = ExtResource( 2 )
+text = "Default Camo"
+align = 1
+
+[node name="cost" type="Label" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_default_panel3/Panel/HBoxContainer/VBoxContainer"]
+margin_top = 216.0
+margin_right = 250.0
+margin_bottom = 244.0
+custom_fonts/font = ExtResource( 2 )
+text = "Cost : $0"
+align = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_default_panel3/Panel/HBoxContainer"]
+margin_left = 254.0
+margin_right = 811.0
+margin_bottom = 267.0
+mouse_filter = 2
+size_flags_horizontal = 3
+
+[node name="btn_default_camo" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_default_panel3/Panel/HBoxContainer"]
+margin_left = 815.0
+margin_top = 187.0
+margin_right = 1115.0
+margin_bottom = 267.0
+rect_min_size = Vector2( 300, 80 )
+size_flags_vertical = 8
+
+[node name="btn_default_camo" type="TextureButton" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_default_panel3/Panel/HBoxContainer/btn_default_camo"]
+modulate = Color( 0.670588, 0.498039, 0.0392157, 1 )
+margin_right = 300.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 100, 50 )
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 5 )
+expand = true
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_default_panel3/Panel/HBoxContainer/btn_default_camo"]
+margin_top = 26.0
+margin_right = 300.0
+margin_bottom = 54.0
+custom_fonts/font = ExtResource( 2 )
+text = "Apply"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer"]
+margin_top = 1438.0
+margin_right = 1170.0
+margin_bottom = 1563.0
 rect_min_size = Vector2( 0, 125 )
 
 [node name="upgrade_page" type="ScrollContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer"]
@@ -464,3 +761,6 @@ align = 1
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_depot/btn_depot" to="." method="_on_btn_depot_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_market/btn_market" to="." method="_on_btn_market_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/repair_panel/Panel/HBoxContainer/btn_repair/btn_repair" to="." method="_on_btn_repair_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_green_panel/Panel/HBoxContainer/btn_green_camo/btn_green_camo" to="." method="_on_btn_green_camo_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_winter_panel2/Panel/HBoxContainer/btn_winter_camo/btn_winter_camo" to="." method="_on_btn_winter_camo_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer/paint_default_panel3/Panel/HBoxContainer/btn_default_camo/btn_default_camo" to="." method="_on_btn_default_camo_pressed"]

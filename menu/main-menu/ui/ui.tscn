@@ -652,6 +652,7 @@ rect_min_size = Vector2( 0, 10 )
 [connection signal="on_item_press" from="CanvasLayer/Control/VBoxContainer/PanelContainer2/list_panel" to="." method="_on_list_panel_on_item_press"]
 [connection signal="accept_contract" from="CanvasLayer/Control/mission_browser" to="." method="_on_mission_browser_accept_contract"]
 [connection signal="accept_mission" from="CanvasLayer/Control/mission_browser" to="." method="_on_mission_browser_accept_mission"]
+[connection signal="on_apply_camo" from="CanvasLayer/Control/shop" to="." method="_on_shop_on_apply_camo"]
 [connection signal="on_repaired" from="CanvasLayer/Control/shop" to="." method="_on_shop_on_repaired"]
 [connection signal="on_resupply" from="CanvasLayer/Control/shop" to="." method="_on_shop_on_resupply"]
 [connection signal="on_join" from="CanvasLayer/Control/server_browser" to="." method="_on_server_browser_on_join"]
