@@ -37,15 +37,70 @@ func _ready():
 	_ship_label.text = Global.selected_ship.name
 	_player_name.text = Global.player_data.name
 	
-	_cash.text = "$" + str(Global.player_data.cash)
+	grab_battle_result()
 	
-	if Global.mp_battle_result.has("cash"):
-		_cash_loot.text = "$ " + str(Global.mp_battle_result.cash)
-		_battle_result.visible = true
-		
 	_exeption_message.visible = (Global.mp_exception_message != "")
 	_exeption_message_label.text = Global.mp_exception_message
 	
+func grab_battle_result():
+	var reward_from_contract = 0
+	var reward_from_loot = 0
+	
+	var total_enemy_destroy = 0
+	var total_airship_destroy = 0
+	var total_fort_destroy = 0
+	
+	if Global.mp_battle_result.has("cash"):
+		reward_from_loot = Global.mp_battle_result.cash
+		
+	if Global.mp_battle_result.has("fort_destroy"):
+		total_enemy_destroy += Global.mp_battle_result.fort_destroy
+		total_fort_destroy += Global.mp_battle_result.fort_destroy
+		
+	if Global.mp_battle_result.has("airship_destroy"):
+		total_enemy_destroy += Global.mp_battle_result.airship_destroy
+		total_airship_destroy += Global.mp_battle_result.airship_destroy
+		
+	var selected_contract = {}
+	for i in Global.contract_list:
+		if i.is_selected and i.status != Missions.CONTRACT_SUCCESS:
+			selected_contract = i
+			for sub in i.subs:
+				if sub.contract_type == Missions.CONTRACT_TYPE_KILL:
+					sub.progress += total_enemy_destroy
+					
+				elif sub.contract_type == Missions.CONTRACT_TYPE_BOMBING:
+					sub.progress += total_fort_destroy
+					
+				elif sub.contract_type == Missions.CONTRACT_TYPE_SHOTTING_DOWN:
+					sub.progress += total_airship_destroy
+					
+				sub.status = Missions.CONTRACT_SUCCESS if sub.progress >= sub.goal else Missions.CONTRACT_NOT_COMMIT
+			break
+			
+	
+	if not selected_contract.empty():
+		var is_sub_completed = true
+		for sub in selected_contract.subs:
+			if sub.status != Missions.CONTRACT_SUCCESS:
+				is_sub_completed = false
+				break
+		
+		if is_sub_completed:
+			selected_contract.status = Missions.CONTRACT_SUCCESS
+			reward_from_contract = selected_contract.reward
+			
+			Global.player_data.cash += reward_from_contract
+			Global.save_player_data()
+		
+	Global.save_player_contracts()
+	
+	if not Global.mp_battle_result.empty():
+		_cash_loot.text = "$ " + str(reward_from_loot + reward_from_contract)
+		_battle_result.visible = true
+		
+	_cash.text = "$" + str(Global.player_data.cash)
+		
 func show_ship_condition_message(_text="", show=true):
 	_ship_condition_text.text = _text
 	_ship_condition_text.visible = show
@@ -78,9 +133,7 @@ func _on_host_pressed():
 		return
 		
 	if Global.selected_mission.status != Missions.OPERATION_NOT_COMMIT:
-		_exeption_message.visible = true
-		_exeption_message_label.text = "Mission expired!"
-		return
+		_on_mission_browser_accept_mission(Missions.generate_operation(Missions.DIFFICULTIES[randi() % Missions.DIFFICULTIES.size()]))
 		
 	# only host player can control what mission it takes
 	Global.mode = Global.MODE_HOST
@@ -108,9 +161,7 @@ func _on_battle_button_pressed():
 		return
 		
 	if Global.selected_mission.status != Missions.OPERATION_NOT_COMMIT:
-		_exeption_message.visible = true
-		_exeption_message_label.text = "Mission expired!"
-		return
+		_on_mission_browser_accept_mission(Missions.generate_operation(Missions.DIFFICULTIES[randi() % Missions.DIFFICULTIES.size()]))
 		
 	Network.connect("server_player_connected", self ,"_solo_player_connected")
 	
@@ -184,6 +235,7 @@ func _on_shop_on_resupply(_ok):
 	
 func _on_mission_button_pressed():
 	_mission_browser.display_missions(Global.mission_list)
+	_mission_browser.display_contracts(Global.contract_list)
 	_mission_browser.visible = true
 	
 func _on_mission_browser_accept_mission(_mission):
@@ -199,6 +251,15 @@ func _on_mission_browser_accept_mission(_mission):
 	Global.save_player_selected_mission()
 	
 	_mission_browser.visible = false
+
+func _on_mission_browser_accept_contract(_contract):
+	for i in Global.contract_list:
+		i.is_selected = false
+	
+	_contract.is_selected = true
+	_mission_browser.display_contracts(Global.contract_list)
+	
+	Global.save_player_contracts()
 
 
 

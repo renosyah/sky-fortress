@@ -650,6 +650,7 @@ rect_min_size = Vector2( 0, 10 )
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer/Control/mission_button/mission_button" to="." method="_on_mission_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer/Control2/shop_button/shop_button" to="." method="_on_shop_button_pressed"]
 [connection signal="on_item_press" from="CanvasLayer/Control/VBoxContainer/PanelContainer2/list_panel" to="." method="_on_list_panel_on_item_press"]
+[connection signal="accept_contract" from="CanvasLayer/Control/mission_browser" to="." method="_on_mission_browser_accept_contract"]
 [connection signal="accept_mission" from="CanvasLayer/Control/mission_browser" to="." method="_on_mission_browser_accept_mission"]
 [connection signal="on_repaired" from="CanvasLayer/Control/shop" to="." method="_on_shop_on_repaired"]
 [connection signal="on_resupply" from="CanvasLayer/Control/shop" to="." method="_on_shop_on_resupply"]

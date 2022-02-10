@@ -1,0 +1,118 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_16.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/ui/button/bg.png" type="Texture" id=3]
+[ext_resource path="res://assets/ui/button/bg_press.png" type="Texture" id=4]
+[ext_resource path="res://assets/ui/mission-browser/contract-item/contract_item.gd" type="Script" id=5]
+
+[node name="contract_item" type="Control"]
+margin_right = 1366.0
+margin_bottom = 400.0
+rect_min_size = Vector2( 0, 450 )
+mouse_filter = 2
+size_flags_vertical = 3
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 17.0
+margin_right = -35.0
+margin_bottom = -16.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer"]
+margin_right = 1007.0
+margin_bottom = 417.0
+mouse_filter = 2
+size_flags_horizontal = 3
+
+[node name="issue_by" type="Label" parent="Panel/HBoxContainer/VBoxContainer"]
+margin_right = 1007.0
+margin_bottom = 40.0
+custom_fonts/font = ExtResource( 2 )
+text = "Operation ..."
+
+[node name="description" type="Label" parent="Panel/HBoxContainer/VBoxContainer"]
+margin_top = 44.0
+margin_right = 1007.0
+margin_bottom = 72.0
+custom_fonts/font = ExtResource( 1 )
+text = "Difficulty : HARD"
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/HBoxContainer/VBoxContainer"]
+margin_top = 76.0
+margin_right = 1007.0
+margin_bottom = 86.0
+rect_min_size = Vector2( 0, 10 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer"]
+margin_top = 90.0
+margin_right = 1007.0
+margin_bottom = 417.0
+size_flags_vertical = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/HBoxContainer"]
+margin_left = 1011.0
+margin_right = 1311.0
+margin_bottom = 417.0
+rect_min_size = Vector2( 300, 0 )
+
+[node name="reward" type="Label" parent="Panel/HBoxContainer/VBoxContainer2"]
+margin_right = 300.0
+margin_bottom = 40.0
+size_flags_vertical = 1
+custom_fonts/font = ExtResource( 2 )
+text = "Reward : "
+align = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/HBoxContainer/VBoxContainer2"]
+margin_top = 44.0
+margin_right = 300.0
+margin_bottom = 333.0
+size_flags_vertical = 3
+
+[node name="button" type="MarginContainer" parent="Panel/HBoxContainer/VBoxContainer2"]
+margin_top = 337.0
+margin_right = 300.0
+margin_bottom = 417.0
+rect_min_size = Vector2( 300, 80 )
+
+[node name="btn" type="TextureButton" parent="Panel/HBoxContainer/VBoxContainer2/button"]
+modulate = Color( 0.355469, 0.355469, 0.355469, 1 )
+margin_right = 300.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 100, 50 )
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+expand = true
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer2/button"]
+margin_top = 26.0
+margin_right = 300.0
+margin_bottom = 54.0
+custom_fonts/font = ExtResource( 1 )
+text = "Accept"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer2/button/btn" to="." method="_on_btn_pressed"]

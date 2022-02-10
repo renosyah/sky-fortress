@@ -115,7 +115,8 @@ const TEMPLATE_OPERATION = {
 	status = OPERATION_NOT_COMMIT,
 	is_selected = false
 }
-	
+
+
 static func generate_operation(difficulty : String = EASY) -> Dictionary:
 	var time = OS.get_datetime()
 	var nameweekday= ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
@@ -126,7 +127,7 @@ static func generate_operation(difficulty : String = EASY) -> Dictionary:
 	var year= time["year"]             
 	var hour= time["hour"]
 	var minute= time["minute"]
-	var second= time["second"] 
+	var second= time["second"]
 	
 	var operation = TEMPLATE_OPERATION.duplicate()
 	operation.id = "MISSION-" + str(GDUUID.v4())
@@ -158,6 +159,107 @@ static func get_total_reward(_operation) -> int:
 	for i in _operation.missions:
 		total += i.max_cash
 	return total
+	
+const CONTRACT_NOT_COMMIT = 0
+const CONTRACT_SUCCESS = 1
+	
+const CONTRACT_TYPE_KILL = 0
+const CONTRACT_TYPE_BOMBING = 1
+const CONTRACT_TYPE_SHOTTING_DOWN = 2
+
+const CONTRACT_TYPES = [CONTRACT_TYPE_KILL, CONTRACT_TYPE_BOMBING,  CONTRACT_TYPE_SHOTTING_DOWN]
+
+const CONTRACT_DESCRIPTIONS = [
+	"Want a get paid?",
+	"Here is what you need to do..",
+	"Bos order, dont question it!",
+	"Issue for anyone",
+	"Got some hot need here",
+	"Good proposition, intresting?"
+]
+
+const TITLE_NAMES = ["Sir", "Miss", "Captain", "Leutenant", "King", "Commander" ,"Mrs"]
+
+
+const TEMPLATE_CONTRACT = {
+	id = "",
+	name = "",
+	description = "",
+	subs = [],
+	reward = 0,
+	status = CONTRACT_NOT_COMMIT,
+	is_selected = false
+}
+const TEMPLATE_SUB_CONTRACT = {
+	contract_type = CONTRACT_TYPE_KILL,
+	status = CONTRACT_NOT_COMMIT,
+	progress = 0,
+	goal = 10,
+}
+
+
+static func generate_contract(difficulty : String = EASY) -> Dictionary:
+	var contract = TEMPLATE_CONTRACT.duplicate()
+	contract.id = "CONTRACT-" + str(GDUUID.v4())
+	contract.name = "Issue by " + TITLE_NAMES[randi() % TITLE_NAMES.size()] + " " + RandomNameGenerator.generate()
+	contract.description = CONTRACT_DESCRIPTIONS[randi() % CONTRACT_DESCRIPTIONS.size()]
+	contract.status = CONTRACT_NOT_COMMIT
+
+	var subs = []
+	
+	match difficulty:
+		EASY:
+			var total_sub = int(rand_range(1,2))
+			for i in total_sub:
+				var sub = TEMPLATE_SUB_CONTRACT.duplicate()
+				sub.contract_type = CONTRACT_TYPES[randi() % CONTRACT_TYPES.size()]
+				sub.status = CONTRACT_NOT_COMMIT
+				sub.progress = 0
+				sub.goal = int(rand_range(1,2))
+				subs.append(sub)
+				
+			contract.reward = (int(rand_range(50, 200)))
+		MEDIUM:
+			var total_sub = int(rand_range(1,3))
+			for i in total_sub:
+				var sub = TEMPLATE_SUB_CONTRACT.duplicate()
+				sub.contract_type = CONTRACT_TYPES[randi() % CONTRACT_TYPES.size()]
+				sub.status = CONTRACT_NOT_COMMIT
+				sub.progress = 0
+				sub.goal = int(rand_range(2,4))
+				subs.append(sub)
+				
+			contract.reward = (int(rand_range(200, 400)))
+		HARD:
+			var total_sub = int(rand_range(2,3))
+			for i in total_sub:
+				var sub = TEMPLATE_SUB_CONTRACT.duplicate()
+				sub.contract_type = CONTRACT_TYPES[randi() % CONTRACT_TYPES.size()]
+				sub.status = CONTRACT_NOT_COMMIT
+				sub.progress = 0
+				sub.goal = int(rand_range(4,8))
+				subs.append(sub)
+			
+			contract.reward = (int(rand_range(500, 800)))
+		EXTREME:
+			var total_sub = int(rand_range(3,4))
+			for i in total_sub:
+				var sub = TEMPLATE_SUB_CONTRACT.duplicate()
+				sub.contract_type = CONTRACT_TYPES[randi() % CONTRACT_TYPES.size()]
+				sub.status = CONTRACT_NOT_COMMIT
+				sub.progress = 0
+				sub.goal = int(rand_range(6,9))
+				subs.append(sub)
+			
+			contract.reward = (int(rand_range(800,1200)))
+			
+	contract.subs = subs.duplicate()
+	
+	return contract
+
+
+
+
 
 
 

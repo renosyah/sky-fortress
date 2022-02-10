@@ -155,7 +155,7 @@ const AUTO_CANNON = {
 	max_range = 40.0,
 	ammo = 450,
 	max_ammo = 450,
-	ammo_cost = 3,
+	ammo_cost = 2,
 	can_fire = false
 }
 

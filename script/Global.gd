@@ -9,6 +9,7 @@ func _ready():
 	load_player_selected_ship()
 	load_player_missions()
 	load_player_selected_mission()
+	load_player_contracts()
 	
 ################################################################
 # player ship & equipment
@@ -200,7 +201,7 @@ func update_player_missions(_current_mission):
 			break
 		pos += 1
 	
-	if pos >= mission_list.size():
+	if pos > mission_list.size() - 1:
 		return
 	
 	mission_list[pos] = _current_mission
@@ -209,6 +210,74 @@ func update_player_missions(_current_mission):
 func save_player_missions():
 	if PERSISTEN_SAVE:
 		SaveLoad.save("mission_list.dat", mission_list)
+	
+################################################################
+# contract list
+var contract_list = []
+	
+func started_contracts():
+	var _contract_list = []
+	for i in 3:
+		_contract_list.append(
+			Missions.generate_contract(Missions.EASY)
+		)
+		
+	for i in 2:
+		_contract_list.append(
+			Missions.generate_contract(Missions.MEDIUM)
+		)
+		
+	for i in 2:
+		_contract_list.append(
+			Missions.generate_contract(Missions.HARD)
+		)
+		
+	for i in 1:
+		_contract_list.append(
+			Missions.generate_contract(Missions.EXTREME)
+		)
+		
+	return _contract_list
+	
+func load_player_contracts():
+	var _contract_list = null
+	
+	if PERSISTEN_SAVE:
+		_contract_list = SaveLoad.load_save("contract_list.dat")
+	
+	if not _contract_list:
+		_contract_list = started_contracts()
+		
+	while (_contract_list.size() < 8):
+		_contract_list.append(
+			Missions.generate_contract(Missions.DIFFICULTIES[randi() % Missions.DIFFICULTIES.size()])
+		)
+		
+	for i in _contract_list:
+		if i.status == Missions.OPERATION_NOT_COMMIT:
+			contract_list.append(i)
+			
+	save_player_contracts()
+	
+func update_player_contracts(_current_contract):
+	if _current_contract.empty():
+		return
+		
+	var pos = 0
+	for i in contract_list:
+		if i.id == _current_contract.id:
+			break
+		pos += 1
+	
+	if pos > contract_list.size() - 1:
+		return
+	
+	contract_list[pos] = _current_contract
+	save_player_contracts()
+	
+func save_player_contracts():
+	if PERSISTEN_SAVE:
+		SaveLoad.save("contract_list.dat", contract_list)
 	
 ################################################################
 # multiplayer connection and data

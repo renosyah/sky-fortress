@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/ui/bar/hp_bar.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/ui/bar/hp_bar.gd" type="Script" id=2]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_16.tres" type="DynamicFont" id=3]
+[ext_resource path="res://assets/ui/mission-browser/contract-item/sub-item/sub_item.gd" type="Script" id=4]
+
+[node name="sub_item" type="VBoxContainer"]
+margin_right = 700.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 700, 100 )
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="task" type="Label" parent="."]
+margin_right = 700.0
+margin_bottom = 28.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 5
+custom_fonts/font = ExtResource( 3 )
+text = "Kill 10 Airship : "
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bar" type="Control" parent="." instance=ExtResource( 1 )]
+margin_top = 32.0
+margin_right = 700.0
+margin_bottom = 82.0
+rect_min_size = Vector2( 0, 50 )
+mouse_filter = 2
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

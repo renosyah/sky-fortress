@@ -338,7 +338,7 @@ remotesync func _cash_pickup(_player_id, _amount):
 	if _player_id == "" or Global.player_data.id == _player_id:
 		if not Global.mp_battle_result.has("cash"):
 			Global.mp_battle_result["cash"] = 0
-			
+		
 		Global.mp_battle_result["cash"] += _amount
 		Global.player_data.cash += _amount
 		Global.save_player_data()
@@ -372,8 +372,26 @@ func _on_enemy_on_spawning_weapon(_node, _weapon):
 func _on_enemy_fort_on_destroyed(_node):
 	_on_enemy_on_destroyed(_node)
 	
+	if Global.player_data.id != _node.hit_by:
+		return
+		
+	if not Global.mp_battle_result.has("fort_destroy"):
+		Global.mp_battle_result["fort_destroy"] = 0
+	
+	Global.mp_battle_result["fort_destroy"] += 1
+	
+	
 func _on_enemy_ship_on_destroyed(_node):
 	_on_enemy_on_destroyed(_node)
+	
+	if Global.player_data.id != _node.hit_by:
+		return
+		
+	if not Global.mp_battle_result.has("airship_destroy"):
+		Global.mp_battle_result["airship_destroy"] = 0
+	
+	Global.mp_battle_result["airship_destroy"] += 1
+	
 	
 func _on_enemy_on_destroyed(_node):
 	if get_tree().is_network_server():
