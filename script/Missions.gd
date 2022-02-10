@@ -178,13 +178,23 @@ const CONTRACT_DESCRIPTIONS = [
 	"Good proposition, intresting?"
 ]
 
-const TITLE_NAMES = ["Sir", "Miss", "Captain", "Leutenant", "King", "Commander" ,"Mrs"]
+const CONTRACT_COMPLETED_MESSAGES = [
+	"Done? good",
+	"Here is your payment",
+	"Thats more like it",
+	"Amazing, see me again if you need work",
+	"Nice job",
+	"What a supprize"
+]
+
+const TITLE_NAMES = ["Sir", "Miss", "Captain", "Leutenant", "General", "Commander" ,"Mrs"]
 
 
 const TEMPLATE_CONTRACT = {
 	id = "",
 	name = "",
 	description = "",
+	completed_message = "",
 	subs = [],
 	reward = 0,
 	status = CONTRACT_NOT_COMMIT,
@@ -203,6 +213,7 @@ static func generate_contract(difficulty : String = EASY) -> Dictionary:
 	contract.id = "CONTRACT-" + str(GDUUID.v4())
 	contract.name = "Issue by " + TITLE_NAMES[randi() % TITLE_NAMES.size()] + " " + RandomNameGenerator.generate()
 	contract.description = CONTRACT_DESCRIPTIONS[randi() % CONTRACT_DESCRIPTIONS.size()]
+	contract.completed_message = CONTRACT_COMPLETED_MESSAGES[randi() % CONTRACT_COMPLETED_MESSAGES.size()]
 	contract.status = CONTRACT_NOT_COMMIT
 
 	var subs = []

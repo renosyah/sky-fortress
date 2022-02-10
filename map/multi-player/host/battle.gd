@@ -271,6 +271,7 @@ func _on_enemy_fort_on_destroyed(_node):
 	
 	if get_tree().is_network_server():
 		_ui.update_scoreboard(_node.hit_by, 1, 0)
+		_ui.update_active_contract(_node.hit_by,1,0,1)
 		
 		if mission.empty():
 			return
@@ -290,6 +291,7 @@ func _on_enemy_ship_on_destroyed(_node):
 	
 	if get_tree().is_network_server():
 		_ui.update_scoreboard(_node.hit_by, 1, 0)
+		_ui.update_active_contract(_node.hit_by,1,1,0)
 		
 		if mission.empty():
 			return

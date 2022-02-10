@@ -114,20 +114,20 @@ margin_bottom = 664.0
 
 [node name="btn_objective" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer"]
 margin_right = 206.0
-margin_bottom = 161.0
+margin_bottom = 128.0
 rect_min_size = Vector2( 100, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="btn_objective" type="Button" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_objective"]
 margin_right = 206.0
-margin_bottom = 161.0
+margin_bottom = 128.0
 rect_min_size = Vector2( 100, 50 )
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_objective"]
-margin_top = 51.0
+margin_top = 34.0
 margin_right = 206.0
-margin_bottom = 110.0
+margin_bottom = 93.0
 custom_fonts/font = ExtResource( 4 )
 text = "Mission
 Objective"
@@ -137,23 +137,49 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="btn_team_status" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer"]
-margin_top = 165.0
+[node name="btn_contract" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer"]
+margin_top = 132.0
 margin_right = 206.0
-margin_bottom = 326.0
+margin_bottom = 260.0
+rect_min_size = Vector2( 100, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="btn_contract" type="Button" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_contract"]
+margin_right = 206.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 100, 50 )
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_contract"]
+margin_top = 34.0
+margin_right = 206.0
+margin_bottom = 93.0
+custom_fonts/font = ExtResource( 4 )
+text = "Active
+Contract"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="btn_team_status" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer"]
+margin_top = 264.0
+margin_right = 206.0
+margin_bottom = 392.0
 rect_min_size = Vector2( 100, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="btn_team_status" type="Button" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_team_status"]
 margin_right = 206.0
-margin_bottom = 161.0
+margin_bottom = 128.0
 rect_min_size = Vector2( 100, 50 )
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_team_status"]
-margin_top = 51.0
+margin_top = 34.0
 margin_right = 206.0
-margin_bottom = 110.0
+margin_bottom = 93.0
 custom_fonts/font = ExtResource( 4 )
 text = "Fleet 
 Status"
@@ -164,22 +190,22 @@ __meta__ = {
 }
 
 [node name="btn_score_board" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer"]
-margin_top = 330.0
+margin_top = 396.0
 margin_right = 206.0
-margin_bottom = 491.0
+margin_bottom = 524.0
 rect_min_size = Vector2( 100, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="btn_score_board" type="Button" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_score_board"]
 margin_right = 206.0
-margin_bottom = 161.0
+margin_bottom = 128.0
 rect_min_size = Vector2( 100, 50 )
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_score_board"]
-margin_top = 51.0
+margin_top = 34.0
 margin_right = 206.0
-margin_bottom = 110.0
+margin_bottom = 93.0
 custom_fonts/font = ExtResource( 4 )
 text = "Score
 Board"
@@ -190,7 +216,7 @@ __meta__ = {
 }
 
 [node name="btn_menu" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer"]
-margin_top = 495.0
+margin_top = 528.0
 margin_right = 206.0
 margin_bottom = 657.0
 rect_min_size = Vector2( 100, 0 )
@@ -199,13 +225,13 @@ size_flags_vertical = 3
 
 [node name="btn_menu" type="Button" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_menu"]
 margin_right = 206.0
-margin_bottom = 162.0
+margin_bottom = 129.0
 rect_min_size = Vector2( 100, 50 )
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_menu"]
-margin_top = 51.0
+margin_top = 35.0
 margin_right = 206.0
-margin_bottom = 110.0
+margin_bottom = 94.0
 custom_fonts/font = ExtResource( 4 )
 text = "Option
 Menu"
@@ -272,6 +298,17 @@ margin_top = 192.0
 margin_right = 308.0
 margin_bottom = 317.0
 rect_min_size = Vector2( 0, 125 )
+
+[node name="contract_page" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer"]
+visible = false
+margin_right = 1142.0
+margin_bottom = 671.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/contract_page"]
+margin_right = 1142.0
+margin_bottom = 671.0
 
 [node name="team_status_page" type="ScrollContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer"]
 visible = false
@@ -372,6 +409,7 @@ __meta__ = {
 
 [connection signal="pressed" from="VBoxContainer/Panel/HBoxContainer/button_close" to="." method="_on_button_close_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_objective/btn_objective" to="." method="_on_btn_objective_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_contract/btn_contract" to="." method="_on_btn_contract_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_team_status/btn_team_status" to="." method="_on_btn_team_status_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_score_board/btn_score_board" to="." method="_on_btn_score_board_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/btn_menu/btn_menu" to="." method="_on_btn_menu_pressed"]

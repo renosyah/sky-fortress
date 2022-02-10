@@ -17,6 +17,7 @@ onready var _accept_button_holder = $Panel/HBoxContainer/VBoxContainer2/button
 onready var _label = $Panel/HBoxContainer/VBoxContainer2/button/Label
 
 var contract = {}
+var show_button = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -26,6 +27,7 @@ func _ready():
 	_accept_button.disabled = contract.is_selected
 	_accept_button.modulate = BTN_DISABLE if contract.is_selected else BTN_DEFAULT
 	_accept_button_holder.visible = contract.status == Missions.OPERATION_NOT_COMMIT
+	_accept_button_holder.visible = show_button
 	_label.text = "Active" if contract.is_selected else "Set Active"
 	
 	_issue_by.text = contract.name

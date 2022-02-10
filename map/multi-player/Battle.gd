@@ -372,25 +372,9 @@ func _on_enemy_on_spawning_weapon(_node, _weapon):
 func _on_enemy_fort_on_destroyed(_node):
 	_on_enemy_on_destroyed(_node)
 	
-	if Global.player_data.id != _node.hit_by:
-		return
-		
-	if not Global.mp_battle_result.has("fort_destroy"):
-		Global.mp_battle_result["fort_destroy"] = 0
-	
-	Global.mp_battle_result["fort_destroy"] += 1
-	
 	
 func _on_enemy_ship_on_destroyed(_node):
 	_on_enemy_on_destroyed(_node)
-	
-	if Global.player_data.id != _node.hit_by:
-		return
-		
-	if not Global.mp_battle_result.has("airship_destroy"):
-		Global.mp_battle_result["airship_destroy"] = 0
-	
-	Global.mp_battle_result["airship_destroy"] += 1
 	
 	
 func _on_enemy_on_destroyed(_node):

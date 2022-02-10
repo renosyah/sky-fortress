@@ -1,11 +1,13 @@
 extends Control
 
 signal on_close
+signal on_contract_completed(_contract)
 signal on_abort
 
 onready var _operation_name = $VBoxContainer/Panel/HBoxContainer/CenterContainer2/VBoxContainer/Label
 
 onready var _objective_page = $VBoxContainer/HBoxContainer2/HBoxContainer/objective_page
+onready var _contract_page = $VBoxContainer/HBoxContainer2/HBoxContainer/contract_page
 onready var _team_status_page = $VBoxContainer/HBoxContainer2/HBoxContainer/team_status_page
 onready var _score_page = $VBoxContainer/HBoxContainer2/HBoxContainer/score_board_page
 onready var _menu_page = $VBoxContainer/HBoxContainer2/HBoxContainer/menu_page
@@ -16,16 +18,18 @@ onready var _operation_message = $VBoxContainer/HBoxContainer2/HBoxContainer/obj
 
 onready var _fleet_status_holder = $VBoxContainer/HBoxContainer2/HBoxContainer/team_status_page/VBoxContainer
 onready var _scoreboard_holder = $VBoxContainer/HBoxContainer2/HBoxContainer/score_board_page/VBoxContainer
+onready var _contract_holder = $VBoxContainer/HBoxContainer2/HBoxContainer/contract_page/VBoxContainer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	pass
 	
 func hide_all():
 	_objective_page.visible = false
 	_team_status_page.visible = false
 	_score_page.visible = false
 	_menu_page.visible = false
+	_contract_page.visible = false
 	
 func update_objective(operation : Dictionary, current_mission : Dictionary):
 	_operation_name.text = operation.name
@@ -79,8 +83,76 @@ func update_scoreboard(_player_id : String, kill_add, cash_add : int = 0):
 	for i in _scoreboard_holder.get_children():
 		if i.player_id == _player_id:
 			i.update_score(kill_add, cash_add)
+	
+func display_active_contract():
+	var _contract = {}
+	for i in Global.contract_list:
+		if i.is_selected:
+			_contract = i
+			break
+			
+	if _contract.empty():
+		return
+			
+	for i in _contract_holder.get_children():
+		_contract_holder.remove_child(i)
 		
+	var item = preload("res://assets/ui/mission-browser/contract-item/contract_item.tscn").instance()
+	item.contract = _contract
+	item.show_button = false
+	_contract_holder.add_child(item)
+	
+func update_active_contract(_player_id : String, enemy_destroy : int = 0, airship_destroy : int = 0, fort_destroy : int = 0):
+	if _player_id != Global.player_data.id:
+		return
 		
+	var _contract = {}
+	for i in Global.contract_list:
+		if i.is_selected:
+			_contract = i
+			break
+			
+	if _contract.empty():
+		return
+		
+	if _contract.status == Missions.CONTRACT_SUCCESS:
+		return
+		
+	for sub in _contract.subs:
+		if sub.status == Missions.CONTRACT_SUCCESS:
+			continue
+			
+		if sub.contract_type == Missions.CONTRACT_TYPE_KILL:
+			sub.progress += enemy_destroy
+			
+		elif sub.contract_type == Missions.CONTRACT_TYPE_BOMBING:
+			sub.progress += fort_destroy
+			
+		elif sub.contract_type == Missions.CONTRACT_TYPE_SHOTTING_DOWN:
+			sub.progress += airship_destroy
+			
+		sub.status = Missions.CONTRACT_SUCCESS if sub.progress >= sub.goal else Missions.CONTRACT_NOT_COMMIT
+		
+	var is_sub_completed = true
+	var reward_from_contract = 0
+	
+	for sub in _contract.subs:
+		if sub.status != Missions.CONTRACT_SUCCESS:
+			is_sub_completed = false
+			break
+
+	if is_sub_completed:
+		_contract.status = Missions.CONTRACT_SUCCESS
+		reward_from_contract = _contract.reward
+		
+		Global.player_data.cash += reward_from_contract
+		Global.save_player_data()
+		
+		emit_signal("on_contract_completed", _contract)
+		
+	Global.save_player_contracts()
+	display_active_contract()
+	
 func _on_button_close_pressed():
 	emit_signal("on_close")
 	
@@ -100,8 +172,15 @@ func _on_btn_menu_pressed():
 	hide_all()
 	_menu_page.visible = true
 	
+func _on_btn_contract_pressed():
+	hide_all()
+	_contract_page.visible = true
+	display_active_contract()
+	
 func _on_abort_button_pressed():
 	emit_signal("on_abort")
+
+
 
 
 

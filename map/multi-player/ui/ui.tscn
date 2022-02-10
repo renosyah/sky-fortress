@@ -346,6 +346,7 @@ margin_bottom = 800.0
 [connection signal="on_prev_click" from="CanvasLayer/Control2/spectate" to="." method="_on_spectate_on_prev_click"]
 [connection signal="on_abort" from="CanvasLayer/Control2/objective_tab" to="." method="_on_objective_tab_on_abort"]
 [connection signal="on_close" from="CanvasLayer/Control2/objective_tab" to="." method="_on_objective_tab_on_close"]
+[connection signal="on_contract_completed" from="CanvasLayer/Control2/objective_tab" to="." method="_on_objective_tab_on_contract_completed"]
 [connection signal="on_spectate_click" from="CanvasLayer/Control2/deadscreen" to="." method="_on_deadscreen_on_spectate_click"]
 [connection signal="on_exit" from="CanvasLayer/Control2/resultscreen" to="." method="_on_resultscreen_on_exit"]
 [connection signal="pressed" from="CanvasLayer/Control2/chating/PanelContainer/HBoxContainer/CenterContainer2/close_chat" to="." method="_on_close_chat_pressed"]

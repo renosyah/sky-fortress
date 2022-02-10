@@ -49,6 +49,9 @@ func set_spectating_name(nm : String):
 	_spectatescreen.set_spectating_name(nm)
 	
 remotesync func _display_mission_objective(level, message, reward : String):
+	if _mission_tab.modulate.a > 0.5:
+		return
+		
 	_mission_label.text = level
 	_mission_message.text = message
 	_miision_reward.text = reward
@@ -93,8 +96,14 @@ func display_scoreboard(_players):
 remotesync func _update_scoreboard(_player_id : String, kill_add, cash_add : int = 0):
 	_objective_tab.update_scoreboard(_player_id, kill_add, cash_add)
 	
-func update_scoreboard(_player_id : String, kill_add, cash_add : int = 0):
-	rpc("_update_scoreboard",_player_id, kill_add, cash_add)
+func update_scoreboard(player_id : String, kill_add, cash_add : int = 0):
+	rpc("_update_scoreboard",player_id, kill_add, cash_add)
+	
+remotesync func _update_active_contract(player_id : String, enemy_destroy : int = 0, airship_destroy : int = 0, fort_destroy : int = 0):
+	_objective_tab.update_active_contract(player_id,enemy_destroy, airship_destroy, fort_destroy)
+	
+func update_active_contract(player_id : String, enemy_destroy : int = 0, airship_destroy : int = 0, fort_destroy : int = 0):
+	rpc("_update_active_contract", player_id, enemy_destroy, airship_destroy, fort_destroy)
 	
 	
 func _on_aim_pressed():
@@ -161,7 +170,10 @@ func _on_chat_on_message(_message, _from):
 	
 	_tween.interpolate_property(_chat_log, "modulate:a", 1.0, 0.0, 5.0)
 	_tween.start()
-
+	
+func _on_objective_tab_on_contract_completed(_contract):
+	_display_mission_objective("Contract Completed!", "\"" + _contract.completed_message +  "\"" , "Reward : $" +str(_contract.reward))
+	
 func _on_close_chat_pressed():
 	_chat_window.visible = false
 	
@@ -176,6 +188,9 @@ func _on_objective_tab_on_close():
 	
 func _on_objective_tab_on_abort():
 	emit_signal("on_exit_click")
+
+
+
 
 
 
