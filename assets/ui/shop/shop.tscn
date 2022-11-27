@@ -248,7 +248,7 @@ scroll_horizontal_enabled = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page"]
 margin_right = 1170.0
-margin_bottom = 1563.0
+margin_bottom = 1434.0
 size_flags_horizontal = 3
 
 [node name="label" type="Label" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer"]
@@ -659,12 +659,6 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer/service_page/VBoxContainer"]
-margin_top = 1438.0
-margin_right = 1170.0
-margin_bottom = 1563.0
-rect_min_size = Vector2( 0, 125 )
 
 [node name="upgrade_page" type="ScrollContainer" parent="VBoxContainer/HBoxContainer2/HBoxContainer"]
 visible = false

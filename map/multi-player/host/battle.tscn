@@ -34,6 +34,7 @@ transform = Transform( 5, 0, 0, 0, -2.18557e-07, 1, 0, -5, -4.37114e-08, 0, 0, 0
 transform = Transform( 1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 20, -20 )
 light_energy = 0.3
 shadow_enabled = true
+directional_shadow_mode = 0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )

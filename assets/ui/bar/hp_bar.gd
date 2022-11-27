@@ -9,6 +9,9 @@ onready var _label = $RichTextLabel
 func _ready():
 	pass # Replace with function body.
 
+func show_label(_show = true):
+	_label.visible = _show
+
 func update_bar(hp, max_hp):
 	if max_hp > 100.0:
 		_hp_bar_bg.step = 1.0

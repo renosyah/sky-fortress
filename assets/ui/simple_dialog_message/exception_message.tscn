@@ -1,0 +1,133 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_48.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/ui/fonts/montserrat_eb_32.tres" type="DynamicFont" id=2]
+
+[node name="exception_message" type="Control"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.603922 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="PanelContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -334.5
+margin_top = -215.0
+margin_right = 334.5
+margin_bottom = 215.0
+rect_min_size = Vector2( 200, 200 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 662.0
+margin_bottom = 423.0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Panel/VBoxContainer"]
+margin_right = 655.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 100 )
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer3"]
+margin_right = 80.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 80, 0 )
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer3"]
+margin_left = 84.0
+margin_top = 20.0
+margin_right = 571.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+text = "Attention!"
+align = 1
+valign = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer3"]
+margin_left = 575.0
+margin_right = 655.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 80, 0 )
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/VBoxContainer"]
+margin_top = 104.0
+margin_right = 655.0
+margin_bottom = 254.0
+rect_min_size = Vector2( 500, 150 )
+
+[node name="MarginContainer2" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer2"]
+margin_right = 10.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="message" type="Label" parent="Panel/VBoxContainer/HBoxContainer2"]
+margin_left = 14.0
+margin_top = 55.0
+margin_right = 641.0
+margin_bottom = 95.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "..."
+align = 1
+valign = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer2"]
+margin_left = 645.0
+margin_right = 655.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="MarginContainer2" type="MarginContainer" parent="Panel/VBoxContainer"]
+margin_top = 258.0
+margin_right = 655.0
+margin_bottom = 298.0
+rect_min_size = Vector2( 0, 40 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+margin_top = 302.0
+margin_right = 655.0
+margin_bottom = 402.0
+rect_min_size = Vector2( 0, 100 )
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer"]
+margin_right = 10.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="close_exeption_message" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+margin_left = 14.0
+margin_right = 641.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 80, 0 )
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+text = "Close"
+
+[node name="MarginContainer3" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer"]
+margin_left = 645.0
+margin_right = 655.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer"]
+margin_top = 406.0
+margin_right = 655.0
+margin_bottom = 416.0
+rect_min_size = Vector2( 0, 10 )

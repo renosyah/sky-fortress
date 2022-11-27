@@ -10,8 +10,8 @@ func set_skin(_camo : String = ""):
 		$pivot/body_2.modulate = Color(0.486275, 0.913725, 0.972549)
 		
 	if _camo == "g-camo":
-		$pivot/body_1.modulate = Color(0.107391, 0.597656, 0.195486)
-		$pivot/body_2.modulate = Color(0.107391, 0.597656, 0.195486)
+		$pivot/body_1.modulate = Color(0.023529, 0.792157, 0.12549)
+		$pivot/body_2.modulate = Color(0.023529, 0.792157, 0.12549)
 	
 	$pivot/sail_1.texture = load("res://skin/ships/sails/"+ _camo + "/" +"sail.png")
 	$pivot/sail_2.texture = load("res://skin/ships/sails/"+ _camo + "/" +"sail.png")

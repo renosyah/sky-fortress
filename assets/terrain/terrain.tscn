@@ -100,7 +100,6 @@ sprite_resources = ExtResource( 13 )
 [node name="MeshInstance" type="MeshInstance" parent="ground/ground"]
 mesh = SubResource( 2 )
 skeleton = NodePath("../../..")
-material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="ground/ground"]
 shape = SubResource( 3 )
